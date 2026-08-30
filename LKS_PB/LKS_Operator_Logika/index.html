@@ -263,7 +263,7 @@
             position: relative;
             min-height: 535px;
             overflow: hidden;
-            background: linear-gradient(#d9edf1, #eaf4d9 74%, #a8d26c 75%)
+            background: linear-gradient(180deg, #dff4ff 0%, #eaf7d7 48%, #bedd7a 100%)
         }
 
         .climb-panel h3 {
@@ -287,61 +287,136 @@
             pointer-events: none
         }
 
-        .pole {
+        .route-map {
             position: absolute;
-            left: 50%;
-            top: 78px;
-            width: 29px;
-            height: 355px;
-            transform: translateX(-50%);
-            background: linear-gradient(90deg, #8a4b26, #c97738 45%, #7d421f);
-            border: 3px solid #583018;
-            border-radius: 14px;
-            box-shadow: 5px 0 0 rgba(70, 45, 25, .2)
+            inset: 90px 18px 52px 18px;
+            z-index: 1
         }
 
-        .top-crown {
+        .route-map .road {
+            position: absolute;
+            inset: 30px 12px 0 12px;
+            border: 6px solid rgba(118, 128, 126, .38);
+            border-radius: 48% 52% 42% 58% / 55% 45% 55% 45%;
+            background: rgba(255, 255, 255, .1)
+        }
+
+        .route-map .path {
             position: absolute;
             left: 50%;
-            top: 40px;
+            top: 18px;
+            width: 72%;
+            height: 78%;
+            transform: translateX(-50%);
+            border: 9px solid rgba(117, 102, 78, .85);
+            border-left-color: rgba(117, 102, 78, .7);
+            border-right-color: rgba(117, 102, 78, .7);
+            border-radius: 50% 50% 46% 54% / 52% 48% 52% 48%;
+            box-shadow: inset 0 0 0 7px rgba(245, 240, 218, .45)
+        }
+
+        .route-map .path::before,
+        .route-map .path::after {
+            content: '';
+            position: absolute;
+            border: 6px dashed rgba(250, 252, 255, .7);
+            border-radius: 50%
+        }
+
+        .route-map .path::before {
+            inset: 18px 18px 18px 18px
+        }
+
+        .route-map .path::after {
+            inset: 36px 36px 36px 36px
+        }
+
+        .route-map .start,
+                .route-map .finish {
+                    position: absolute;
+                    left: 50%;
+                    bottom: 18px;
+                    z-index: 3;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    border: 3px solid #fff;
+                    box-shadow: 0 0 0 3px rgba(18, 55, 22, .3);
+                    transform: translateX(-50%)
+                }
+
+                .route-map .start {
+                    background: #2a9d5d
+                }
+
+                .route-map .finish {
+                    background: #d95f4f;
+                    box-shadow: 0 0 0 3px rgba(18, 55, 22, .3), 0 0 8px rgba(217, 95, 79, .7)
+                }
+
+                .route-map .goal {
+                    position: absolute;
+                    left: 50%;
+                    top: 18px;
+                    z-index: 2;
+                    width: 95px;
+                    height: 60px;
+                    transform: translateX(-50%);
+                    background: linear-gradient(180deg, #f7d359 0%, #efad43 100%);
+                    border: 3px solid var(--ink);
+                    border-radius: 10px 10px 6px 6px;
+                    box-shadow: 0 10px 0 rgba(71, 54, 23, .2)
+                }
+
+        .route-map .goal::before,
+        .route-map .goal::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            width: 18px;
+            height: 18px;
+            background: #fff2c3;
+            border: 3px solid var(--ink);
+            border-radius: 50%
+        }
+
+        .route-map .goal::before { left: 18px }
+        .route-map .goal::after { right: 18px }
+
+        .route-map .school {
+            position: absolute;
+            left: 50%;
+            bottom: 72px;
             z-index: 2;
-            width: 165px;
-            height: 75px;
             transform: translateX(-50%);
-            background: #dfbd3f;
-            clip-path: polygon(50% 0, 61% 25%, 82% 13%, 78% 41%, 100% 50%, 77% 61%, 82% 88%, 60% 76%, 50% 100%, 39% 76%, 18% 88%, 23% 61%, 0 50%, 22% 41%, 18% 13%, 39% 25%);
-            filter: drop-shadow(3px 4px 0 #7c5c27)
-        }
-
-        .prize {
-            position: absolute;
-            top: 62px;
-            left: 50%;
-            z-index: 3;
-            transform: translateX(-50%);
-            color: #fff;
-            font: 900 .7rem Arial, sans-serif;
-            letter-spacing: .08em
+            padding: 8px 12px;
+            color: #1a3d30;
+            background: rgba(255, 255, 255, .8);
+            border: 2px solid rgba(23, 50, 56, .35);
+            border-radius: 999px;
+            font: 800 .62rem Arial, sans-serif;
+            letter-spacing: .08em;
+            text-transform: uppercase
         }
 
         .climber {
             position: absolute;
             left: 50%;
-            top: 285px;
+            top: 295px;
             z-index: 4;
-            width: 76px;
-            height: 91px;
+            width: 78px;
+            height: 92px;
             transform: translateX(-50%);
-            transition: top .7s cubic-bezier(.2, .8, .3, 1)
+            transition: top .9s cubic-bezier(.22, .8, .2, 1), transform .25s ease
         }
 
         .climber .head {
             position: absolute;
-            left: 25px;
+            left: 27px;
             top: 0;
-            width: 28px;
-            height: 28px;
-            background: #9b5a37;
+            width: 24px;
+            height: 24px;
+            background: #a87251;
             border: 3px solid var(--ink);
             border-radius: 50%
         }
@@ -349,64 +424,52 @@
         .climber .shirt {
             position: absolute;
             left: 18px;
-            top: 26px;
+            top: 24px;
             width: 42px;
-            height: 35px;
-            background: var(--blue);
+            height: 34px;
+            background: #2f9bd6;
             border: 3px solid var(--ink);
-            border-radius: 13px 13px 5px 5px
+            border-radius: 12px 12px 6px 6px
         }
 
         .climber .arm {
             position: absolute;
-            top: 28px;
-            width: 29px;
-            height: 9px;
-            background: #9b5a37;
+            top: 27px;
+            width: 24px;
+            height: 8px;
+            background: #a87251;
             border: 3px solid var(--ink);
             border-radius: 8px
         }
 
         .climber .arm.left {
-            left: -2px;
-            transform: rotate(-42deg)
+            left: 5px;
+            transform: rotate(-32deg)
         }
 
         .climber .arm.right {
-            right: -2px;
-            transform: rotate(42deg)
+            right: 5px;
+            transform: rotate(32deg)
         }
 
         .climber .leg {
             position: absolute;
-            top: 57px;
-            width: 10px;
-            height: 34px;
-            background: #263f69;
+            top: 56px;
+            width: 11px;
+            height: 32px;
+            background: #1e4d74;
             border: 3px solid var(--ink);
             border-radius: 7px
         }
 
         .climber .leg.left {
-            left: 23px;
+            left: 25px;
             transform: rotate(12deg)
         }
 
         .climber .leg.right {
-            right: 23px;
+            right: 25px;
             transform: rotate(-12deg)
-        }
-
-        .ladder {
-            position: absolute;
-            left: calc(50% - 48px);
-            top: 114px;
-            width: 96px;
-            height: 305px;
-            border-left: 8px solid #b77837;
-            border-right: 8px solid #b77837;
-            opacity: .6;
-            background: repeating-linear-gradient(to bottom, transparent 0 28px, #b77837 28px 35px)
         }
 
         .ground {
@@ -415,24 +478,34 @@
             left: 0;
             right: 0;
             height: 25%;
-            background: #86ba59;
-            border-top: 3px solid #568744
+            background: linear-gradient(180deg, #96d166 0%, #69b250 100%);
+            border-top: 3px solid #4d7d38
         }
 
         .level {
             position: absolute;
-            bottom: 21px;
-            left: 20px;
-            right: 20px;
+            bottom: 18px;
+            left: 18px;
+            right: 18px;
             display: flex;
             justify-content: space-between;
-            color: #356331;
-            font: 800 .68rem Arial, sans-serif
+            gap: 6px;
+            color: #32562f;
+            font: 800 .6rem Arial, sans-serif
+        }
+
+        .level span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 18px;
+            transition: transform .25s ease, color .25s ease, opacity .25s ease;
+            opacity: .9
         }
 
         .level span.active {
             color: var(--red);
-            transform: scale(1.18)
+            transform: scale(1.15)
         }
 
         .quiz-panel {
@@ -820,9 +893,7 @@
             <div class="form-grid"><label class="field">Nama lengkap<input id="playerName" autocomplete="name"
                         placeholder="Nama kamu"></label><label class="field">No. absen<input id="playerNumber"
                         type="number" min="1" placeholder="01"></label><label class="field">Kelas<input id="playerClass"
-                        placeholder="IX A"></label><button class="primary" id="startButton" type="button">Mulai panjat
-                    pinang</button></div>
-            <div class="rule"><b>Aturan main:</b> setiap jawaban benar bernilai 10 poin. Salah pertama mendapat 2/3
+                        placeholder="IX A"></label>                        <button class="primary" id="startButton" type="button">Mulai perjalanan</button></div>            <div class="rule"><b>Aturan main:</b> setiap jawaban benar bernilai 10 poin. Salah pertama mendapat 2/3
                 poin, salah kedua mendapat 1/3 poin, dan salah ketiga mendapat 0 poin lalu langsung lanjut. Skor akhir
                 dihitung dari poin yang diperoleh dibagi total poin maksimal, dikali 100. Skor di bawah 70 menjadi 70.
             </div>
@@ -830,17 +901,20 @@
         <section class="game hidden" id="gameArea">
             <aside class="panel climb-panel">
                 <div class="sky"></div>
-                <h3>Papan perbaikan</h3>
-                <p id="climbStatus">Bantu pemanjat naik satu tingkat.</p>
-                <div class="top-crown"></div><span class="prize">HADIAH</span>
-                <div class="ladder"></div>
-                <div class="pole"></div>
+                <h3>Jalan sehat RICCI</h3>
+                <p id="climbStatus">Mulai dari sekolah, tempuh rute menuju pintu tujuan.</p>
+                <div class="route-map">
+                    <div class="road"></div>
+                    <div class="path"></div>
+                    <div class="start"></div>
+                    <div class="goal"></div>
+                    <div class="finish"></div>
+                    <div class="school">Sekolah RICCI</div>
+                </div>
                 <div class="climber" id="climber"><i class="head"></i><i class="shirt"></i><i class="arm left"></i><i
                         class="arm right"></i><i class="leg left"></i><i class="leg right"></i></div>
                 <div class="ground"></div>
-                <div class="level" id="levels"><span
-                        class="active">Mulai</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>Puncak</span>
-                </div>
+                <div class="level" id="levels"></div>
             </aside>
             <section class="panel quiz-panel">
                 <div class="quiz-top">
@@ -908,7 +982,17 @@
             { q: 'Tabel yang berfungsi menunjukkan nilai true atau false dari suatu ekspresi logika untuk semua kombinasi disebut...', o: ['Tabel Perkalian', 'Tabel Kebenaran', 'Tabel Data', 'Tabel Pemrograman'], a: 1, e: 'Tabel kebenaran menunjukkan nilai true atau false dari suatu ekspresi logika untuk semua kombinasi nilai.', p: 10 },
             { q: 'Salah satu kegunaan dari ekspresi logika dalam pemrograman adalah untuk menentukan kondisi. Apa yang terjadi jika kondisi tersebut terpenuhi?', o: ['Program akan berhenti bekerja seketika.', 'Program akan menjalankan suatu blok kode tertentu.', 'Program akan menghapus data yang ada.', 'Program akan mengalami error.'], a: 1, e: 'Jika kondisi tertentu terpenuhi, program akan menjalankan suatu blok kode tertentu.', p: 10 },
             { q: 'Selain menentukan kondisi, ekspresi logika juga bisa digunakan untuk mencari data yang memenuhi kriteria tertentu. Hal ini disebut dengan...', o: ['Memfilter data', 'Menghapus data', 'Mengacak data', 'Menyimpan data'], a: 0, e: 'Ekspresi logika dapat digunakan untuk memfilter data yang memenuhi kriteria tertentu.', p: 10 },
-            { q: 'Pernyataan A bernilai "True", dan pernyataan B bernilai "False". Jika keduanya dihubungkan dengan ekspresi (A AND B), maka hasil akhirnya adalah...', o: ['True', 'False', 'Bisa True atau False', 'Tidak ada jawaban'], a: 1, e: 'Operator AND menuntut semua pernyataan bernilai true. Karena B bernilai false, hasil A AND B adalah false.', p: 10 }
+            { q: 'Pernyataan A bernilai "True", dan pernyataan B bernilai "False". Jika keduanya dihubungkan dengan ekspresi (A AND B), maka hasil akhirnya adalah...', o: ['True', 'False', 'Bisa True atau False', 'Tidak ada jawaban'], a: 1, e: 'Operator AND menuntut semua pernyataan bernilai true. Karena B bernilai false, hasil A AND B adalah false.', p: 10 },
+            { q: 'Dua ekspresi logika dihubungkan dengan OR. Jika A = False dan B = False, hasilnya adalah...', o: ['True', 'False', 'Tidak dapat ditentukan', 'Kosong'], a: 1, e: 'OR hanya bernilai true jika minimal salah satu nilai true. Karena keduanya false, hasilnya false.', p: 10 },
+            { q: 'Dalam logika, kombinasi nilai true dan false untuk semua kemungkinan disebut...', o: ['Aturan', 'Tabel kebenaran', 'String', 'Variabel'], a: 1, e: 'Tabel kebenaran membantu kita melihat hasil dari semua kombinasi nilai input.', p: 10 },
+            { q: 'Jika sebuah kondisi menggunakan ekspresi yang mengembalikan true, program biasanya akan...', o: ['Lanjut ke langkah berikutnya', 'Mengulang semua kode', 'Mencetak struk', 'Menghapus file'], a: 0, e: 'Kondisi yang benar biasanya akan menjalankan blok kode yang sesuai.', p: 10 },
+            { q: 'Operator NOT akan membuat nilai true menjadi...', o: ['True', 'False', 'Null', 'Sama'], a: 1, e: 'NOT membalikkan nilai dari true menjadi false.', p: 10 },
+            { q: 'Ekspresi logika sering dipakai dalam program untuk menentukan apakah data boleh...', o: ['Diunduh', 'Diterima atau ditolak', 'Dicetak dua kali', 'Dihapus otomatis'], a: 1, e: 'Salah satu fungsi utama ekspresi logika adalah memutuskan apakah data diterima atau ditolak.', p: 10 },
+            { q: 'Kemungkinan paling tepat jika A = True dan B = False untuk A OR B adalah...', o: ['True', 'False', 'Tidak ada', 'Nol'], a: 0, e: 'A OR B bernilai true jika salah satu operand true. Karena A true, hasilnya true.', p: 10 },
+            { q: 'Ekspresi logika AND sering dipakai untuk mengecek apakah...', o: ['Semua syarat terpenuhi', 'Hanya satu syarat terpenuhi', 'Tidak ada syarat', 'Semua data dihapus'], a: 0, e: 'AND meminta semua syarat terpenuhi agar hasilnya benar.', p: 10 },
+            { q: 'Jika pernyataan awalnya bernilai true, lalu diberi NOT, maka hasilnya adalah...', o: ['True', 'False', 'Salah semua', 'Kosong'], a: 1, e: 'NOT membalikkan nilai, sehingga true menjadi false.', p: 10 },
+            { q: 'Berikut ini yang bukan operator logika adalah...', o: ['AND', 'OR', 'NOT', 'PLUS'], a: 3, e: 'PLUS adalah operator aritmatika, bukan operator logika.', p: 10 },
+            { q: 'Pernyataan yang benar untuk ekspresi X = (A AND B) OR NOT A jika A = True dan B = False adalah...', o: ['True', 'False', 'Nol', 'Tak terdefinisi'], a: 1, e: 'Pada kasus ini A = True, B = False. A AND B = False, NOT A = False, jadi False OR False = False. Hasil akhirnya adalah false.', p: 10 }
         ];
         const storageKey = 'panjatPinangDigitalProgressOperatorLogika'; const POINTS_PER_QUESTION = 10;
         const state = { index: 0, score: 0, wrong: 0, questionStarted: 0, totalStarted: 0, answers: [], timerId: null, locked: false, phase: 'question', timerEnd: 0, completed: false, penaltyEnd: 0, player: { name: '', number: '', className: '' } };
@@ -917,8 +1001,24 @@
         function showPenalty() { if (!state.player.name || state.completed) return; state.penaltyEnd = Date.now() + 600000; state.phase = 'penalty'; saveProgress(); $('penaltyOverlay').classList.remove('hidden'); runPenaltyTimer() }
         function runPenaltyTimer() { clearInterval(state.timerId); const tick = () => { const remaining = Math.max(0, Math.ceil((state.penaltyEnd - Date.now()) / 1000)); $('penaltyTimer').textContent = formatTime(remaining); $('penaltyBar').style.width = `${remaining / 600 * 100}%`; if (remaining <= 0) { clearInterval(state.timerId); state.penaltyEnd = 0; state.phase = 'question'; saveProgress(); $('penaltyOverlay').classList.add('hidden'); renderQuestion() } }; tick(); state.timerId = setInterval(tick, 250) }
         function restorePenalty() { if (state.phase !== 'penalty' || !state.penaltyEnd) return false; if (state.penaltyEnd <= Date.now()) { state.penaltyEnd = 0; state.phase = 'question'; saveProgress(); return false } $('penaltyOverlay').classList.remove('hidden'); runPenaltyTimer(); return true }
-        function renderQuestion(resetStart = true) { const item = questions[state.index]; if (resetStart) state.questionStarted = Date.now(); document.querySelector('.quiz-panel').classList.remove('private'); $('questionTitle').textContent = `Pertanyaan ${state.index + 1}`; $('questionCount').textContent = `${state.index + 1} / ${questions.length}`; $('questionText').textContent = item.q; $('pointMeta').textContent = `Nilai soal: ${POINTS_PER_QUESTION} poin`; $('attemptMeta').textContent = `Kesalahan soal ini: ${state.answers[state.index]?.wrong || 0}`; $('choices').innerHTML = item.o.map((option, index) => `<button class="choice" data-answer="${index}" type="button"><span class="choice-key">${String.fromCharCode(65 + index)}</span><span>${option}</span></button>`).join(''); $('feedback').className = 'feedback'; $('feedback').textContent = 'Pilih satu jawaban yang paling tepat.'; $('explanation').classList.add('hidden'); $('timerBox').classList.remove('visible'); state.locked = false; updateClimber(); saveProgress() }
-        function updateClimber() { const percent = state.index / (questions.length - 1); $('climber').style.top = `${285 - percent * 205}px`;[...$('levels').children].forEach((level, index) => level.classList.toggle('active', index === Math.min(state.index, 9))); $('climbStatus').textContent = state.index === 9 ? 'Satu soal lagi menuju hadiah!' : `Tingkat ${state.index + 1} dari ${questions.length}`; $('progressBar').style.width = `${state.index / questions.length * 100}%`; $('score').textContent = formatScore(percentageScore(state.score)); }
+        function buildLevelMarkers() {
+            const levels = $('levels');
+            const labels = ['Mulai', ...Array.from({ length: questions.length }, (_, index) => index + 1), 'Finish'];
+            levels.innerHTML = labels.map((label, index) => `<span class="${index === 0 ? 'active' : ''}">${label}</span>`).join('');
+        }
+        function renderQuestion(resetStart = true) { const item = questions[state.index]; if (resetStart) state.questionStarted = Date.now(); document.querySelector('.quiz-panel').classList.remove('private'); buildLevelMarkers(); $('questionTitle').textContent = `Pertanyaan ${state.index + 1}`; $('questionCount').textContent = `${state.index + 1} / ${questions.length}`; $('questionText').textContent = item.q; $('pointMeta').textContent = `Nilai soal: ${POINTS_PER_QUESTION} poin`; $('attemptMeta').textContent = `Kesalahan soal ini: ${state.answers[state.index]?.wrong || 0}`; $('choices').innerHTML = item.o.map((option, index) => `<button class="choice" data-answer="${index}" type="button"><span class="choice-key">${String.fromCharCode(65 + index)}</span><span>${option}</span></button>`).join(''); $('feedback').className = 'feedback'; $('feedback').textContent = 'Pilih satu jawaban yang paling tepat.'; $('explanation').classList.add('hidden'); $('timerBox').classList.remove('visible'); state.locked = false; updateClimber(); saveProgress() }
+        function updateClimber() {
+            const markerCount = $('levels').children.length || 1;
+            const activeIndex = Math.min(state.index, Math.max(markerCount - 2, 0));
+            [...$('levels').children].forEach((level, index) => level.classList.toggle('active', index === activeIndex));
+            const percent = questions.length > 1 ? state.index / (questions.length - 1) : 0;
+            const startTop = 295;
+            const rise = 210;
+            $('climber').style.top = `${startTop - percent * rise}px`;
+            $('climbStatus').textContent = state.index >= questions.length - 1 ? 'Tahap akhir: satu langkah lagi menuju pintu tujuan!' : `Jarak tempuh: ${Math.min(state.index, questions.length - 1)} / ${questions.length}`;
+            $('progressBar').style.width = `${(state.index / questions.length) * 100}%`;
+            $('score').textContent = formatScore(percentageScore(state.score));
+        }
         function startTimer(seconds, label, done) { state.phase = label.includes('Tunggu') ? 'wrongWait' : 'correctWait'; state.timerEnd = Date.now() + seconds * 1000; saveProgress(); $('timerLabel').textContent = label; $('timerBox').classList.add('visible'); clearInterval(state.timerId); const tick = () => { const remaining = Math.max(0, Math.ceil((state.timerEnd - Date.now()) / 1000)); $('timer').textContent = formatTime(remaining); $('timerBar').style.width = `${remaining / seconds * 100}%`; if (remaining <= 0) { clearInterval(state.timerId); state.phase = 'question'; state.timerEnd = 0; saveProgress(); done() } }; tick(); state.timerId = setInterval(tick, 250) }
         function nextQuestion() { if (state.index === questions.length - 1) { finishGame(); return } state.index += 1; renderQuestion() }
         function answerQuestion(choice) { if (state.locked) return; const item = questions[state.index]; const record = state.answers[state.index] || { wrong: 0, elapsed: 0, points: 0 }; const elapsed = (Date.now() - state.questionStarted) / 1000; if (choice !== item.a) { state.locked = true; record.wrong += 1; record.elapsed += elapsed; state.wrong += 1; state.answers[state.index] = record; updateClimber(); $('feedback').className = 'feedback error';[...document.querySelectorAll('.choice')].forEach(button => button.disabled = true); const wrongButton = document.querySelector(`[data-answer="${choice}"]`); if (wrongButton) wrongButton.classList.add('wrong'); $('attemptMeta').textContent = `Kesalahan soal ini: ${record.wrong}`; if (record.wrong >= 3) { record.points = 0; saveProgress(); $('feedback').innerHTML = '<strong>Kesalahan ketiga.</strong>Tidak ada poin untuk soal ini. Lanjut ke soal berikutnya.'; setTimeout(nextQuestion, 1200); return } record.elapsed += 10; saveProgress(); $('feedback').innerHTML = '<strong>Belum tepat.</strong>Jawabanmu salah. Soal ini akan terbuka lagi setelah 10 detik.'; startTimer(10, 'Tunggu sebelum mencoba lagi', () => renderQuestion()); return } state.locked = true; record.elapsed += elapsed + 10; record.points = POINTS_PER_QUESTION * (record.wrong === 0 ? 1 : record.wrong === 1 ? 2 / 3 : 1 / 3); state.score += record.points; state.answers[state.index] = record; updateClimber(); $('feedback').className = 'feedback success'; $('feedback').innerHTML = '<strong>Benar!</strong>Pemanjat naik satu tingkat. Simak pembahasannya, lalu lanjut otomatis.';[...document.querySelectorAll('.choice')].forEach(button => { button.disabled = true; if (Number(button.dataset.answer) === item.a) button.classList.add('correct') }); $('explanation').textContent = `Pembahasan: ${item.e}`; $('explanation').classList.remove('hidden'); startTimer(10, 'Lanjut ke pertanyaan berikutnya', nextQuestion) }
