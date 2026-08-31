@@ -447,7 +447,21 @@ function startSection(i) {
 }
 
 function animateCards(){const area=$('questionCards').getBoundingClientRect();const points=[[0,0],[Math.max(0,area.width-170),0],[0,Math.max(0,area.height-125)],[Math.max(0,area.width-170),Math.max(0,area.height-125)]];document.querySelectorAll('.question-card').forEach(card=>{const rect=card.getBoundingClientRect();const startX=rect.left-area.left;const startY=rect.top-area.top;const targets=shuffle(points.slice());[[1,'x1','y1'],[2,'x2','y2'],[3,'x3','y3']].forEach(([point,x,y])=>{card.style.setProperty(`--${x}`,`${Math.round(targets[point][0]-startX)}px`);card.style.setProperty(`--${y}`,`${Math.round(targets[point][1]-startY)}px`)});card.classList.remove('card-moving');void card.offsetWidth;card.classList.add('card-moving');setTimeout(()=>card.classList.remove('card-moving'),5000)})}
-function buildLevelMarkers() { const labels = ['Mulai']; for (let i = 1; i <= SECTION_SIZE; i++)labels.push(String(i)); labels.push('Finish'); const box = $('levels'); box.style.cssText = 'display:flex;flex-wrap:wrap;gap:5px;'; box.innerHTML = labels.map(l => `<span>${l}</span>`).join(''); }
+function buildLevelMarkers() {
+    if (state.currentSection === -1) return;
+    const sec = getSectionDetails(state.currentSection);
+    const labels = ['Mulai']; 
+    
+    // Looping angka 1 sampai 50 (atau 30)
+    for (let i = 1; i <= sec.count; i++) {
+        labels.push(String(i));
+    }
+    
+    const box = $('levels'); 
+    // Menggunakan flex-wrap agar 50 angka bisa muat dengan rapi di bagian bawah
+    box.style.cssText = 'display:flex; flex-wrap:wrap; justify-content:center; gap:6px; font-size:0.65rem;';
+    box.innerHTML = labels.map(l => `<span>${l}</span>`).join(''); 
+}
 
 // Fungsi pembantu untuk perhitungan posisi dinamis dan aman
 function getClimbBounds() {
@@ -464,27 +478,35 @@ function getCompletedCountForSection(){
 }
 
 function updateClimber(){
-    const completed = Math.min(Math.max(0,getCompletedCountForSection()),SECTION_SIZE);
+    const sec = getSectionDetails(state.currentSection);
+    const completed = Math.min(Math.max(0,getCompletedCountForSection()), sec.count);
     
-    // Perhitungan Start Y dan End Y yang tepat dan responsif
     const { startY, endY } = getClimbBounds();
-    const stepGap = (startY - endY) / Math.max(SECTION_SIZE, 1);
+    const stepGap = (startY - endY) / Math.max(sec.count, 1);
     const currentTop = startY - (completed * stepGap);
     
     $('climber').style.top=`${currentTop}px`;
-    const activeStep=completed===0?0:(completed>=SECTION_SIZE?$('levels').children.length-1:completed);
-    [...$('levels').children].forEach((level,index)=>level.classList.toggle('active',index===activeStep));
+
+    // FITUR HIGHLIGHT ANGKA DI BAWAH (Menandai Posisi Saat Ini)
+    const levelSpans = [...$('levels').children];
+    levelSpans.forEach((level, index) => {
+        // Index 0 adalah 'Mulai', index 1 adalah soal 1, dst.
+        level.classList.toggle('active', index === completed);
+        
+        // Opsional: Mewarnai hijau untuk soal yang sudah dilewati
+        if(index > 0 && index < completed) {
+            level.style.color = '#13795b'; // Hijau tua
+        } else if (index > completed) {
+            level.style.color = '#356331'; // Warna default
+        }
+    });
     
-    $('climbStatus').textContent=completed===0?'Mulai perjalanan menuju soal pertama.':completed===SECTION_SIZE?'Semua soal di bagian ini selesai!':`Tangga ${completed} dari ${SECTION_SIZE} sudah dilewati.`;
-    $('progressBar').style.width=`${((state.currentSection * SECTION_SIZE + completed)/questions.length)*100}%`;
+    $('climbStatus').textContent=completed===0?'Mulai perjalanan menuju puncak.':completed===sec.count?'Semua soal di bagian ini selesai!':`Kamu telah menyelesaikan ${completed} dari ${sec.count} soal.`;
+    $('progressBar').style.width=`${((sec.start + completed)/80)*100}%`;
     
-    let sectionPoints = 0;
-    for(let j = state.currentSection * SECTION_SIZE; j < state.currentSection * SECTION_SIZE + SECTION_SIZE; j++) {
-        sectionPoints += state.answers[j]?.points || 0;
-    }
-    state.score = sectionPoints;
-    $('score').textContent=formatScore(getScaledScore(state.score, completed === SECTION_SIZE));
-    $('questionCount').textContent=`${completed} / ${SECTION_SIZE} selesai`;
+    const scores = calculateScores();
+    $('score').textContent = scores.finalSkor.toFixed(1).replace(/\.0$/, '');
+    $('questionCount').textContent=`${completed} / ${sec.count} selesai`;
     updateSessionTime()
 }
 

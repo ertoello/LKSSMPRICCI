@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panjat Pinang Digital | Keamanan Digital Kelas 9</title>
+<style>
+:root{--ink:#173238;--muted:#607579;--paper:#fffdf5;--cream:#f5eedf;--green:#13795b;--green-dark:#07513e;--red:#d95f4f;--yellow:#f5c84b;--blue:#3289a8;--line:#d9d1c2;--shadow:0 14px 30px rgba(30,52,46,.14)}
+*{box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{width:0;height:0;background:transparent}body{margin:0;color:var(--ink);font-family:'Segoe Print','Comic Sans MS','Trebuchet MS',sans-serif;background:var(--cream);background-image:radial-gradient(#d5cab6 1px,transparent 1px);background-size:19px 19px}button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.shell{width:min(1180px,100%);margin:auto;padding:24px 20px 50px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:13px}.brand-mark{display:grid;place-items:center;width:52px;height:52px;color:#fff;background:var(--red);border:3px solid var(--ink);border-radius:50% 50% 45% 10%;box-shadow:4px 4px 0 var(--ink);font:900 23px Arial,sans-serif}.brand h1{margin:0;font-size:clamp(1.45rem,3vw,2rem)}.brand p{margin:3px 0 0;color:var(--muted);font:700 .74rem Arial,sans-serif}.scorebox{min-width:130px;padding:9px 14px;text-align:center;background:var(--paper);border:2px solid var(--ink);border-radius:8px;box-shadow:3px 3px 0 var(--ink)}.scorebox span{display:block;color:var(--muted);font:700 .67rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em}.scorebox strong{font:900 1.7rem Arial,sans-serif}
+.hero{position:relative;overflow:hidden;padding:30px clamp(22px,5vw,58px);background:linear-gradient(125deg,#fff5bf,#d9efdf 58%,#d9edf2);border:2px solid var(--ink);border-radius:13px;box-shadow:var(--shadow)}.hero:after{content:'✦';position:absolute;right:9%;top:14px;color:#fff;opacity:.85;font-size:5rem;transform:rotate(20deg)}.eyebrow{margin:0 0 8px;color:var(--green);font:800 .7rem Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase}.hero h2{max-width:690px;margin:0 0 11px;font-size:clamp(1.65rem,3.5vw,2.8rem);line-height:1}.hero h2 span{color:var(--red)}.hero p{max-width:700px;margin:0;color:var(--muted);font:1rem/1.55 Arial,sans-serif}.progress{height:12px;margin-top:20px;overflow:hidden;background:#ded9ca;border-radius:10px}.progress div{width:0;height:100%;background:var(--green);transition:width .4s ease}
+.panel{padding:23px;background:var(--paper);border:2px solid var(--ink);border-radius:10px;box-shadow:var(--shadow)}.registration{margin-top:20px}.registration h3,.result h3{margin:0 0 6px;font-size:1.35rem}.lead{margin:0 0 18px;color:var(--muted);font: .9rem/1.5 Arial,sans-serif}.form-grid{display:grid;grid-template-columns:1.5fr .8fr .7fr auto;gap:10px;align-items:end}.field{display:block;color:var(--muted);font:800 .7rem Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase}.field input{width:100%;margin-top:6px;padding:11px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:5px}.primary{width:100%;padding:12px 14px;color:#fff;background:var(--green);border:2px solid var(--ink);border-radius:5px;box-shadow:3px 3px 0 var(--ink);font:800 .8rem Arial,sans-serif; text-align: center;}.primary:hover{background:var(--green-dark)}.primary:disabled{opacity:.45;cursor:not-allowed}.rule{margin-top:16px;padding:12px;color:#705a27;background:#fff4c7;border-left:4px solid var(--yellow);font: .8rem/1.5 Arial,sans-serif}
+.sections-grid { display: grid; gap: 15px; margin-top: 20px; }
+.section-card { padding: 20px; background: #fff; border: 2px solid var(--ink); border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 3px 3px 0 var(--ink); transition: transform 0.1s; }
+.section-card:hover { transform: translateY(-3px); }
+.section-card.locked { background: #f4f4f4; border-color: #aaa; box-shadow: 3px 3px 0 #aaa; }
+.section-card.locked:hover { transform: translateY(0); cursor: not-allowed; }
+.section-status { font-size: 0.85rem; font-weight: bold; padding: 6px 12px; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+.status-locked { background: #e0e0e0; color: #777; }
+.status-unlocked { background: var(--green); color: #fff; }
+.status-completed { background: var(--yellow); color: var(--ink); }
+.game{display:grid;grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr);gap:20px;margin-top:20px}.climb-panel{position:relative;min-height:535px;overflow:hidden;background:linear-gradient(#d9edf1,#eaf4d9 74%,#a8d26c 75%)}.climb-panel h3{position:relative;z-index:2;margin:0 0 5px}.climb-panel p{position:relative;z-index:2;margin:0;color:var(--muted);font: .78rem Arial,sans-serif}.sky{position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.55),transparent 45%);pointer-events:none}.pole{position:absolute;left:50%;top:78px;width:29px;height:355px;transform:translateX(-50%);background:linear-gradient(90deg,#8a4b26,#c97738 45%,#7d421f);border:3px solid #583018;border-radius:14px;box-shadow:5px 0 0 rgba(70,45,25,.2)}.top-crown{position:absolute;left:50%;top:40px;z-index:2;width:165px;height:75px;transform:translateX(-50%);background:#dfbd3f;clip-path:polygon(50% 0,61% 25%,82% 13%,78% 41%,100% 50%,77% 61%,82% 88%,60% 76%,50% 100%,39% 76%,18% 88%,23% 61%,0 50%,22% 41%,18% 13%,39% 25%);filter:drop-shadow(3px 4px 0 #7c5c27)}.prize{position:absolute;top:62px;left:50%;z-index:3;transform:translateX(-50%);color:#fff;font:900 .7rem Arial,sans-serif;letter-spacing:.08em}.climber{position:absolute;left:50%;top:345px;z-index:4;width:76px;height:91px;transform:translateX(-50%);transition:top .7s cubic-bezier(.2,.8,.3,1)}.climber .head{position:absolute;left:25px;top:0;width:28px;height:28px;background:#9b5a37;border:3px solid var(--ink);border-radius:50%}.climber .shirt{position:absolute;left:18px;top:26px;width:42px;height:35px;background:var(--blue);border:3px solid var(--ink);border-radius:13px 13px 5px 5px}.climber .arm{position:absolute;top:28px;width:29px;height:9px;background:#9b5a37;border:3px solid var(--ink);border-radius:8px}.climber .arm.left{left:-2px;transform:rotate(-42deg)}.climber .arm.right{right:-2px;transform:rotate(42deg)}.climber .leg{position:absolute;top:57px;width:10px;height:34px;background:#263f69;border:3px solid var(--ink);border-radius:7px}.climber .leg.left{left:23px;transform:rotate(12deg)}.climber .leg.right{right:23px;transform:rotate(-12deg)}.ladder{position:absolute;left:calc(50% - 48px);top:114px;width:96px;height:305px;border-left:8px solid #b77837;border-right:8px solid #b77837;opacity:.6;background:repeating-linear-gradient(to bottom,transparent 0 28px,#b77837 28px 35px)}.ground{position:absolute;bottom:0;left:0;right:0;height:25%;background:#86ba59;border-top:3px solid #568744}.level{position:absolute;bottom:5px;left:5px;right:5px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;color:#356331;font:800 .68rem Arial,sans-serif;z-index:5}.level span{background:rgba(255,255,255,0.6);padding:2px 5px;border-radius:4px;transition:all 0.2s}.level span.active{color:var(--red);background:#fff;transform:scale(1.2);box-shadow:0 2px 4px rgba(0,0,0,0.2)}
+.quiz-panel{min-height:535px}.quiz-top{display:flex;justify-content:space-between;align-items:start;gap:10px}.quiz-top h3{margin:0;font-size:1.45rem}.question-count{color:var(--muted);font:800 .7rem Arial,sans-serif}.question{margin:22px 0 17px;font-size:clamp(1.15rem,2.5vw,1.55rem);line-height:1.32}.choices{display:grid;gap:10px}.choice{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:center;padding:12px;text-align:left;color:var(--ink);background:#fcf8ef;border:2px solid var(--line);border-radius:7px;transition:transform .15s,border-color .15s,background .15s}.choice:hover{transform:translateX(3px);border-color:var(--green)}.choice-key{display:grid;place-items:center;width:27px;height:27px;color:#fff;background:var(--green);border-radius:50%;font:900 .78rem Arial,sans-serif}.choice:disabled{cursor:default;opacity:.7}.explanation{margin-top:15px;padding:13px;background:#eef6f0;border:1px solid #b9d7c1;border-radius:6px;color:#385c4a;font:.83rem/1.5 Arial,sans-serif}.quiz-panel.private .question,.quiz-panel.private .choices,.quiz-panel.private .explanation{visibility:hidden}
+.result{margin-top:20px;background:linear-gradient(135deg,#144653,#13795b 60%,#d95f4f);color:#fff}.result h2{margin:0 0 5px;font-size:clamp(1.9rem,4vw,3rem)}.result .eyebrow{color:var(--yellow)}.result-sub{margin:0;color:#e5f4eb;font: .86rem/1.5 Arial,sans-serif}.result-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0}.result-meta div{padding:12px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);border-radius:5px;font: .75rem Arial,sans-serif}.result-meta b{display:block;margin-top:5px;color:#fff;font-size:1.12rem}.result-table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.95);color:var(--ink);font: .76rem Arial,sans-serif}.result-table th,.result-table td{padding:10px 8px;border-bottom:1px solid #d9e0d9;text-align:left}.result-table th{color:var(--green-dark);background:#e5f2e7}.restart{margin-top:17px;padding:11px 14px;color:var(--ink);background:var(--yellow);border:2px solid var(--ink);border-radius:5px;font:900 .78rem Arial,sans-serif}
+.penalty-overlay{position:fixed;inset:0;z-index:20000;display:grid;place-items:center;padding:20px;background:rgba(17,39,42,.94);color:#fff;text-align:center}.penalty-box{width:min(100%,720px);padding:38px 30px;border:2px solid var(--yellow);border-radius:12px;box-shadow:0 0 0 8px rgba(245,200,75,.08),var(--shadow)}.penalty-box h2{margin:0 0 10px;color:var(--yellow);font-size:clamp(1.8rem,5vw,3rem)}.penalty-box p{margin:8px 0;color:#e1eeea;font:1rem/1.55 'Trebuchet MS','Segoe UI',sans-serif}.penalty-hint{margin-top: 15px; padding:11px;background:rgba(255,255,255,.1);border-radius:5px;font-weight:800!important}
+@keyframes pop{from{transform:scale(.96);opacity:.2}to{transform:scale(1);opacity:1}}body,body *{font-family:'Segoe Print','Comic Sans MS','Trebuchet MS',sans-serif!important}@media(max-width:760px){.topbar{align-items:flex-start;flex-direction:column}.scorebox{width:100%}.form-grid,.game{grid-template-columns:1fr}.form-grid .primary{margin-top:2px}.climb-panel{min-height:430px}.pole{height:260px}.ladder{height:208px}.climber{top:250px}.result-meta{grid-template-columns:1fr 1fr}.result-table{display:block;overflow-x:auto;white-space:nowrap}}
+.result-table th,.result-table td{padding:15px 14px;vertical-align:top;line-height:1.5}.result-table th:nth-child(1){min-width:70px}.result-table th:nth-child(2){min-width:300px}.result-table th:nth-child(3){min-width:220px}.result-table th:nth-child(4){min-width:90px}.result-table th:nth-child(5){min-width:120px}
+.session-time{min-width:130px;padding:9px 14px;text-align:center;background:var(--paper);border:2px solid var(--ink);border-radius:8px;box-shadow:3px 3px 0 var(--ink)}.session-time span{display:block;color:var(--muted);font:700 .67rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em}.session-time strong{display:block;margin-top:3px;color:var(--green-dark);font:900 1.35rem Arial,sans-serif}
+.question-cards{display:grid;grid-auto-flow:column;grid-template-rows:repeat(4,minmax(105px,1fr));grid-auto-columns:minmax(145px,1fr);gap:14px;margin-top:20px;overflow:auto;padding:6px}.question-card{min-height:105px;padding:16px;text-align:left;color:#fff;border:3px solid var(--ink);border-radius:13px;box-shadow:4px 4px 0 var(--ink);transition:filter .2s;position:relative;z-index:1}.question-card:hover{filter:saturate(1.15)}.question-card:focus-visible{outline:4px solid var(--yellow);outline-offset:3px}.question-card.done{outline:4px solid #fff;outline-offset:-8px}.question-card-status{display:block;margin-top:14px;font:800 .78rem/1.35 Arial,sans-serif;opacity:.9}.card-instruction{margin:8px 0 0;color:var(--muted);font:.82rem/1.45 Arial,sans-serif}.card-moving{z-index:3;animation:cardDrift 5s ease-in-out both}@keyframes cardDrift{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(var(--x1),var(--y1)) rotate(-3deg)}50%{transform:translate(var(--x2),var(--y2)) rotate(3deg)}75%{transform:translate(var(--x3),var(--y3)) rotate(-2deg)}100%{transform:translate(0,0) rotate(0)}}.journey-overlay{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(9,28,31,.72);opacity:0;pointer-events:none;transition:opacity .25s ease}.journey-overlay.active{opacity:1;pointer-events:auto}.journey-overlay .climb-panel{min-height:78vh;max-height:78vh;overflow:auto;box-shadow:0 0 0 10px rgba(255,255,255,.08),var(--shadow);transform:scale(.98);transition:transform .5s ease}.journey-overlay.active .climb-panel{transform:scale(1)}.journey-overlay .climber{transition:top 5s cubic-bezier(.2,.8,.3,1),transform .35s ease}.journey-overlay .question-count{display:none}.quiz-panel{min-height:535px}.quiz-panel .quiz-top{align-items:center}.quiz-panel .explanation,.quiz-panel .question-meta{display:none}body.playing .session-time,body.playing .scorebox{display:none}
+.question-modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:22px;background:rgba(9,28,31,.94);perspective:1200px}.question-modal.hidden{display:none}.question-modal-box{width:min(1100px,100%);max-height:calc(100vh - 44px);overflow:auto;padding:28px;background:var(--paper);border:3px solid var(--ink);border-radius:16px;box-shadow:0 0 0 8px rgba(245,200,75,.12),var(--shadow);animation:modalFlip .45s ease both}.question-modal-box h2{margin:0 0 18px;font-size:clamp(1.35rem,3vw,2rem);line-height:1.25}.matching-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.8fr);gap:20px;align-items:start}.matching-question{padding:18px;background:#fff4c7;border:2px solid var(--yellow);border-radius:8px;font:1.05rem/1.5 Arial,sans-serif}.modal-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;max-height:52vh;overflow:auto}.modal-feedback{min-height:48px;margin-top:16px;padding:12px;border-left:4px solid var(--yellow);background:#fff8dc;font:.84rem/1.45 Arial,sans-serif}@keyframes modalFlip{from{opacity:0;transform:rotateX(-65deg) scale(.75)}to{opacity:1;transform:rotateX(0) scale(1)}}.explanation-modal{position:fixed;inset:0;z-index:1100;display:grid;place-items:center;padding:22px;background:rgba(9,28,31,.82)}.explanation-modal.hidden{display:none}.explanation-box{width:min(1100px,100%);min-height:60vh;max-height:calc(100vh - 44px);overflow:auto;padding:clamp(30px,6vw,70px);background:var(--paper);border:4px solid var(--green);border-radius:18px;box-shadow:0 0 0 10px rgba(245,200,75,.15),var(--shadow);text-align:center;animation:modalFlip .45s ease both}.explanation-box h2{margin:0 0 20px;color:var(--green-dark);font-size:clamp(2rem,5vw,3.8rem)}.explanation-box p{font:clamp(1.2rem,2.5vw,2rem)/1.6 Arial,sans-serif}.explanation-box .modal-explanation{margin:25px auto;max-width:900px;text-align:left;font-size:clamp(1.1rem,2vw,1.5rem)}.continue-button{margin-top:15px;padding:12px 22px;color:#fff;background:var(--green);border:2px solid var(--ink);border-radius:5px;box-shadow:3px 3px 0 var(--ink);font:900 1rem Arial,sans-serif; cursor:pointer;}.continue-button:hover{background:var(--green-dark);}.reset-all{display:block;margin:22px auto 0;padding:12px 20px;color:var(--ink);background:var(--yellow);border:2px solid var(--ink);border-radius:5px;box-shadow:3px 3px 0 var(--ink);font:900 .82rem Arial,sans-serif}@media(max-width:760px){.matching-layout{grid-template-columns:1fr}.modal-choices{max-height:none}#gameArea.journey-transition .climb-panel{inset:12px;min-height:calc(100vh - 24px)}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">PP</div>
+        <div><h1>Panjat Pinang Digital</h1><p>Keamanan Digital Kelas 9</p></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center">
+        <div class="session-time"><span>Waktu sesi</span><strong id="sessionTime">00:00</strong></div>
+        <div class="scorebox"><span>Skor Sementara</span><strong id="score">0</strong></div>
+    </div>
+</header>
+
+<section class="hero" id="heroArea">
+    <p class="eyebrow">Misi Keamanan Digital Kelas 9</p>
+    <h2>Naik sampai <span>puncak!</span></h2>
+    <p>Selesaikan Bagian Wajib dan Bagian Bonus. Kumpulkan nilai semaksimal mungkin dengan ketelitian penuh.</p>
+    <div class="progress"><div id="progressBar"></div></div>
+</section>
+
+<!-- PANEL REGISTRASI -->
+<section class="panel registration" id="registration">
+    <h3>Kenalan dulu dengan pemain</h3>
+    <p class="lead">Isi identitasmu sebelum permainan dimulai. Data ini akan dicantumkan pada laporan hasil akhir.</p>
+    <div class="form-grid">
+        <label class="field">Nama lengkap<input id="playerName" autocomplete="name" placeholder="Nama kamu"></label>
+        <label class="field">No. absen<input id="playerNumber" type="number" min="1" placeholder="01"></label>
+        <label class="field">Kelas<input id="playerClass" placeholder="IX A"></label>
+        <button class="primary" id="startButton" type="button">Masuk ke Permainan</button>
+    </div>
+    <div class="rule"><b>Instruksi pengerjaan:</b> <br>Ada total 80 pertanyaan yang dibagi menjadi: <b>50 Soal Wajib</b> dan <b>30 Soal Bonus</b>. <br>Waktu pengerjaan tidak dibatasi, namun <b>kamu hanya dapat memilih jawaban 1 kali tanpa ada kesempatan mengulang</b>. Setiap kali menjawab, sistem akan meminta konfirmasi keyakinanmu. <br>Setiap 3 jawaban benar pada soal bonus akan menggantikan 1 jawaban salah pada soal wajib! Laporan akhir akan muncul setelah bagian diselesaikan.<br><br><i>Gunakan <b>Ctrl + F</b> jika ingin berhenti secara paksa. Gunakan <b>Ctrl + ` (Kutip Miring)</b> untuk reset data pemain.</i></div>
+</section>
+
+<!-- PANEL MENU BAGIAN -->
+<section class="panel hidden" id="sectionMenu">
+    <h3>Pilih Komponen Tantangan</h3>
+    <p class="lead">Kerjakan soal Wajib dan kumpulkan poin di soal Bonus. Masukkan password dari guru untuk membuka bagian yang terkunci.</p>
+    <div class="sections-grid" id="sectionsGrid"></div>
+</section>
+
+<!-- PANEL GAME (PANJAT PINANG & KARTU SOAL) -->
+<section class="game hidden" id="gameArea">
+    <aside class="panel climb-panel">
+        <div class="sky"></div>
+        <h3 id="panelBagianTitle">Papan panjat pinang</h3>
+        <p id="climbStatus">Bantu pemanjat naik satu tingkat.</p>
+        <div class="top-crown"></div>
+        <span class="prize">HADIAH</span>
+        <div class="ladder"></div>
+        <div class="pole"></div>
+        <div class="climber" id="climber">
+            <i class="head"></i><i class="shirt"></i><i class="arm left"></i><i class="arm right"></i><i class="leg left"></i><i class="leg right"></i>
+        </div>
+        <div class="ground"></div>
+        <div class="level" id="levels"></div>
+    </aside>
+    <section class="panel quiz-panel">
+        <div class="quiz-top">
+            <div>
+                <h3 id="questionTitle">Pilih kartu pertanyaan</h3>
+                <p class="card-instruction">Buka kartu mana saja untuk menjawab soal di bagian ini.</p>
+            </div>
+            <span class="question-count" id="questionCount">0 selesai</span>
+        </div>
+        <div class="question-cards" id="questionCards"></div>
+    </section>
+</section>
+
+<!-- PANEL HASIL PER BAGIAN -->
+<section class="result hidden" id="resultArea">
+    <p class="eyebrow" id="resultEyebrow">Bagian Selesai</p>
+    <h2 id="resultTitle">Selamat, kamu sampai puncak!</h2>
+    <p class="result-sub">Berikut catatan perjalanan Keamanan Digital kamu pada bagian ini.</p>
+    <div class="result-meta">
+        <div>Nama<b id="resultName">-</b></div>
+        <div>Kelas / Absen<b id="resultIdentity">-</b></div>
+        <div>Total Benar (Bagian Ini)<b id="resultScoreWajib">0</b></div>
+        <div>Perkiraan Skor Akhir<b id="resultScore">0 / 100</b></div>
+    </div>
+    <p id="bonusStats" style="background:rgba(255,255,255,0.2); padding:10px; border-radius:5px; margin-bottom:15px; font-size: 0.9rem;"></p>
+    <h3>Rincian perjalanan</h3>
+    <table class="result-table">
+        <thead><tr><th>Soal</th><th>Pertanyaan</th><th>Jawaban Kamu</th><th>Status</th><th>Durasi</th></tr></thead>
+        <tbody id="resultRows"></tbody>
+    </table>
+    
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;">
+        <button class="primary" id="btnBackToMenu" type="button" style="width: auto;">Kembali ke Daftar Bagian</button>
+        <button class="reset-all" id="resetAllButton" type="button" style="margin-top:0;">Reset Seluruh Progres Pemain</button>
+    </div>
+</section>
+</main>
+
+<!-- MODAL PASSWORD -->
+<div id="passwordModal" class="question-modal hidden" aria-modal="true" role="dialog" style="z-index: 10000;">
+    <div class="question-modal-box" style="max-width: 450px; text-align: center; padding: 30px;">
+        <h3 style="margin: 0 0 10px; font-size: 1.5rem; color: var(--green-dark);">Bagian Terkunci</h3>
+        <p style="margin-bottom: 20px; color: var(--muted);">Masukkan password yang diberikan oleh guru untuk membuka bagian ini.</p>
+        <input type="text" id="sectionPasswordInput" placeholder="Ketik password di sini..." style="width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 5px; border: 2px solid var(--line); font-size: 1.1rem; text-align: center; text-transform: uppercase;">
+        <p id="passwordError" style="color: var(--red); display: none; font-size: 0.9rem; font-weight: bold; margin-bottom: 15px;">Password salah! Coba lagi.</p>
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <button class="primary" id="btnSubmitPassword" style="width: 100px;">Buka</button>
+            <button class="primary" id="btnCancelPassword" style="background:var(--muted); width: 100px;">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL TAB TERKUNCI KARENA KELUAR HALAMAN -->
+<section class="penalty-overlay hidden" id="penaltyOverlay" aria-modal="true" role="dialog">
+    <div class="penalty-box">
+        <p class="eyebrow" style="color:#f5c84b">Peringatan Anti-Curang</p>
+        <h2>Layar Terkunci!</h2>
+        <p>Sistem mendeteksi kamu membuka tab atau jendela lain. Permainan dijeda otomatis untuk mencegah kecurangan.</p>
+        <p class="penalty-hint">Tekan <b>Ctrl + C</b> lalu tekan <b>B</b> pada keyboard untuk membuka kunci layar.</p>
+    </div>
+</section>
+
+<!-- MODAL PERTANYAAN -->
+<section class="question-modal hidden" id="questionModal" aria-modal="true" role="dialog">
+    <div class="question-modal-box">
+        <p class="eyebrow">Kartu pertanyaan</p>
+        <div class="matching-layout">
+            <div class="matching-question">
+                <h2 id="modalQuestion"></h2>
+                <p>Pilih jawaban yang paling sesuai di samping. Kamu hanya bisa memilih 1 kali.</p>
+            </div>
+            <div class="modal-choices" id="modalChoices"></div>
+        </div>
+        <div class="modal-feedback" id="modalFeedback">Baca dengan cermat, lalu klik jawaban yang menurutmu benar.</div>
+    </div>
+</section>
+
+<!-- MODAL PENJELASAN SETELAH MENJAWAB -->
+<section class="explanation-modal hidden" id="explanationModal" aria-modal="true" role="dialog">
+    <div class="explanation-box">
+        <p class="eyebrow">Tahap Pembahasan</p>
+        <p id="explanationAnswer" style="margin-bottom: 10px; font-weight: bold; color:var(--ink)"></p>
+        <div class="modal-explanation" id="explanationText"></div>
+        <button class="continue-button" id="explanationContinue" type="button">Ke Soal Selanjutnya</button>
+    </div>
+</section>
+
+<script>
+// --- KONFIGURASI PASSWORD: [WAJIB, BONUS] ---
+const SECTION_PASSWORDS = ['WAJIB', 'BONUS'];
+
+// 80 SOAL: Indeks 0-49 (Wajib), Indeks 50-79 (Bonus)
+    const questions = [
+        // ==========================================
+        // 80 SOAL - FUNGSI (INPUT, PROSES, OUTPUT)
+        // Kehidupan Sehari-hari
+        // ==========================================
+
+        { q: 'Rina membuat es teh dengan menyiapkan teh, gula, air panas, dan es batu. Setelah semua bahan diolah, ia mendapatkan segelas es teh. Dalam kegiatan tersebut, es teh yang sudah jadi merupakan...', o: ['Input', 'Proses', 'Output', 'Instruksi'], a: 2, e: 'Es teh yang sudah jadi merupakan hasil akhir dari kegiatan pembuatan es teh sehingga termasuk output.' },
+
+        { q: 'Budi ingin membuat jus mangga. Ia menyiapkan mangga, air, gula, dan es batu sebelum mulai membuat jus. Bahan-bahan tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 0, e: 'Bahan yang disiapkan sebelum proses pembuatan jus merupakan input atau masukan.' },
+
+        { q: 'Ibu membuat jus dengan cara mengupas mangga, memotongnya, memasukkan bahan ke blender, lalu menghaluskannya. Kegiatan tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 1, e: 'Mengupas, memotong, memasukkan, dan menghaluskan merupakan kegiatan mengolah bahan sehingga termasuk proses.' },
+
+        { q: 'Andi mencuci sepatu yang kotor menggunakan air dan sabun. Setelah digosok dan dibilas, sepatu menjadi bersih. Dalam kegiatan tersebut, sepatu bersih merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Sepatu bersih merupakan hasil akhir setelah sepatu kotor melalui proses pencucian sehingga termasuk output.' },
+
+        { q: 'Siti ingin mencuci pakaian. Ia menyiapkan pakaian kotor, air, dan deterjen. Jika dilihat berdasarkan konsep Input-Proses-Output, pakaian kotor dan deterjen merupakan...', o: ['Output', 'Input', 'Proses', 'Kondisi'], a: 1, e: 'Pakaian kotor dan deterjen merupakan bahan yang digunakan dalam proses mencuci sehingga termasuk input.' },
+
+        { q: 'Ayah memasak nasi menggunakan beras dan air. Setelah dimasak hingga matang, beras berubah menjadi nasi. Kegiatan memasak beras hingga menjadi nasi merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil'], a: 1, e: 'Memasak merupakan kegiatan yang mengolah beras dan air hingga menghasilkan nasi sehingga termasuk proses.' },
+
+        { q: 'Dalam kegiatan membuat nasi, manakah yang merupakan input?', o: ['Nasi matang', 'Beras dan air', 'Memasak nasi', 'Nasi siap dimakan'], a: 1, e: 'Beras dan air merupakan bahan awal yang digunakan untuk membuat nasi sehingga termasuk input.' },
+
+        { q: 'Dalam kegiatan membuat nasi, manakah yang merupakan output?', o: ['Beras', 'Air', 'Proses memasak', 'Nasi matang'], a: 3, e: 'Nasi matang merupakan hasil akhir dari proses memasak beras dan air sehingga menjadi output.' },
+
+        { q: 'Dina membuat telur goreng. Ia menggunakan telur, minyak, dan garam. Ia kemudian memasak telur di atas wajan hingga matang. Yang termasuk proses adalah...', o: ['Telur dan minyak', 'Garam', 'Memasak telur hingga matang', 'Telur goreng'], a: 2, e: 'Memasak telur hingga matang merupakan kegiatan pengolahan sehingga termasuk proses.' },
+
+        { q: 'Setelah telur dimasak hingga matang, telur tersebut siap dimakan. Telur yang siap dimakan merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Telur yang sudah matang dan siap dimakan merupakan hasil akhir dari proses memasak.' },
+
+        { q: 'Lani membuat sandwich dengan roti, selada, telur, dan keju. Ia menyusun semua bahan menjadi satu. Roti, selada, telur, dan keju merupakan...', o: ['Output', 'Input', 'Proses', 'Kesimpulan'], a: 1, e: 'Bahan-bahan yang digunakan untuk membuat sandwich merupakan input.' },
+
+        { q: 'Dalam kegiatan membuat sandwich, menyusun roti, selada, telur, dan keju merupakan...', o: ['Input', 'Output', 'Proses', 'Bahan'], a: 2, e: 'Menyusun bahan merupakan kegiatan yang dilakukan untuk mengolah input menjadi hasil sehingga termasuk proses.' },
+
+        { q: 'Sandwich yang sudah selesai dibuat dan siap dimakan merupakan...', o: ['Input', 'Proses', 'Output', 'Instruksi'], a: 2, e: 'Sandwich yang sudah selesai merupakan hasil akhir dari proses pembuatan sehingga termasuk output.' },
+
+        { q: 'Riko membuat kopi dengan memasukkan bubuk kopi dan gula ke dalam gelas, kemudian menuangkan air panas dan mengaduknya. Bubuk kopi dan gula merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 0, e: 'Bubuk kopi dan gula merupakan bahan yang digunakan sebagai masukan dalam pembuatan kopi.' },
+
+        { q: 'Dalam kegiatan membuat kopi, menuangkan air panas dan mengaduk kopi merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 1, e: 'Menuangkan air panas dan mengaduk merupakan kegiatan pengolahan bahan sehingga termasuk proses.' },
+
+        { q: 'Kopi yang sudah tercampur dan siap diminum merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Kopi siap diminum merupakan hasil akhir dari proses pembuatan kopi sehingga termasuk output.' },
+
+        { q: 'Tono membersihkan kamarnya. Ia mengumpulkan pakaian, merapikan buku, menyapu lantai, dan membuang sampah. Kegiatan-kegiatan tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 1, e: 'Mengumpulkan, merapikan, menyapu, dan membuang sampah merupakan langkah-langkah dalam proses membersihkan kamar.' },
+
+        { q: 'Setelah selesai dibersihkan, kamar Tono menjadi rapi dan bersih. Kondisi kamar tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Instruksi'], a: 2, e: 'Kamar yang sudah rapi dan bersih merupakan hasil akhir dari kegiatan membersihkan kamar sehingga termasuk output.' },
+
+        { q: 'Dalam kegiatan membersihkan kamar, pakaian dan buku yang akan dirapikan dapat dianggap sebagai...', o: ['Output', 'Input', 'Proses', 'Hasil'], a: 1, e: 'Pakaian dan buku merupakan benda yang akan diproses atau ditata sehingga dapat dianggap sebagai input.' },
+
+        { q: 'Maya ingin membuat salad buah. Ia menyiapkan apel, melon, semangka, saus, dan keju. Bahan-bahan tersebut merupakan...', o: ['Proses', 'Output', 'Input', 'Kesimpulan'], a: 2, e: 'Semua bahan yang disiapkan sebelum pembuatan salad merupakan input.' },
+
+        { q: 'Dalam membuat salad buah, kegiatan memotong buah dan mencampurkannya dengan saus merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 1, e: 'Memotong dan mencampurkan bahan merupakan proses pengolahan.' },
+
+        { q: 'Salad buah yang sudah selesai dibuat merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Salad buah yang sudah jadi merupakan hasil akhir sehingga termasuk output.' },
+
+        { q: 'Kakak membuat popcorn dari biji jagung. Ia memasukkan biji jagung ke dalam panci lalu memanaskannya hingga menjadi popcorn. Biji jagung merupakan...', o: ['Output', 'Proses', 'Input', 'Hasil'], a: 2, e: 'Biji jagung merupakan bahan awal yang dimasukkan sebelum proses pemanasan sehingga termasuk input.' },
+
+        { q: 'Dalam membuat popcorn, kegiatan memanaskan biji jagung hingga berubah menjadi popcorn merupakan...', o: ['Input', 'Output', 'Proses', 'Bahan'], a: 2, e: 'Pemanasan merupakan proses yang mengubah biji jagung menjadi popcorn.' },
+
+        { q: 'Popcorn yang sudah mengembang dan siap dimakan merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Popcorn siap dimakan merupakan hasil akhir dari proses pemanasan biji jagung.' },
+
+        { q: 'Doni ingin membuat roti bakar. Ia menyiapkan roti, margarin, dan selai. Semua bahan tersebut merupakan...', o: ['Input', 'Output', 'Proses', 'Hasil'], a: 0, e: 'Roti, margarin, dan selai merupakan bahan yang digunakan sebagai input.' },
+
+        { q: 'Doni mengoleskan margarin dan selai pada roti kemudian memanggangnya. Kegiatan tersebut termasuk...', o: ['Input', 'Output', 'Proses', 'Bahan'], a: 2, e: 'Mengoleskan dan memanggang merupakan kegiatan yang mengolah bahan sehingga termasuk proses.' },
+
+        { q: 'Roti bakar yang sudah matang merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Roti bakar matang merupakan hasil akhir dari proses pembuatan sehingga termasuk output.' },
+
+        { q: 'Ibu membuat jus jeruk. Ia menggunakan beberapa buah jeruk, air, dan gula. Jika menggunakan konsep IPO, buah jeruk, air, dan gula merupakan...', o: ['Output', 'Input', 'Proses', 'Hasil'], a: 1, e: 'Buah jeruk, air, dan gula merupakan bahan awal yang digunakan dalam proses pembuatan jus.' },
+
+        { q: 'Saat membuat jus jeruk, ibu memeras jeruk dan mencampurkannya dengan air serta gula. Kegiatan tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 1, e: 'Memeras dan mencampurkan bahan merupakan proses pengolahan.' },
+
+        { q: 'Segelas jus jeruk yang sudah selesai dibuat merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Jus jeruk merupakan hasil akhir dari proses pembuatan sehingga termasuk output.' },
+
+        { q: 'Rani ingin menanam bunga. Ia menyiapkan benih, tanah, dan air. Dalam kegiatan tersebut, benih, tanah, dan air merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil'], a: 0, e: 'Benih, tanah, dan air merupakan bahan awal yang diperlukan untuk proses menanam bunga.' },
+
+        { q: 'Rani menanam benih, menyiramnya, dan merawatnya setiap hari. Kegiatan tersebut merupakan...', o: ['Input', 'Output', 'Proses', 'Hasil akhir'], a: 2, e: 'Menanam, menyiram, dan merawat merupakan proses yang dilakukan terhadap input.' },
+
+        { q: 'Setelah dirawat dengan baik, tanaman Rani tumbuh. Tanaman yang tumbuh merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Tanaman yang tumbuh merupakan hasil dari rangkaian kegiatan menanam dan merawat sehingga termasuk output.' },
+
+        { q: 'Budi ingin mencuci tangannya. Ia menggunakan air dan sabun, kemudian menggosok tangannya dan membilasnya. Air dan sabun merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil'], a: 0, e: 'Air dan sabun merupakan bahan yang digunakan dalam kegiatan mencuci tangan sehingga termasuk input.' },
+
+        { q: 'Dalam kegiatan mencuci tangan, menggosok dan membilas tangan merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 1, e: 'Menggosok dan membilas merupakan kegiatan pengolahan atau proses.' },
+
+        { q: 'Setelah mencuci tangan, tangan Budi menjadi bersih. Tangan yang bersih merupakan...', o: ['Input', 'Proses', 'Output', 'Instruksi'], a: 2, e: 'Tangan yang bersih merupakan hasil akhir dari kegiatan mencuci tangan.' },
+
+        { q: 'Salsa membuat telur rebus. Ia menyiapkan telur dan air lalu merebus telur sampai matang. Jika telur matang adalah output, maka telur dan air merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 0, e: 'Telur dan air merupakan bahan awal yang digunakan sebelum proses perebusan.' },
+
+        { q: 'Dalam kegiatan membuat telur rebus, merebus telur sampai matang merupakan...', o: ['Input', 'Output', 'Proses', 'Bahan'], a: 2, e: 'Merebus telur merupakan kegiatan yang mengolah input menjadi output.' },
+
+        { q: 'Dalam kegiatan membuat telur rebus, telur yang sudah matang merupakan...', o: ['Input', 'Proses', 'Output', 'Instruksi'], a: 2, e: 'Telur matang merupakan hasil akhir dari proses perebusan sehingga termasuk output.' },
+
+        { q: 'Ayah membuat jus alpukat dengan alpukat, susu, gula, dan es. Semua bahan tersebut dimasukkan ke blender dan dihaluskan. Jika dilihat dari konsep IPO, kegiatan menggunakan blender merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil'], a: 1, e: 'Blender digunakan untuk mengolah bahan-bahan sehingga kegiatan tersebut merupakan bagian dari proses.' },
+
+        { q: 'Seorang anak membuat kue dengan tepung, telur, gula, dan susu. Setelah bahan dicampurkan dan dipanggang, hasilnya adalah kue. Tepung, telur, gula, dan susu merupakan...', o: ['Output', 'Input', 'Proses', 'Kesimpulan'], a: 1, e: 'Bahan-bahan tersebut merupakan input yang digunakan dalam proses pembuatan kue.' },
+
+        { q: 'Dalam pembuatan kue, mencampurkan bahan dan memanggang adonan merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil'], a: 1, e: 'Mencampurkan dan memanggang adalah kegiatan pengolahan sehingga termasuk proses.' },
+
+        { q: 'Kue yang sudah matang dan siap disajikan merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Kue matang merupakan hasil akhir dari proses pembuatan kue sehingga termasuk output.' },
+
+        { q: 'Sebelum pergi sekolah, Andi menyiapkan seragam, buku, sepatu, dan tas. Barang-barang tersebut dapat dianggap sebagai...', o: ['Input', 'Output', 'Proses', 'Hasil akhir'], a: 0, e: 'Barang-barang yang disiapkan sebelum kegiatan berangkat sekolah dapat dianggap sebagai input atau masukan.' },
+
+        { q: 'Andi memakai seragam, memasukkan buku ke tas, dan memakai sepatu sebelum berangkat sekolah. Kegiatan tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 1, e: 'Memakai seragam, menyiapkan tas, dan memakai sepatu merupakan rangkaian proses persiapan.' },
+
+        { q: 'Setelah semua persiapan selesai, Andi siap berangkat ke sekolah. Kondisi siap berangkat tersebut dapat dianggap sebagai...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Siap berangkat merupakan hasil akhir dari rangkaian kegiatan persiapan.' },
+
+        { q: 'Ibu ingin membuat pakaian menjadi lebih rapi. Ia menyiapkan pakaian yang kusut dan setrika, lalu menyetrikanya. Pakaian kusut merupakan...', o: ['Output', 'Input', 'Proses', 'Hasil akhir'], a: 1, e: 'Pakaian kusut merupakan kondisi awal yang akan diproses sehingga termasuk input.' },
+
+        { q: 'Dalam kegiatan menyetrika pakaian, menggerakkan setrika di atas pakaian merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 1, e: 'Menggerakkan setrika merupakan kegiatan pengolahan yang mengubah kondisi pakaian.' },
+
+        { q: 'Pakaian yang sudah lebih rapi setelah disetrika merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi awal'], a: 2, e: 'Pakaian yang sudah rapi merupakan hasil dari proses menyetrika sehingga termasuk output.' },
+
+        { q: 'Dika membuat jus dengan buah yang masih utuh. Ia mencuci buah, memotongnya, lalu menghaluskannya. Jika buah merupakan input, kegiatan mencuci dan memotong merupakan...', o: ['Input', 'Output', 'Proses', 'Hasil'], a: 2, e: 'Mencuci dan memotong merupakan kegiatan pengolahan terhadap bahan awal.' },
+
+        { q: 'Seorang anak memasukkan beras dan air ke dalam panci. Setelah dimasak, hasilnya adalah nasi. Manakah urutan IPO yang tepat?', o: ['Nasi → beras → memasak', 'Beras dan air → memasak → nasi', 'Memasak → nasi → beras', 'Air → nasi → beras'], a: 1, e: 'Beras dan air menjadi input, memasak merupakan proses, dan nasi merupakan output.' },
+
+        { q: 'Perhatikan kegiatan berikut: pakaian kotor → dicuci dengan air dan deterjen → pakaian bersih. Bagian yang merupakan proses adalah...', o: ['Pakaian kotor', 'Air dan deterjen', 'Mencuci pakaian', 'Pakaian bersih'], a: 2, e: 'Mencuci pakaian merupakan kegiatan pengolahan dari pakaian kotor menjadi pakaian bersih.' },
+
+        { q: 'Perhatikan kegiatan berikut: buah → dipotong dan dicampur → salad buah. Bagian "buah" merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil'], a: 0, e: 'Buah merupakan bahan awal yang digunakan dalam pembuatan salad sehingga termasuk input.' },
+
+        { q: 'Perhatikan kegiatan berikut: buah → dipotong dan dicampur → salad buah. Bagian "dipotong dan dicampur" merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 1, e: 'Memotong dan mencampurkan buah merupakan proses pengolahan.' },
+
+        { q: 'Perhatikan kegiatan berikut: buah → dipotong dan dicampur → salad buah. Bagian "salad buah" merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Salad buah merupakan hasil akhir dari proses pengolahan buah sehingga termasuk output.' },
+
+        { q: 'Ibu membuat sambal dengan cabai, bawang, garam, dan tomat. Semua bahan kemudian diulek hingga halus. Yang menjadi input adalah...', o: ['Sambal', 'Mengulek bahan', 'Cabai, bawang, garam, dan tomat', 'Sambal siap makan'], a: 2, e: 'Cabai, bawang, garam, dan tomat merupakan bahan awal sehingga termasuk input.' },
+
+        { q: 'Dalam membuat sambal, kegiatan mengulek cabai, bawang, garam, dan tomat merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 1, e: 'Mengulek merupakan kegiatan mengolah bahan menjadi sambal sehingga termasuk proses.' },
+
+        { q: 'Sambal yang sudah halus dan siap dimakan merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Sambal siap dimakan merupakan hasil akhir dari proses pembuatan sambal.' },
+
+        { q: 'Rudi membuat es buah. Ia memasukkan potongan buah, sirup, dan es batu ke dalam mangkuk. Apa yang termasuk input?', o: ['Es buah siap dimakan', 'Mencampurkan bahan', 'Potongan buah, sirup, dan es batu', 'Mangkuk kosong'], a: 2, e: 'Potongan buah, sirup, dan es batu merupakan bahan awal sehingga termasuk input.' },
+
+        { q: 'Setelah semua bahan es buah dimasukkan ke mangkuk, Rudi mencampurkannya hingga rata. Kegiatan tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil'], a: 1, e: 'Mencampurkan bahan merupakan proses pengolahan.' },
+
+        { q: 'Es buah yang sudah selesai dibuat dan siap dinikmati merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Es buah siap dinikmati merupakan hasil akhir dari proses pembuatan.' },
+
+        { q: 'Mira membuat layang-layang menggunakan kertas, bambu, benang, dan lem. Bahan-bahan tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil'], a: 0, e: 'Kertas, bambu, benang, dan lem merupakan bahan awal dalam pembuatan layang-layang sehingga termasuk input.' },
+
+        { q: 'Dalam membuat layang-layang, memotong kertas, menyusun bambu, dan memasang benang merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 1, e: 'Memotong, menyusun, dan memasang merupakan kegiatan yang mengolah bahan sehingga termasuk proses.' },
+
+        { q: 'Layang-layang yang sudah selesai dibuat merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Layang-layang yang selesai dibuat merupakan hasil akhir dari proses pembuatan.' },
+
+        { q: 'Seorang siswa ingin membuat prakarya dari kertas. Kertas, gunting, dan lem sudah disiapkan. Dalam konsep IPO, benda-benda tersebut dapat dianggap sebagai...', o: ['Output', 'Proses', 'Input', 'Kesimpulan'], a: 2, e: 'Kertas, gunting, dan lem merupakan sesuatu yang disiapkan sebelum proses pembuatan dimulai sehingga dapat dianggap sebagai input.' },
+
+        { q: 'Ketika membuat prakarya, kegiatan memotong, melipat, dan menempel merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil'], a: 1, e: 'Memotong, melipat, dan menempel merupakan rangkaian kegiatan pengolahan sehingga termasuk proses.' },
+
+        { q: 'Prakarya yang sudah selesai dibuat merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Prakarya yang selesai merupakan hasil akhir dari kegiatan pembuatan sehingga termasuk output.' },
+
+        { q: 'Konsep Input-Proses-Output dapat ditemukan dalam kegiatan sehari-hari karena banyak kegiatan memiliki...', o: ['Bahan, kegiatan pengolahan, dan hasil', 'Hanya hasil tanpa proses', 'Hanya input tanpa hasil', 'Kegiatan yang selalu menggunakan komputer'], a: 0, e: 'Banyak kegiatan sehari-hari memiliki sesuatu yang digunakan sebagai input, proses pengolahan, dan hasil akhir.' },
+
+        { q: 'Mengapa bahan makanan dapat dianggap sebagai input dalam kegiatan memasak?', o: ['Karena bahan tersebut menjadi hasil akhir', 'Karena bahan tersebut digunakan sebelum dan selama proses memasak', 'Karena bahan tersebut merupakan proses', 'Karena bahan tersebut tidak mengalami perubahan'], a: 1, e: 'Bahan makanan menjadi masukan yang kemudian diolah melalui proses memasak.' },
+
+        { q: 'Mengapa makanan yang sudah matang dapat dianggap sebagai output?', o: ['Karena merupakan bahan awal', 'Karena merupakan kegiatan pengolahan', 'Karena merupakan hasil setelah melalui proses', 'Karena belum mengalami proses'], a: 2, e: 'Makanan matang merupakan hasil yang diperoleh setelah bahan mengalami proses pengolahan.' },
+
+        { q: 'Perhatikan contoh berikut: "Beras + air → dimasak → nasi." Jika beras dan air diganti dengan tepung dan telur, bagian yang tetap menunjukkan konsep IPO adalah...', o: ['Bahan → proses → hasil', 'Hasil → bahan → proses', 'Proses → hasil → bahan', 'Hasil saja'], a: 0, e: 'Konsep IPO tetap memiliki masukan atau bahan, proses pengolahan, dan hasil akhir.' },
+
+        { q: 'Rina membuat teh manis. Ia lupa memasukkan gula sebelum teh diminum. Apa yang menunjukkan bahwa urutan kegiatan tersebut kurang tepat?', o: ['Gula dimasukkan setelah teh diminum', 'Teh menggunakan air', 'Teh disajikan dalam gelas', 'Rina menggunakan gula'], a: 0, e: 'Gula seharusnya ditambahkan sebelum teh diminum. Menambahkannya setelah diminum menunjukkan urutan proses yang tidak tepat.' },
+
+        { q: 'Dalam kegiatan membuat jus, jika buah sudah disiapkan tetapi belum diolah, kegiatan berikutnya yang paling tepat adalah...', o: ['Meminum jus', 'Mengolah buah', 'Menyajikan jus yang belum dibuat', 'Membuang buah'], a: 1, e: 'Setelah bahan disiapkan, langkah berikutnya adalah melakukan proses pengolahan untuk menghasilkan jus.' },
+
+        { q: 'Dalam konsep Input-Proses-Output, jika tidak ada input yang diberikan, maka...', o: ['Selalu ada output', 'Proses tidak memiliki masukan yang akan diolah', 'Output langsung menjadi input', 'Proses pasti selesai'], a: 1, e: 'Input merupakan masukan yang akan diolah. Tanpa input, proses tidak memiliki data atau bahan yang akan diproses.' },
+
+        { q: 'Seorang anak memberikan tepung, telur, dan gula kepada ibunya. Ibu kemudian mengolahnya menjadi kue. Dalam contoh tersebut, kegiatan ibu mengolah bahan merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 1, e: 'Mengolah bahan menjadi kue merupakan proses.' },
+
+        { q: 'Dalam contoh membuat kue, jika "kue matang" merupakan output, maka "tepung, telur, dan gula" merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 0, e: 'Tepung, telur, dan gula merupakan bahan awal yang menjadi input dalam proses pembuatan kue.' },
+
+        { q: 'Perhatikan kegiatan berikut: "Pakaian kotor → dicuci → pakaian bersih." Jika pakaian bersih adalah output, maka "dicuci" merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 1, e: 'Dicuci merupakan kegiatan pengolahan yang mengubah pakaian kotor menjadi pakaian bersih.' },
+
+        { q: 'Perhatikan kegiatan berikut: "Benih + tanah + air → ditanam dan dirawat → tanaman tumbuh." Dalam kegiatan tersebut, tanaman tumbuh merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Tanaman yang tumbuh merupakan hasil dari proses menanam dan merawat sehingga termasuk output.' },
+
+        { q: 'Jika seseorang membuat teh, lalu teh tersebut disajikan kepada orang lain untuk diminum, maka teh yang sudah jadi merupakan...', o: ['Input', 'Proses', 'Output', 'Instruksi'], a: 2, e: 'Teh yang sudah selesai dibuat merupakan hasil akhir dari proses pembuatan teh sehingga termasuk output.' },
+
+        { q: 'Dalam kegiatan membuat makanan, manakah yang paling tepat menggambarkan konsep Input-Proses-Output?', o: ['Bahan makanan → dimasak → makanan siap dimakan', 'Makanan → bahan → dimasak', 'Memasak → bahan → makanan', 'Makanan → makanan → bahan'], a: 0, e: 'Bahan makanan menjadi input, memasak menjadi proses, dan makanan siap dimakan menjadi output.' },
+
+        { q: 'Seorang anak ingin membuat sesuatu dari bahan yang tersedia. Ia terlebih dahulu menentukan bahan yang diperlukan, kemudian mengolahnya, dan akhirnya mendapatkan hasil. Pola kegiatan tersebut sesuai dengan konsep...', o: ['Input-Proses-Output', 'Output-Input-Proses', 'Proses-Output-Input', 'Input-Output-Input'], a: 0, e: 'Kegiatan tersebut mengikuti pola Input sebagai masukan, Proses sebagai pengolahan, dan Output sebagai hasil.' },
+
+        { q: 'Mengapa konsep Input-Proses-Output penting dipahami sebelum mempelajari fungsi dalam komputer?', o: ['Karena fungsi juga bekerja dengan menerima masukan, melakukan pengolahan, dan menghasilkan keluaran', 'Karena komputer hanya digunakan untuk memasak', 'Karena semua fungsi tidak membutuhkan input', 'Karena output selalu berupa makanan'], a: 0, e: 'Fungsi dalam komputer memiliki pola yang sama, yaitu menerima input, memprosesnya berdasarkan aturan tertentu, dan menghasilkan output.' },
+
+        { q: 'Jika kita memberikan angka 5 dan 3 kepada sebuah fungsi penjumlahan, angka 5 dan 3 berperan sebagai...', o: ['Proses', 'Output', 'Input', 'Kesimpulan'], a: 2, e: 'Angka 5 dan 3 merupakan data yang diberikan kepada fungsi untuk diolah sehingga menjadi input.' },
+
+        { q: 'Jika fungsi penjumlahan menerima angka 5 dan 3 kemudian melakukan operasi 5 + 3, operasi tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 1, e: 'Operasi penjumlahan merupakan proses yang dilakukan terhadap input.' },
+
+        { q: 'Jika fungsi penjumlahan menerima angka 5 dan 3 lalu menghasilkan angka 8, angka 8 merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 2, e: 'Angka 8 merupakan hasil dari proses penjumlahan sehingga menjadi output.' },
+
+        { q: 'Manakah contoh yang paling tepat untuk menggambarkan fungsi sebagai "mesin" dalam kehidupan sehari-hari?', o: ['Bahan dimasukkan, diolah, lalu menghasilkan sesuatu', 'Sesuatu digunakan tanpa proses', 'Hasil muncul tanpa masukan', 'Semua kegiatan dilakukan secara acak'], a: 0, e: 'Fungsi dapat dibayangkan seperti mesin yang menerima input, mengolahnya melalui proses tertentu, lalu menghasilkan output.' }
+    ];
+
+// Konfigurasi 2 Bagian
+function getSectionDetails(i) {
+    if (i === 0) return { start: 0, count: 50, title: 'Wajib' };
+    else return { start: 50, count: 30, title: 'Bonus' };
+}
+
+const storageKey='panjatPinangDigital80SoalProgress';
+const colors=['#e05a47','#3289a8','#7b61a8','#e49b36','#3b9b72','#d14d86','#6b7fce','#bc6b3e','#3d9695','#a45a9a'];
+
+const state={
+    currentSection: -1, unlocked: [false, false], 
+    index:0, questionStarted:0, totalStarted:0, answers:[], 
+    timerId:null, locked:false, phase:'menu', completed:false, tabLocked:false, 
+    questionPausedElapsedMs:0, player:{name:'',number:'',className:''}, 
+    cardOrder:[], cardColors:[]
+};
+
+const $=id=>document.getElementById(id);
+const formatTime=seconds=>{const safe=Math.max(0,Math.floor(seconds||0));return `${Math.floor(safe/60).toString().padStart(2,'0')}:${(safe%60).toString().padStart(2,'0')}`};
+
+function saveProgress(){const saved={...state,timerId:null};localStorage.setItem(storageKey,JSON.stringify(saved))}
+function sessionSeconds(){const answeredElapsed=state.answers.reduce((sum,item)=>sum+(item?.elapsed||0),0);const currentQuestionElapsed=state.questionStarted&&!state.completed?(Date.now()-state.questionStarted)/1000:0;return answeredElapsed+currentQuestionElapsed}
+function updateSessionTime(){ $('sessionTime').textContent=formatTime(sessionSeconds()); }
+function startSessionClock(){clearInterval(state.timerId);updateSessionTime();state.timerId=setInterval(updateSessionTime,1000)}
+
+function showTabLock(){
+    if(!state.player.name||state.completed)return;
+    if(state.phase==='menu'||state.phase==='finished')return; 
+    if(state.tabLocked)return;
+    state.tabLocked=true;$('penaltyOverlay').classList.remove('hidden');clearInterval(state.timerId);
+    if(state.phase==='modal'&&state.questionStarted){state.questionPausedElapsedMs=Date.now()-state.questionStarted;state.questionStarted=0;}
+    saveProgress()
+}
+function hideTabLock(){
+    if(!state.player.name||state.completed)return;
+    state.tabLocked=false;$('penaltyOverlay').classList.add('hidden');
+    if(state.phase==='modal'&&!state.answers[state.index]?.answered){
+        if(state.questionPausedElapsedMs>0){state.questionStarted=Date.now()-state.questionPausedElapsedMs;state.questionPausedElapsedMs=0;}
+    }
+    startSessionClock();if(state.player.name)saveProgress()
+}
+function shuffle(values){for(let i=values.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[values[i],values[j]]=[values[j],values[i]]}return values}
+function resetState(){
+    clearInterval(state.timerId);
+    localStorage.removeItem(storageKey);
+    Object.assign(state,{
+        currentSection:-1, unlocked:[false,false],
+        index:0, questionStarted:0, totalStarted:0, answers:[], 
+        timerId:null, locked:false, phase:'menu', completed:false, tabLocked:false, 
+        questionPausedElapsedMs:0, player:{name:'',number:'',className:''}, 
+        cardOrder:[], cardColors:[]
+    });
+    document.body.classList.remove('playing');
+    $('registration').classList.remove('hidden');
+    $('sectionMenu').classList.add('hidden');
+    $('gameArea').classList.add('hidden');
+    $('resultArea').classList.add('hidden');
+    $('questionModal').classList.add('hidden');
+    $('explanationModal').classList.add('hidden');
+    hideTabLock();
+    $('playerName').value='';$('playerNumber').value='';$('playerClass').value='';
+    $('score').textContent='0';$('sessionTime').textContent='00:00';$('progressBar').style.width='0%' 
+}
+
+function renderSectionMenu() {
+    const grid = $('sectionsGrid');
+    grid.innerHTML = '';
+    for(let i=0; i<2; i++) {
+        const isUnlocked = state.unlocked[i];
+        const sec = getSectionDetails(i);
+        let completedCount = 0;
+        
+        for(let j=sec.start; j < sec.start + sec.count; j++) {
+            if(state.answers[j]?.answered) completedCount++;
+        }
+        const isCompleted = completedCount === sec.count;
+
+        let statusHtml = '';
+        let cardClass = 'section-card';
+        if (isCompleted) {
+            statusHtml = `<span class="section-status status-completed">Selesai (${completedCount}/${sec.count})</span>`;
+        } else if (isUnlocked) {
+            statusHtml = `<span class="section-status status-unlocked">Terbuka (${completedCount}/${sec.count})</span>`;
+        } else {
+            statusHtml = `<span class="section-status status-locked">Terkunci (Butuh Password)</span>`;
+            cardClass += ' locked';
+        }
+
+        grid.innerHTML += `
+            <div class="${cardClass}" onclick="handleSectionClick(${i})">
+                <div>
+                    <h4 style="margin:0 0 5px; font-size: 1.15rem;">Bagian ${i+1}: Soal ${sec.title}</h4>
+                    <div style="font-size:0.85rem; color:var(--muted)">Jumlah: ${sec.count} Soal</div>
+                </div>
+                ${statusHtml}
+            </div>
+        `;
+    }
+}
+
+let pendingSection = -1;
+function handleSectionClick(i) {
+    if (state.unlocked[i]) {
+        startSection(i);
+    } else {
+        pendingSection = i;
+        $('sectionPasswordInput').value = '';
+        $('passwordError').style.display = 'none';
+        $('passwordModal').classList.remove('hidden');
+        setTimeout(() => $('sectionPasswordInput').focus(), 100);
+    }
+}
+
+$('btnSubmitPassword').addEventListener('click', () => {
+    const val = $('sectionPasswordInput').value.trim().toUpperCase();
+    if (val === SECTION_PASSWORDS[pendingSection]) {
+        state.unlocked[pendingSection] = true;
+        saveProgress();
+        $('passwordModal').classList.add('hidden');
+        startSection(pendingSection);
+    } else {
+        $('passwordError').style.display = 'block';
+    }
+});
+$('btnCancelPassword').addEventListener('click', () => {
+    $('passwordModal').classList.add('hidden');
+});
+
+function startSection(i) {
+    state.currentSection = i;
+    state.phase = 'cards';
+    const sec = getSectionDetails(i);
+    
+    let currentOrder = [];
+    for(let j = sec.start; j < sec.start + sec.count; j++) {
+        currentOrder.push(j);
+    }
+    state.cardOrder = shuffle(currentOrder);
+    state.cardColors = shuffle(currentOrder.map((_, idx) => colors[idx % colors.length]));
+    
+    document.body.classList.add('playing');
+    $('sectionMenu').classList.add('hidden');
+    $('gameArea').classList.remove('hidden');
+    $('panelBagianTitle').textContent = `Panjat Pinang - Bagian ${sec.title}`;
+    renderCards();
+}
+
+function animateCards(){const area=$('questionCards').getBoundingClientRect();const points=[[0,0],[Math.max(0,area.width-170),0],[0,Math.max(0,area.height-125)],[Math.max(0,area.width-170),Math.max(0,area.height-125)]];document.querySelectorAll('.question-card').forEach(card=>{const rect=card.getBoundingClientRect();const startX=rect.left-area.left;const startY=rect.top-area.top;const targets=shuffle(points.slice());[[1,'x1','y1'],[2,'x2','y2'],[3,'x3','y3']].forEach(([point,x,y])=>{card.style.setProperty(`--${x}`,`${Math.round(targets[point][0]-startX)}px`);card.style.setProperty(`--${y}`,`${Math.round(targets[point][1]-startY)}px`)});card.classList.remove('card-moving');void card.offsetWidth;card.classList.add('card-moving');setTimeout(()=>card.classList.remove('card-moving'),5000)})}
+
+// MUNCULKAN ANGKA 1, 2, 3 ... 50 ATAU 30 DI BAWAH ANIMASI
+function buildLevelMarkers() {
+    if (state.currentSection === -1) return;
+    const sec = getSectionDetails(state.currentSection);
+    
+    const labels = ['Mulai'];
+    for (let i = 1; i <= sec.count; i++) labels.push(String(i));
+    labels.push('Selesai');
+    
+    const box = $('levels');
+    box.innerHTML = labels.map(l => `<span>${l}</span>`).join(''); 
+}
+
+function getClimbBounds() {
+    return window.innerWidth <= 760 ? { startY: 250, endY: 65 } : { startY: 345, endY: 65 };
+}
+
+function getCompletedCountForSection(){
+    let count = 0;
+    const sec = getSectionDetails(state.currentSection);
+    for(let i=sec.start; i < sec.start + sec.count; i++) {
+        if (state.answers[i] && state.answers[i].answered) count++;
+    }
+    return count;
+}
+
+function calculateScores() {
+    let wajibBenar = 0;
+    for(let i=0; i<50; i++) { if(state.answers[i]?.correct) wajibBenar++; }
+    let wajibSalah = 50 - wajibBenar;
+
+    let bonusBenar = 0;
+    for(let i=50; i<80; i++) { if(state.answers[i]?.correct) bonusBenar++; }
+
+    let penggantiSalah = Math.floor(bonusBenar / 3);
+    let penggantiDipakai = Math.min(penggantiSalah, wajibSalah);
+
+    let finalSkor = ((wajibBenar + penggantiDipakai) / 50) * 100;
+    return { wajibBenar, wajibSalah, bonusBenar, penggantiDipakai, finalSkor };
+}
+
+function updateClimber(){
+    const sec = getSectionDetails(state.currentSection);
+    const completed = Math.min(Math.max(0,getCompletedCountForSection()), sec.count);
+    
+    const { startY, endY } = getClimbBounds();
+    const stepGap = (startY - endY) / Math.max(sec.count, 1);
+    const currentTop = startY - (completed * stepGap);
+    
+    $('climber').style.top=`${currentTop}px`;
+    
+    // Warnai kotak angka yang sudah dilewati (Active)
+    const activeStep = completed === 0 ? 0 : (completed >= sec.count ? $('levels').children.length - 1 : completed);
+    const levelSpans = $('levels').children;
+    if(levelSpans.length > 0) {
+        [...levelSpans].forEach((level, index) => {
+            level.classList.toggle('active', index === activeStep);
+        });
+    }
+
+    $('climbStatus').textContent=completed===0?'Mulai perjalanan menuju puncak.':completed===sec.count?'Semua soal di bagian ini selesai!':`Kamu telah melewati ${completed} dari ${sec.count} anak tangga.`;
+    $('progressBar').style.width=`${((sec.start + completed)/80)*100}%`;
+    
+    const scores = calculateScores();
+    $('score').textContent = scores.finalSkor.toFixed(1).replace(/\.0$/, '');
+    $('questionCount').textContent=`${completed} / ${sec.count} selesai`;
+    updateSessionTime()
+}
+
+window.addEventListener('resize', () => { if(state.phase === 'cards') updateClimber(); });
+
+function renderCards(){
+    $('questionCards').innerHTML=state.cardOrder.map((questionIndex,cardIndex)=>{
+        const record=state.answers[questionIndex];
+        const status=record?.answered?'Terkunci':'Buka Soal';
+        return `<button class="question-card ${record?.answered?'done':''}" style="background:${state.cardColors[cardIndex]}" data-card="${questionIndex}" type="button" ${record?.answered?'disabled':''}><span class="question-card-status">${status}</span></button>`
+    }).join('');
+    buildLevelMarkers();
+    updateClimber();
+    saveProgress();
+    animateCards();
+}
+
+function openQuestion(questionIndex){
+    const record=state.answers[questionIndex];if(record?.answered)return;
+    const previousIndex=state.index;state.index=questionIndex;state.phase='modal';state.locked=false;
+    if(previousIndex!==questionIndex||!state.questionStarted)state.questionStarted=Date.now();
+    
+    const item=questions[questionIndex];
+    $('modalQuestion').textContent=item.q;
+    $('modalChoices').innerHTML = item.o.map((answer, index) => `<button class="choice" data-answer="${index}" type="button"><span class="choice-key">${['A','B','C','D'][index]}</span><span>${answer}</span></button>`).join('');
+    
+    $('modalFeedback').innerHTML='Baca dengan cermat, lalu klik jawaban yang menurutmu benar.';
+    $('explanationModal').classList.add('hidden');
+    $('questionModal').classList.remove('hidden');
+    saveProgress();startSessionClock()
+}
+
+function closeQuestion(){if(state.locked){$('questionModal').classList.add('hidden');state.phase='cards';state.questionStarted=0;renderCards();return}}
+
+// FUNGSI PILIH JAWABAN (DENGAN KONFIRMASI IN-GAME)
+let pendingChoice = -1;
+
+function selectChoice(choice) {
+    if(state.locked || state.phase !== 'modal') return;
+    pendingChoice = choice;
+
+    // Reset warna border semua tombol
+    document.querySelectorAll('#modalChoices .choice').forEach(b => b.style.borderColor = 'var(--line)');
+    
+    // Beri highlight pada tombol yang baru saja diklik
+    const selectedBtn = document.querySelector(`#modalChoices [data-answer="${choice}"]`);
+    if(selectedBtn) selectedBtn.style.borderColor = 'var(--green)';
+
+    // Ubah area pesan bawah menjadi tombol konfirmasi
+    $('modalFeedback').innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <strong style="color:var(--ink);">Apakah kamu yakin dengan jawaban ini?</strong>
+            <div style="display:flex; gap:10px;">
+                <button onclick="confirmAnswer(true)" style="padding:8px 16px; background:var(--green); color:#fff; border:2px solid var(--ink); border-radius:5px; font-weight:bold; cursor:pointer;">Ya, Yakin!</button>
+                <button onclick="confirmAnswer(false)" style="padding:8px 16px; background:var(--red); color:#fff; border:2px solid var(--ink); border-radius:5px; font-weight:bold; cursor:pointer;">Batal</button>
+            </div>
+        </div>
+    `;
+}
+
+// EKSEKUSI JAWABAN SETELAH MENEKAN YA/BATAL
+window.confirmAnswer = function(yakin) {
+    if(!yakin) {
+        pendingChoice = -1;
+        $('modalFeedback').innerHTML = 'Baca dengan cermat, lalu klik jawaban yang menurutmu benar.';
+        document.querySelectorAll('#modalChoices .choice').forEach(b => b.style.borderColor = 'var(--line)');
+        return;
+    }
+
+    const choice = pendingChoice;
+    const item = questions[state.index];
+    const record = state.answers[state.index] || {elapsed:0, answered:false};
+    const elapsed = (Date.now() - (state.questionStarted || Date.now())) / 1000;
+    
+    record.elapsed += elapsed;
+    record.answered = true;
+    record.correct = (choice === item.a);
+    record.selected = choice;
+    state.answers[state.index] = record;
+    
+    state.questionStarted = 0;
+    $('questionModal').classList.add('hidden');
+    $('explanationAnswer').textContent = "Mari kita bahas:";
+    $('explanationText').innerHTML = "Informasi tambahan terkait soal tersebut:<br><br><b>Penjelasan:</b> " + item.e + "<br><br>*(Sistem telah menyimpan jawabanmu)*";
+    $('explanationModal').classList.remove('hidden');
+    
+    state.locked = true;
+    updateClimber(); animateCards(); saveProgress();
+};
+
+function triggerJourneyTransition(callback){
+    const gameArea=$('gameArea');if(!gameArea)return callback&&callback();
+    const panel=gameArea.querySelector('.climb-panel');
+    const climber=$('climber');
+    
+    const sec = getSectionDetails(state.currentSection);
+    const newlyCompleted = Math.min(Math.max(0, getCompletedCountForSection()), sec.count);
+    const oldCompleted = Math.max(0, newlyCompleted - 1);
+    
+    const { startY, endY } = getClimbBounds();
+    const stepGap = (startY - endY) / Math.max(sec.count, 1);
+    
+    const currentTop = startY - (oldCompleted * stepGap);
+    const nextTop = startY - (newlyCompleted * stepGap);
+    
+    if(climber){
+        climber.style.transition = 'none';
+        climber.style.top = `${currentTop}px`;
+        void climber.offsetWidth;
+        climber.style.transition = 'top 3s cubic-bezier(.22,1,.36,1), transform 3s ease';
+        climber.style.transform = 'translateX(-50%) scale(1.08)';
+        requestAnimationFrame(() => { climber.style.top = `${nextTop}px`; });
+    }
+    
+    if(panel){panel.style.transition='transform .3s ease, box-shadow .3s ease';panel.style.transform='scale(1.02)'}
+    gameArea.classList.add('journey-transition');
+    
+    const overlay=document.createElement('div');
+    overlay.className='journey-overlay active';
+    overlay.innerHTML=`<div class="panel climb-panel">${panel.innerHTML}</div>`;
+    document.body.appendChild(overlay);
+    
+    const overlayClimber=overlay.querySelector('#climber');
+    if(overlayClimber){
+        overlayClimber.style.transition = 'none';
+        overlayClimber.style.top = `${currentTop}px`;
+        void overlayClimber.offsetWidth;
+        overlayClimber.style.transition='top 3s cubic-bezier(.22,1,.36,1), transform 3s ease';
+        requestAnimationFrame(()=>{
+            overlayClimber.style.top=`${nextTop}px`;
+            overlayClimber.style.transform='translateX(-50%) scale(1.08)';
+        })
+    }
+    
+    setTimeout(()=>{
+        overlay.classList.remove('active');
+        setTimeout(()=>overlay.remove(),250);
+        if(climber){
+            climber.style.transition='top .7s cubic-bezier(.2,.8,.3,1), transform .35s ease';
+            climber.style.transform='translateX(-50%)';
+            climber.style.top=`${nextTop}px`; 
+        }
+        if(panel){panel.style.transform='';}
+        gameArea.classList.remove('journey-transition');
+        if(callback)callback();
+    },3000)
+}
+
+function nextQuestion(){
+    const sec = getSectionDetails(state.currentSection);
+    let isFinalQuestion = true;
+    for(let j=sec.start; j<sec.start+sec.count; j++) {
+        if (!state.answers[j] || !state.answers[j].answered) {
+            isFinalQuestion = false; break;
+        }
+    }
+    
+    if(isFinalQuestion){$('explanationModal').classList.add('hidden');finishSection();return}
+    $('explanationModal').classList.add('hidden');
+    triggerJourneyTransition(()=>{closeQuestion();})
+}
+
+function finishSection(){
+    clearInterval(state.timerId);
+    state.completed=true; 
+    state.phase='finished';
+    state.questionStarted=0;
+    document.body.classList.remove('playing');
+    saveProgress();
+    
+    $('gameArea').classList.add('hidden');
+    $('questionModal').classList.add('hidden');
+    $('resultArea').classList.remove('hidden');
+    
+    const sec = getSectionDetails(state.currentSection);
+    const scores = calculateScores();
+    
+    $('resultEyebrow').textContent = `Bagian ${sec.title} Selesai`;
+    
+    let bagianBenar = 0;
+    for(let i=sec.start; i<sec.start+sec.count; i++) {
+        if(state.answers[i]?.correct) bagianBenar++;
+    }
+    $('resultScoreWajib').textContent = `${bagianBenar} Soal`;
+    $('resultScore').textContent = `${scores.finalSkor.toFixed(1).replace(/\.0$/, '')} / 100`;
+    
+    if(state.currentSection === 1 || scores.bonusBenar > 0) {
+        $('bonusStats').innerHTML = `<b>Statistik Bantuan Bonus:</b> Kamu menjawab benar ${scores.bonusBenar} soal Bonus. Hal ini berhasil menggantikan <b>${scores.penggantiDipakai}</b> jawaban salahmu di soal Wajib!`;
+        $('bonusStats').style.display = 'block';
+    } else {
+        $('bonusStats').style.display = 'none';
+    }
+
+    $('resultName').textContent = state.player.name;
+    $('resultIdentity').textContent = `${state.player.className} / ${state.player.number}`;
+    updateSessionTime();
+    
+    let htmlRows = '';
+    for(let i=sec.start; i<sec.start+sec.count; i++) {
+        const question = questions[i];
+        const item = state.answers[i]||{elapsed:0, answered:true, correct:false, selected:-1};
+        const statusStr = item.correct ? '<span style="color:green;font-weight:bold;">Benar</span>' : '<span style="color:var(--red);font-weight:bold;">Salah</span>';
+        const userAns = item.selected >= 0 ? question.o[item.selected] : '-';
+        htmlRows += `<tr><td>${i+1}</td><td>${question.q}</td><td>${userAns}</td><td>${statusStr}</td><td>${formatTime(item.elapsed)}</td></tr>`;
+    }
+    $('resultRows').innerHTML = htmlRows;
+    $('resultArea').scrollIntoView({behavior:'smooth'});
+    state.completed = false; 
+}
+
+function forceFinishSection() {
+    if (!state.player?.name || state.completed || state.currentSection === -1) return;
+    const sec = getSectionDetails(state.currentSection);
+    
+    for (let i = sec.start; i < sec.start + sec.count; i++) {
+        const current = state.answers[i] || {elapsed:0, answered:false, correct:false, selected:-1};
+        if (!current.answered) {
+            current.answered = true;
+            current.correct = false;
+            current.selected = -1;
+            state.answers[i] = current;
+        }
+    }
+    
+    if (state.phase === 'modal') { $('questionModal').classList.add('hidden'); }
+    $('explanationModal').classList.add('hidden');
+    finishSection();
+}
+
+// Navigasi Awal
+$('startButton').addEventListener('click',()=>{
+    if(!$('playerName').value.trim()||!$('playerNumber').value.trim()||!$('playerClass').value.trim()){alert('Isi nama, nomor absen, dan kelas terlebih dahulu.');return}
+    const player={name:$('playerName').value.trim(),number:$('playerNumber').value.trim(),className:$('playerClass').value.trim()};
+    resetState();
+    state.totalStarted=Date.now();
+    state.player=player;
+    state.phase='menu';
+    $('registration').classList.add('hidden');
+    $('sectionMenu').classList.remove('hidden');
+    $('heroArea').classList.add('hidden');
+    renderSectionMenu();
+    startSessionClock();
+});
+
+$('btnBackToMenu').addEventListener('click', () => {
+    state.phase='menu';
+    $('resultArea').classList.add('hidden');
+    $('sectionMenu').classList.remove('hidden');
+    renderSectionMenu();
+});
+
+$('questionCards').addEventListener('click',event=>{
+    const card=event.target.closest('[data-card]');
+    if(card && !card.disabled){card.classList.add('opened');setTimeout(()=>openQuestion(Number(card.dataset.card)),180)}
+});
+
+$('modalChoices').addEventListener('click', event => {
+    const button = event.target.closest('[data-answer]');
+    if(button) selectChoice(Number(button.dataset.answer));
+});
+
+$('explanationContinue').addEventListener('click',nextQuestion);
+$('resetAllButton').addEventListener('click', () => { if(confirm('Reset seluruh game dan kembali ke awal?')) resetState(); });
+
+let unlockShortcutStep=0;
+document.addEventListener('visibilitychange', () => { if(document.hidden) showTabLock(); });
+window.addEventListener('blur', showTabLock);
+
+document.addEventListener('keydown', event => {
+    const key = event.key.toLowerCase();
+    
+    // UNLOCK TAB (Ctrl + C lalu B)
+    if(event.ctrlKey && key === 'c') { unlockShortcutStep = 1; return; }
+    if(unlockShortcutStep === 1 && key === 'b') { event.preventDefault(); unlockShortcutStep = 0; hideTabLock(); return; }
+    if(key !== 'control' && key !== 'c') { unlockShortcutStep = 0; }
+    
+    // FORCE STOP BAGIAN (Ctrl + F)
+    if(event.ctrlKey && key === 'f') {
+        event.preventDefault();
+        if(state.player?.name && !state.completed && state.currentSection !== -1 && state.phase !== 'menu'){
+            if(confirm('Yakin ingin memberhentikan bagian ini secara paksa? Sisa soal yang belum dikerjakan akan dicatat salah.')) forceFinishSection();
+        }
+        return;
+    }
+    
+    // RESET GAME PENUH (Ctrl + ` ATAU Tombol ~)
+    if(event.ctrlKey && key === '`') {
+        event.preventDefault();
+        if(confirm('Reset semua progres permainan ke awal mula?')) resetState();
+    }
+});
+
+function restoreGame(){
+    const saved=localStorage.getItem(storageKey);if(!saved)return false;
+    try{Object.assign(state,JSON.parse(saved));}catch(error){localStorage.removeItem(storageKey);return false}
+    if(!state.player?.name)return false;
+    
+    $('playerName').value=state.player.name;$('playerNumber').value=state.player.number;$('playerClass').value=state.player.className;
+    $('registration').classList.add('hidden');$('heroArea').classList.add('hidden');
+    
+    if (state.phase === 'menu' || state.phase === 'finished' || state.currentSection === -1) {
+        state.phase = 'menu';
+        $('sectionMenu').classList.remove('hidden');
+        renderSectionMenu();
+    } else if (state.phase === 'cards' || state.phase === 'modal') {
+        document.body.classList.add('playing');
+        $('gameArea').classList.remove('hidden');
+        renderCards();
+        if(state.phase==='modal'&&state.index>=0&&!state.answers[state.index]?.answered)setTimeout(()=>openQuestion(state.index),0);
+    }
+    if(state.tabLocked)$('penaltyOverlay').classList.remove('hidden');
+    startSessionClock();return true
+}
+
+restoreGame();
+</script>
+</body>
+</html>
