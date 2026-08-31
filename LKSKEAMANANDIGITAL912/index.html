@@ -292,7 +292,7 @@ const state={
     locked:false, phase:'menu', completed:false, tabLocked:false, 
     questionTimerId:null, questionDeadline:0, questionRemainingSeconds:QUESTION_TIME_LIMIT, 
     questionPausedElapsedMs:0, player:{name:'',number:'',className:''}, 
-    cardOrder:[], cardColors:[], answerPool:[]
+    cardOrder:[], cardColors:[]
 };
 
 const $=id=>document.getElementById(id);
@@ -342,7 +342,7 @@ function resetState(){
         timerId:null, readingTimerId:null, cooldownTimerId:null, cooldownEnd:0, 
         locked:false, phase:'menu', completed:false, tabLocked:false, questionTimerId:null, 
         questionDeadline:0, questionRemainingSeconds:QUESTION_TIME_LIMIT, questionPausedElapsedMs:0, 
-        player:{name:'',number:'',className:''}, cardOrder:[], cardColors:[], answerPool:[]
+        player:{name:'',number:'',className:''}, cardOrder:[], cardColors:[]
     });
     document.body.classList.remove('playing');
     $('registration').classList.remove('hidden');
@@ -355,8 +355,6 @@ function resetState(){
     $('playerName').value='';$('playerNumber').value='';$('playerClass').value='';
     $('score').textContent='0';$('sessionTime').textContent='00:00';$('progressBar').style.width='0%' 
 }
-
-function createAnswerPool(){const correct=questions.map(item=>item.o[item.a]);const distractors=['Perangkat keras komputer','Jaringan lokal','Sistem operasi','Mesin pencari','Folder dokumen','Kabel data','Aplikasi permainan','Kamera digital','Penyimpanan awan','Kode program','Situs berita','Printer'];const pool=correct.slice();for(const answer of shuffle(distractors)){if(pool.length>=questions.length+10)break;if(!pool.includes(answer))pool.push(answer)}return shuffle(pool)}
 
 // MENU BAGIAN LOGIC
 function renderSectionMenu() {
@@ -558,10 +556,12 @@ function openQuestion(questionIndex){
     const record=state.answers[questionIndex];if(record?.answered)return;
     const previousIndex=state.index;state.index=questionIndex;state.phase='modal';state.locked=false;
     if(previousIndex!==questionIndex||!state.questionStarted)state.questionStarted=Date.now();
-    if(!state.answerPool?.length)state.answerPool=createAnswerPool();
+    
     const item=questions[questionIndex];
     $('modalQuestion').textContent=item.q;
-    $('modalChoices').innerHTML=state.answerPool.map((answer,index)=>`<button class="choice" data-answer="${index}" type="button"><span class="choice-key">${index+1}</span><span>${answer}</span></button>`).join('');
+    // Tampilkan 4 pilihan murni dari properti 'o' tanpa mencampur dari pool lain.
+    $('modalChoices').innerHTML = item.o.map((answer, index) => `<button class="choice" data-answer="${index}" type="button"><span class="choice-key">${['A','B','C','D'][index]}</span><span>${answer}</span></button>`).join('');
+    
     $('modalFeedback').className='modal-feedback';$('modalFeedback').textContent='Pilih jawaban yang paling tepat.';
     $('wrongCountdown').classList.add('hidden');$('explanationModal').classList.add('hidden');$('modalExplanation').classList.add('hidden');$('readingCountdown').classList.add('hidden');$('continueButton').classList.add('hidden');$('continueButton').disabled=true;
     $('questionModal').classList.remove('hidden');
@@ -578,7 +578,7 @@ function answerQuestion(choice){
     const record=state.answers[state.index]||{wrong:0,elapsed:0,points:0,answered:false,correctAnswerGiven:false};
     const elapsed=(Date.now()-(state.questionStarted||Date.now()))/1000;
     
-    if(state.answerPool[choice]!==item.o[item.a]){
+    if(choice !== item.a){
         record.wrong=(record.wrong||0)+1;state.wrong+=1;record.elapsed+=elapsed;state.answers[state.index]=record;
         const wrongButton=document.querySelector(`#modalChoices [data-answer="${choice}"]`);
         if(wrongButton){wrongButton.disabled=true;wrongButton.classList.add('wrong')}
@@ -597,7 +597,7 @@ function answerQuestion(choice){
     $('modalFeedback').innerHTML='<strong>Jawaban benar!</strong> Tunggu waktu soal selesai untuk lanjut ke pembahasan.';
     [...document.querySelectorAll('#modalChoices .choice')].forEach(button=>{
         button.disabled=true;
-        if(state.answerPool[Number(button.dataset.answer)]===item.o[item.a])button.classList.add('correct')
+        if(Number(button.dataset.answer) === item.a) button.classList.add('correct')
     });
     saveProgress()
 }
@@ -748,7 +748,6 @@ $('startButton').addEventListener('click',()=>{
     resetState();
     state.totalStarted=Date.now();
     state.player=player;
-    state.answerPool=createAnswerPool();
     state.phase='menu';
     $('registration').classList.add('hidden');
     $('sectionMenu').classList.remove('hidden');
@@ -823,7 +822,6 @@ function restoreGame(){
     try{Object.assign(state,JSON.parse(saved));}catch(error){localStorage.removeItem(storageKey);return false}
     if(!state.player?.name)return false;
     
-    if(!Array.isArray(state.answerPool)||state.answerPool.length!==questions.length+10)state.answerPool=createAnswerPool();
     $('playerName').value=state.player.name;$('playerNumber').value=state.player.number;$('playerClass').value=state.player.className;
     $('registration').classList.add('hidden');$('heroArea').classList.add('hidden');
     
