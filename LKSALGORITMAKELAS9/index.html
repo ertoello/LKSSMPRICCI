@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panjat Pinang Digital | ALGORITMA Kelas 9</title>
+    <title>Panjat Pinang Digital | Berpikir Komputasional Kelas 7</title>
     <style>
         :root {
             --ink: #173238;
@@ -98,7 +98,13 @@
             font: 700 .74rem Arial, sans-serif
         }
 
-        .scorebox {
+        .score-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .scorebox, .session-time {
             min-width: 130px;
             padding: 9px 14px;
             text-align: center;
@@ -108,7 +114,7 @@
             box-shadow: 3px 3px 0 var(--ink)
         }
 
-        .scorebox span {
+        .scorebox span, .session-time span {
             display: block;
             color: var(--muted);
             font: 700 .67rem Arial, sans-serif;
@@ -116,8 +122,11 @@
             letter-spacing: .08em
         }
 
-        .scorebox strong {
-            font: 900 1.7rem Arial, sans-serif
+        .scorebox strong, .session-time strong {
+            display: block;
+            margin-top: 3px;
+            color: var(--green-dark);
+            font: 900 1.5rem Arial, sans-serif
         }
 
         .hero {
@@ -241,15 +250,19 @@
             box-shadow: 3px 3px 0 var(--ink);
             font: 800 .8rem Arial, sans-serif;
             text-align: center;
+            transition: transform 0.1s, box-shadow 0.1s;
         }
 
-        .primary:hover {
-            background: var(--green-dark)
+        .primary:active {
+            transform: translate(3px, 3px);
+            box-shadow: 1px 1px 0 var(--ink);
         }
 
         .primary:disabled {
             opacity: .45;
-            cursor: not-allowed
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 3px 3px 0 var(--ink);
         }
 
         .rule {
@@ -258,7 +271,8 @@
             color: #705a27;
             background: #fff4c7;
             border-left: 4px solid var(--yellow);
-            font: .8rem/1.5 Arial, sans-serif
+            font: .8rem/1.5 Arial, sans-serif;
+            line-height: 1.6;
         }
 
         .sections-grid {
@@ -302,22 +316,12 @@
             border-radius: 5px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            text-align: center;
         }
 
-        .status-locked {
-            background: #e0e0e0;
-            color: #777;
-        }
-
-        .status-unlocked {
-            background: var(--green);
-            color: #fff;
-        }
-
-        .status-completed {
-            background: var(--yellow);
-            color: var(--ink);
-        }
+        .status-locked { background: #e0e0e0; color: #777; }
+        .status-unlocked { background: var(--green); color: #fff; }
+        .status-completed { background: var(--yellow); color: var(--ink); }
 
         .game {
             display: grid;
@@ -333,19 +337,8 @@
             background: linear-gradient(#d9edf1, #eaf4d9 74%, #a8d26c 75%)
         }
 
-        .climb-panel h3 {
-            position: relative;
-            z-index: 2;
-            margin: 0 0 5px
-        }
-
-        .climb-panel p {
-            position: relative;
-            z-index: 2;
-            margin: 0;
-            color: var(--muted);
-            font: .78rem Arial, sans-serif
-        }
+        .climb-panel h3 { position: relative; z-index: 2; margin: 0 0 5px }
+        .climb-panel p { position: relative; z-index: 2; margin: 0; color: var(--muted); font: .78rem Arial, sans-serif }
 
         .sky {
             position: absolute;
@@ -399,70 +392,18 @@
             width: 76px;
             height: 91px;
             transform: translateX(-50%);
+            transform-origin: bottom center;
             transition: top .7s cubic-bezier(.2, .8, .3, 1)
         }
 
-        .climber .head {
-            position: absolute;
-            left: 25px;
-            top: 0;
-            width: 28px;
-            height: 28px;
-            background: #9b5a37;
-            border: 3px solid var(--ink);
-            border-radius: 50%
-        }
-
-        .climber .shirt {
-            position: absolute;
-            left: 18px;
-            top: 26px;
-            width: 42px;
-            height: 35px;
-            background: var(--blue);
-            border: 3px solid var(--ink);
-            border-radius: 13px 13px 5px 5px
-        }
-
-        .climber .arm {
-            position: absolute;
-            top: 28px;
-            width: 29px;
-            height: 9px;
-            background: #9b5a37;
-            border: 3px solid var(--ink);
-            border-radius: 8px
-        }
-
-        .climber .arm.left {
-            left: -2px;
-            transform: rotate(-42deg)
-        }
-
-        .climber .arm.right {
-            right: -2px;
-            transform: rotate(42deg)
-        }
-
-        .climber .leg {
-            position: absolute;
-            top: 57px;
-            width: 10px;
-            height: 34px;
-            background: #263f69;
-            border: 3px solid var(--ink);
-            border-radius: 7px
-        }
-
-        .climber .leg.left {
-            left: 23px;
-            transform: rotate(12deg)
-        }
-
-        .climber .leg.right {
-            right: 23px;
-            transform: rotate(-12deg)
-        }
+        .climber .head { position: absolute; left: 25px; top: 0; width: 28px; height: 28px; background: #9b5a37; border: 3px solid var(--ink); border-radius: 50% }
+        .climber .shirt { position: absolute; left: 18px; top: 26px; width: 42px; height: 35px; background: var(--blue); border: 3px solid var(--ink); border-radius: 13px 13px 5px 5px }
+        .climber .arm { position: absolute; top: 28px; width: 29px; height: 9px; background: #9b5a37; border: 3px solid var(--ink); border-radius: 8px }
+        .climber .arm.left { left: -2px; transform: rotate(-42deg) }
+        .climber .arm.right { right: -2px; transform: rotate(42deg) }
+        .climber .leg { position: absolute; top: 57px; width: 10px; height: 34px; background: #263f69; border: 3px solid var(--ink); border-radius: 7px }
+        .climber .leg.left { left: 23px; transform: rotate(12deg) }
+        .climber .leg.right { right: 23px; transform: rotate(-12deg) }
 
         .ladder {
             position: absolute;
@@ -515,86 +456,101 @@
         }
 
         .quiz-panel {
-            min-height: 535px
+            min-height: 535px;
+            display: flex;
+            flex-direction: column;
         }
 
         .quiz-top {
             display: flex;
             justify-content: space-between;
             align-items: start;
-            gap: 10px
-        }
-
-        .quiz-top h3 {
-            margin: 0;
-            font-size: 1.45rem
-        }
-
-        .question-count {
-            color: var(--muted);
-            font: 800 .7rem Arial, sans-serif
-        }
-
-        .question {
-            margin: 22px 0 17px;
-            font-size: clamp(1.15rem, 2.5vw, 1.55rem);
-            line-height: 1.32
-        }
-
-        .choices {
-            display: grid;
-            gap: 10px
-        }
-
-        .choice {
-            display: grid;
-            grid-template-columns: 32px 1fr;
             gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-top h3 { margin: 0; font-size: 1.45rem }
+        .question-count { color: var(--muted); font: 800 .7rem Arial, sans-serif }
+
+        /* --- STYLING UNTUK SPINWHEEL --- */
+        .wheel-container {
+            position: relative;
+            width: min(280px, 80vw); /* Responsive width */
+            height: min(280px, 80vw); /* Perfect circle ratio */
+            margin: 10px auto 30px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            padding: 12px;
-            text-align: left;
-            color: var(--ink);
-            background: #fcf8ef;
-            border: 2px solid var(--line);
-            border-radius: 7px;
-            transition: transform .15s, border-color .15s, background .15s
         }
 
-        .choice:hover {
-            transform: translateX(3px);
-            border-color: var(--green)
+        .wheel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
 
-        .choice-key {
-            display: grid;
-            place-items: center;
-            width: 27px;
-            height: 27px;
-            color: #fff;
-            background: var(--green);
+        .wheel {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            font: 900 .78rem Arial, sans-serif
+            border: 6px solid var(--ink);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 5s cubic-bezier(0.25, 0.1, 0.15, 1);
+            background: #ccc;
         }
 
-        .choice:disabled {
-            cursor: default;
-            opacity: .7
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: var(--paper);
+            border: 4px solid var(--ink);
+            border-radius: 50%;
+            z-index: 5;
         }
 
-        .explanation {
-            margin-top: 15px;
-            padding: 13px;
-            background: #eef6f0;
-            border: 1px solid #b9d7c1;
-            border-radius: 6px;
-            color: #385c4a;
-            font: .83rem/1.5 Arial, sans-serif
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid var(--red);
+            z-index: 10;
+            filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.3));
         }
 
-        .quiz-panel.private .question,
-        .quiz-panel.private .choices,
-        .quiz-panel.private .explanation {
-            visibility: hidden
+        .spin-btn {
+            margin-top: 25px;
+            width: auto;
+            padding: 12px 40px;
+            font-size: 1.2rem;
+            background: var(--yellow);
+            color: var(--ink);
+            border: 3px solid var(--ink);
+            border-radius: 8px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--ink);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .spin-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 1px 1px 0 var(--ink);
+        }
+
+        .spin-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 4px 4px 0 var(--ink);
         }
 
         .result {
@@ -603,24 +559,13 @@
             color: #fff
         }
 
-        .result h2 {
-            margin: 0 0 5px;
-            font-size: clamp(1.9rem, 4vw, 3rem)
-        }
-
-        .result .eyebrow {
-            color: var(--yellow)
-        }
-
-        .result-sub {
-            margin: 0;
-            color: #e5f4eb;
-            font: .86rem/1.5 Arial, sans-serif
-        }
+        .result h2 { margin: 0 0 5px; font-size: clamp(1.9rem, 4vw, 3rem) }
+        .result .eyebrow { color: var(--yellow) }
+        .result-sub { margin: 0; color: #e5f4eb; font: .86rem/1.5 Arial, sans-serif }
 
         .result-meta {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 10px;
             margin: 22px 0
         }
@@ -648,27 +593,15 @@
             font: .76rem Arial, sans-serif
         }
 
-        .result-table th,
-        .result-table td {
+        .result-table th, .result-table td {
             padding: 10px 8px;
             border-bottom: 1px solid #d9e0d9;
-            text-align: left
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.5;
         }
 
-        .result-table th {
-            color: var(--green-dark);
-            background: #e5f2e7
-        }
-
-        .restart {
-            margin-top: 17px;
-            padding: 11px 14px;
-            color: var(--ink);
-            background: var(--yellow);
-            border: 2px solid var(--ink);
-            border-radius: 5px;
-            font: 900 .78rem Arial, sans-serif
-        }
+        .result-table th { color: var(--green-dark); background: #e5f2e7 }
 
         .penalty-overlay {
             position: fixed;
@@ -707,259 +640,9 @@
             padding: 11px;
             background: rgba(255, 255, 255, .1);
             border-radius: 5px;
-            font-weight: 800 !important
         }
 
-        @keyframes pop {
-            from {
-                transform: scale(.96);
-                opacity: .2
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1
-            }
-        }
-
-        body,
-        body * {
-            font-family: 'Segoe Print', 'Comic Sans MS', 'Trebuchet MS', sans-serif !important
-        }
-
-        @media(max-width:760px) {
-            .topbar {
-                align-items: flex-start;
-                flex-direction: column
-            }
-
-            .scorebox {
-                width: 100%
-            }
-
-            .form-grid,
-            .game {
-                grid-template-columns: 1fr
-            }
-
-            .form-grid .primary {
-                margin-top: 2px
-            }
-
-            .climb-panel {
-                min-height: 430px
-            }
-
-            .pole {
-                height: 260px
-            }
-
-            .ladder {
-                height: 208px
-            }
-
-            .climber {
-                top: 250px
-            }
-
-            .result-meta {
-                grid-template-columns: 1fr 1fr
-            }
-
-            .result-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap
-            }
-        }
-
-        .result-table th,
-        .result-table td {
-            padding: 15px 14px;
-            vertical-align: top;
-            line-height: 1.5
-        }
-
-        .result-table th:nth-child(1) {
-            min-width: 70px
-        }
-
-        .result-table th:nth-child(2) {
-            min-width: 300px
-        }
-
-        .result-table th:nth-child(3) {
-            min-width: 220px
-        }
-
-        .result-table th:nth-child(4) {
-            min-width: 90px
-        }
-
-        .result-table th:nth-child(5) {
-            min-width: 120px
-        }
-
-        .session-time {
-            min-width: 130px;
-            padding: 9px 14px;
-            text-align: center;
-            background: var(--paper);
-            border: 2px solid var(--ink);
-            border-radius: 8px;
-            box-shadow: 3px 3px 0 var(--ink)
-        }
-
-        .session-time span {
-            display: block;
-            color: var(--muted);
-            font: 700 .67rem Arial, sans-serif;
-            text-transform: uppercase;
-            letter-spacing: .08em
-        }
-
-        .session-time strong {
-            display: block;
-            margin-top: 3px;
-            color: var(--green-dark);
-            font: 900 1.35rem Arial, sans-serif
-        }
-
-        .question-cards {
-            display: grid;
-            grid-auto-flow: column;
-            grid-template-rows: repeat(4, minmax(105px, 1fr));
-            grid-auto-columns: minmax(145px, 1fr);
-            gap: 14px;
-            margin-top: 20px;
-            overflow: auto;
-            padding: 6px
-        }
-
-        .question-card {
-            min-height: 105px;
-            padding: 16px;
-            text-align: left;
-            color: #fff;
-            border: 3px solid var(--ink);
-            border-radius: 13px;
-            box-shadow: 4px 4px 0 var(--ink);
-            transition: filter .2s;
-            position: relative;
-            z-index: 1
-        }
-
-        .question-card:hover {
-            filter: saturate(1.15)
-        }
-
-        .question-card:focus-visible {
-            outline: 4px solid var(--yellow);
-            outline-offset: 3px
-        }
-
-        .question-card.done {
-            outline: 4px solid #fff;
-            outline-offset: -8px
-        }
-
-        .question-card-status {
-            display: block;
-            margin-top: 14px;
-            font: 800 .78rem/1.35 Arial, sans-serif;
-            opacity: .9
-        }
-
-        .card-instruction {
-            margin: 8px 0 0;
-            color: var(--muted);
-            font: .82rem/1.45 Arial, sans-serif
-        }
-
-        .card-moving {
-            z-index: 3;
-            animation: cardDrift 5s ease-in-out both
-        }
-
-        @keyframes cardDrift {
-            0% {
-                transform: translate(0, 0) rotate(0)
-            }
-
-            25% {
-                transform: translate(var(--x1), var(--y1)) rotate(-3deg)
-            }
-
-            50% {
-                transform: translate(var(--x2), var(--y2)) rotate(3deg)
-            }
-
-            75% {
-                transform: translate(var(--x3), var(--y3)) rotate(-2deg)
-            }
-
-            100% {
-                transform: translate(0, 0) rotate(0)
-            }
-        }
-
-        .journey-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 1200;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 18px;
-            background: rgba(9, 28, 31, .72);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity .25s ease
-        }
-
-        .journey-overlay.active {
-            opacity: 1;
-            pointer-events: auto
-        }
-
-        .journey-overlay .climb-panel {
-            min-height: 78vh;
-            max-height: 78vh;
-            overflow: auto;
-            box-shadow: 0 0 0 10px rgba(255, 255, 255, .08), var(--shadow);
-            transform: scale(.98);
-            transition: transform .5s ease
-        }
-
-        .journey-overlay.active .climb-panel {
-            transform: scale(1)
-        }
-
-        .journey-overlay .climber {
-            transition: top 5s cubic-bezier(.2, .8, .3, 1), transform .35s ease
-        }
-
-        .journey-overlay .question-count {
-            display: none
-        }
-
-        .quiz-panel {
-            min-height: 535px
-        }
-
-        .quiz-panel .quiz-top {
-            align-items: center
-        }
-
-        .quiz-panel .explanation,
-        .quiz-panel .question-meta {
-            display: none
-        }
-
-        body.playing .session-time,
-        body.playing .scorebox {
-            display: none
-        }
+        body.playing .score-container { display: none }
 
         .question-modal {
             position: fixed;
@@ -972,9 +655,7 @@
             perspective: 1200px
         }
 
-        .question-modal.hidden {
-            display: none
-        }
+        .question-modal.hidden { display: none }
 
         .question-modal-box {
             width: min(1100px, 100%);
@@ -1017,6 +698,36 @@
             overflow: auto
         }
 
+        .choice {
+            display: grid;
+            grid-template-columns: 32px 1fr;
+            gap: 10px;
+            align-items: center;
+            padding: 12px;
+            text-align: left;
+            color: var(--ink);
+            background: #fcf8ef;
+            border: 2px solid var(--line);
+            border-radius: 7px;
+            transition: transform .15s, border-color .15s, background .15s
+        }
+
+        .choice:hover {
+            transform: translateX(3px);
+            border-color: var(--green)
+        }
+
+        .choice-key {
+            display: grid;
+            place-items: center;
+            width: 27px;
+            height: 27px;
+            color: #fff;
+            background: var(--green);
+            border-radius: 50%;
+            font: 900 .78rem Arial, sans-serif
+        }
+
         .modal-feedback {
             min-height: 48px;
             margin-top: 16px;
@@ -1027,15 +738,8 @@
         }
 
         @keyframes modalFlip {
-            from {
-                opacity: 0;
-                transform: rotateX(-65deg) scale(.75)
-            }
-
-            to {
-                opacity: 1;
-                transform: rotateX(0) scale(1)
-            }
+            from { opacity: 0; transform: rotateX(-65deg) scale(.75) }
+            to { opacity: 1; transform: rotateX(0) scale(1) }
         }
 
         .explanation-modal {
@@ -1048,9 +752,7 @@
             background: rgba(9, 28, 31, .82)
         }
 
-        .explanation-modal.hidden {
-            display: none
-        }
+        .explanation-modal.hidden { display: none }
 
         .explanation-box {
             width: min(1100px, 100%);
@@ -1072,9 +774,7 @@
             font-size: clamp(2rem, 5vw, 3.8rem)
         }
 
-        .explanation-box p {
-            font: clamp(1.2rem, 2.5vw, 2rem)/1.6 Arial, sans-serif
-        }
+        .explanation-box p { font: clamp(1.2rem, 2.5vw, 2rem)/1.6 Arial, sans-serif }
 
         .explanation-box .modal-explanation {
             margin: 25px auto;
@@ -1083,55 +783,71 @@
             font-size: clamp(1.1rem, 2vw, 1.5rem)
         }
 
-        .continue-button {
-            margin-top: 15px;
-            padding: 12px 22px;
-            color: #fff;
-            background: var(--green);
-            border: 2px solid var(--ink);
-            border-radius: 5px;
-            box-shadow: 3px 3px 0 var(--ink);
-            font: 900 1rem Arial, sans-serif;
-            cursor: pointer;
-        }
-
-        .continue-button:hover {
-            background: var(--green-dark);
-        }
-
-        .reset-all {
-            display: block;
-            margin: 22px auto 0;
-            padding: 12px 20px;
-            color: var(--ink);
-            background: var(--yellow);
-            border: 2px solid var(--ink);
-            border-radius: 5px;
-            box-shadow: 3px 3px 0 var(--ink);
-            font: 900 .82rem Arial, sans-serif
-        }
-
+        /* ====== RESPONSIVE MEDIA QUERIES UNTUK HP & TABLET ====== */
         @media(max-width:760px) {
-            .matching-layout {
-                grid-template-columns: 1fr
+            .shell { padding: 15px 12px 30px; }
+            
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
             }
 
-            .modal-choices {
-                max-height: none
+            .score-container {
+                width: 100%;
+                justify-content: space-between;
+                gap: 10px;
             }
 
-            #gameArea.journey-transition .climb-panel {
-                inset: 12px;
-                min-height: calc(100vh - 24px)
+            .scorebox, .session-time {
+                width: 100%;
+                flex: 1;
+                padding: 8px;
             }
+
+            .form-grid, .game { grid-template-columns: 1fr; }
+            
+            .section-card { flex-direction: column; gap: 15px; align-items: flex-start; }
+
+            .ground { height: 28%; } /* Memberi lebih banyak ruang untuk area angka level */
+            .climb-panel { min-height: 400px; }
+            .pole { height: 260px; top: 60px; }
+            .ladder { height: 220px; top: 80px; }
+            .top-crown { transform: translateX(-50%) scale(0.8); top: 25px; }
+            .climber { transform: translateX(-50%) scale(0.8); }
+
+            .level { bottom: 2px; gap: 2px; }
+            .level span { padding: 1px 4px; font-size: 0.6rem; }
+
+            .result-meta { grid-template-columns: 1fr 1fr; }
+            .result-meta div:last-child { grid-column: 1 / -1; text-align: center; }
+            
+            .result-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .question-modal-box { padding: 20px 15px; }
+            .matching-layout { grid-template-columns: 1fr; }
+            .modal-choices { 
+                grid-template-columns: 1fr; 
+                max-height: 45vh; 
+            }
+            .explanation-box { padding: 25px 15px; }
         }
 
-        /* KELAS TAMBAHAN UNTUK BLUR KARTU (BLUR DIKURANGI) */
-        .cards-shuffling {
-            filter: blur(2px);
-            opacity: 0.75;
-            pointer-events: none;
-            transition: filter 0.3s ease, opacity 0.3s ease;
+        @media(max-width:480px) {
+            .hero h2 { font-size: 2rem; }
+            .brand h1 { font-size: 1.5rem; }
+            .result-meta { grid-template-columns: 1fr; } 
+            
+            .climb-panel { min-height: 350px; }
+            .pole { height: 200px; top: 55px; }
+            .ladder { height: 160px; top: 75px; }
+            .prize { top: 45px; font-size: 0.6rem; }
+            .climber { transform: translateX(-50%) scale(0.7); }
+
+            .level span { padding: 1px 3px; font-size: 0.55rem; }
         }
     </style>
 </head>
@@ -1143,54 +859,49 @@
                 <div class="brand-mark">PP</div>
                 <div>
                     <h1>Panjat Pinang Digital</h1>
-                    <p>ALGORITMA Kelas 9</p>
+                    <p>Berpikir Komputasional Kelas 7</p>
                 </div>
             </div>
-            <div style="display:flex;gap:12px;align-items:center">
+            <div class="score-container">
                 <div class="session-time"><span>Waktu sesi</span><strong id="sessionTime">00:00</strong></div>
                 <div class="scorebox"><span>Skor Sementara</span><strong id="score">0</strong></div>
             </div>
         </header>
 
         <section class="hero" id="heroArea">
-            <p class="eyebrow">Misi ALGORITMA Kelas 9</p>
+            <p class="eyebrow">Misi Berpikir Komputasional Kelas 7</p>
             <h2>Naik sampai <span>puncak!</span></h2>
-            <p>Selesaikan Bagian Wajib dan Bagian Bonus. Kumpulkan nilai semaksimal mungkin dengan ketelitian penuh.</p>
+            <p>Selesaikan Bagian Wajib dan Bagian Bonus. Putar Spinwheel untuk memilih soalmu.</p>
             <div class="progress">
                 <div id="progressBar"></div>
             </div>
         </section>
 
-        <!-- PANEL REGISTRASI -->
         <section class="panel registration" id="registration">
             <h3>Kenalan dulu dengan pemain</h3>
-            <p class="lead">Isi identitasmu sebelum permainan dimulai. Data ini akan dicantumkan pada laporan hasil
-                akhir.</p>
+            <p class="lead">Isi identitasmu sebelum permainan dimulai. Data ini akan dicantumkan pada laporan hasil akhir.</p>
             <div class="form-grid">
-                <label class="field">Nama lengkap<input id="playerName" autocomplete="name"
-                        placeholder="Nama kamu"></label>
+                <label class="field">Nama lengkap<input id="playerName" autocomplete="name" placeholder="Nama kamu"></label>
                 <label class="field">No. absen<input id="playerNumber" type="number" min="1" placeholder="01"></label>
                 <label class="field">Kelas<input id="playerClass" placeholder="IX A"></label>
                 <button class="primary" id="startButton" type="button">Masuk ke Permainan</button>
             </div>
-            <div class="rule"><b>Instruksi pengerjaan:</b> <br>Ada total 80 pertanyaan yang dibagi menjadi: <b>50 Soal
-                    Wajib</b> dan <b>30 Soal Bonus</b>. <br>Waktu pengerjaan tidak dibatasi, namun <b>kamu hanya dapat
-                    memilih jawaban 1 kali tanpa ada kesempatan mengulang</b>. Setiap kali menjawab, sistem akan meminta
-                konfirmasi keyakinanmu. <br>Setiap 3 jawaban benar pada soal bonus akan menggantikan 1 jawaban salah
-                pada soal wajib! Laporan akhir akan muncul setelah bagian diselesaikan.<br><br><i>Gunakan <b>Ctrl +
-                        F</b> jika ingin berhenti secara paksa. Gunakan <b>Ctrl + ` (Kutip Miring)</b> untuk reset data
-                    pemain.</i></div>
+            <div class="rule">
+                <b>Instruksi pengerjaan:</b> <br>
+                - Kamu hanya perlu mengerjakan <b>20 soal pilihan acak dari total 50 Soal Wajib</b>.<br>
+                - Terdapat <b>30 Soal Bonus</b> tambahan untuk memperbaiki nilai.<br>
+                - <b>Setiap 5 jawaban benar pada soal bonus akan menggantikan 1 jawaban salah pada soal wajib!</b><br>
+                - Putar Spinwheel untuk memilih soal. Waktu menjawab tidak dibatasi namun hanya bisa memilih 1 kali.<br><br>
+                <i><b>Peringatan Anti-Curang:</b> Sistem akan mendeteksi jika kamu membuka tab/jendela lain dan mencatatnya ke dalam laporan akhir! Tersedia tombol khusus untuk membuka kembali jika layar terkunci.</i>
+            </div>
         </section>
 
-        <!-- PANEL MENU BAGIAN -->
         <section class="panel hidden" id="sectionMenu">
             <h3>Pilih Komponen Tantangan</h3>
-            <p class="lead">Kerjakan soal Wajib dan kumpulkan poin di soal Bonus. Masukkan password dari guru untuk
-                membuka bagian yang terkunci.</p>
+            <p class="lead">Kerjakan soal Wajib dan kumpulkan poin di soal Bonus. Masukkan password dari guru untuk membuka bagian yang terkunci.</p>
             <div class="sections-grid" id="sectionsGrid"></div>
         </section>
 
-        <!-- PANEL GAME (PANJAT PINANG & KARTU SOAL) -->
         <section class="game hidden" id="gameArea">
             <aside class="panel climb-panel">
                 <div class="sky"></div>
@@ -1201,8 +912,7 @@
                 <div class="ladder"></div>
                 <div class="pole"></div>
                 <div class="climber" id="climber">
-                    <i class="head"></i><i class="shirt"></i><i class="arm left"></i><i class="arm right"></i><i
-                        class="leg left"></i><i class="leg right"></i>
+                    <i class="head"></i><i class="shirt"></i><i class="arm left"></i><i class="arm right"></i><i class="leg left"></i><i class="leg right"></i>
                 </div>
                 <div class="ground"></div>
                 <div class="level" id="levels"></div>
@@ -1210,29 +920,43 @@
             <section class="panel quiz-panel">
                 <div class="quiz-top">
                     <div>
-                        <h3 id="questionTitle">Pilih kartu pertanyaan</h3>
-                        <p class="card-instruction">Buka kartu mana saja untuk menjawab soal di bagian ini.</p>
+                        <h3 id="questionTitle">Putar Spinwheel</h3>
+                        <p class="card-instruction">Tekan tombol putar untuk memilih soal acak selanjutnya.</p>
                     </div>
                     <span class="question-count" id="questionCount">0 selesai</span>
                 </div>
-                <div class="question-cards" id="questionCards"></div>
+
+                <div class="wheel-container">
+                    <div class="wheel-pointer"></div>
+                    <div class="wheel-wrapper">
+                        <div class="wheel" id="spinWheelElement"></div>
+                        <div class="wheel-center"></div>
+                    </div>
+                    <button class="spin-btn" id="btnSpin">Putar! (5s)</button>
+                </div>
+
             </section>
         </section>
 
-        <!-- PANEL HASIL PER BAGIAN -->
         <section class="result hidden" id="resultArea">
             <p class="eyebrow" id="resultEyebrow">Bagian Selesai</p>
             <h2 id="resultTitle">Selamat, kamu sampai puncak!</h2>
-            <p class="result-sub">Berikut catatan perjalanan ALGORITMA kamu pada bagian ini.</p>
+            <p class="result-sub">Berikut catatan perjalanan Berpikir Komputasional kamu pada bagian ini.</p>
+
+            <div style="background:rgba(255,255,255,0.9); padding:15px; border-radius:10px; margin-top:20px; border:2px solid var(--red); text-align:center;">
+                <p style="color:var(--red); font-weight:900; font-size:1.2rem; margin:0; line-height: 1.4;">⚠️ JANGAN LUPA DISCREENSHOOT HASILNYA SEBAGAI BUKTI KEPADA GURU! ⚠️</p>
+            </div>
+
             <div class="result-meta">
                 <div>Nama<b id="resultName">-</b></div>
                 <div>Kelas / Absen<b id="resultIdentity">-</b></div>
                 <div>Total Benar (Bagian Ini)<b id="resultScoreWajib">0</b></div>
+                <div>Upaya Pencontekan<b id="resultCheatCount" style="color:var(--red);">0 Kali</b></div>
                 <div>Perkiraan Skor Akhir<b id="resultScore">0 / 100</b></div>
             </div>
-            <p id="bonusStats"
-                style="background:rgba(255,255,255,0.2); padding:10px; border-radius:5px; margin-bottom:15px; font-size: 0.9rem;">
-            </p>
+
+            <p id="bonusStats" style="background:rgba(255,255,255,0.2); padding:10px; border-radius:5px; margin-bottom:15px; font-size: 0.9rem;"></p>
+
             <h3>Rincian perjalanan</h3>
             <table class="result-table">
                 <thead>
@@ -1248,202 +972,183 @@
             </table>
 
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;">
-                <button class="primary" id="btnBackToMenu" type="button"
-                    style="width: auto; background: var(--blue);">Kembali ke Daftar Bagian</button>
-                <button class="reset-all" id="resetAllButton" type="button" style="margin-top:0;">Reset Seluruh Progres
-                    Pemain</button>
+                <button class="primary" id="btnBackToMenu" type="button" style="width: auto; background: var(--blue);">Kembali ke Daftar Bagian</button>
+                <button class="reset-all" id="resetAllButton" type="button" style="margin-top:0;">Reset Seluruh Progres Pemain</button>
             </div>
         </section>
     </main>
 
-    <!-- MODAL PASSWORD -->
     <div id="passwordModal" class="question-modal hidden" aria-modal="true" role="dialog" style="z-index: 10000;">
         <div class="question-modal-box" style="max-width: 450px; text-align: center; padding: 30px;">
             <h3 style="margin: 0 0 10px; font-size: 1.5rem; color: var(--green-dark);">Bagian Terkunci</h3>
-            <p style="margin-bottom: 20px; color: var(--muted);">Masukkan password yang diberikan oleh guru untuk
-                membuka bagian ini.</p>
-            <input type="text" id="sectionPasswordInput" placeholder="Ketik password di sini..."
-                style="width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 5px; border: 2px solid var(--line); font-size: 1.1rem; text-align: center; text-transform: uppercase;">
-            <p id="passwordError"
-                style="color: var(--red); display: none; font-size: 0.9rem; font-weight: bold; margin-bottom: 15px;">
-                Password salah! Coba lagi.</p>
+            <p style="margin-bottom: 20px; color: var(--muted);">Masukkan password yang diberikan oleh guru untuk membuka bagian ini.</p>
+            <input type="text" id="sectionPasswordInput" placeholder="Ketik password di sini..." style="width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 5px; border: 2px solid var(--line); font-size: 1.1rem; text-align: center; text-transform: uppercase;">
+            <p id="passwordError" style="color: var(--red); display: none; font-size: 0.9rem; font-weight: bold; margin-bottom: 15px;">Password salah! Coba lagi.</p>
             <div style="display:flex; gap:10px; justify-content:center;">
                 <button class="primary" id="btnSubmitPassword" style="width: 100px;">Buka</button>
-                <button class="primary" id="btnCancelPassword"
-                    style="background:var(--muted); width: 100px;">Batal</button>
+                <button class="primary" id="btnCancelPassword" style="background:var(--muted); width: 100px;">Batal</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL SHUFFLE KARTU (5 DETIK) -->
-    <div id="shuffleModal" class="question-modal hidden" style="z-index: 10500;">
-        <div class="question-modal-box" style="max-width: 400px; text-align: center;">
-            <h2 style="color: var(--yellow); margin-bottom: 5px;">Mengacak Kartu...</h2>
-            <p style="font-size: 1.1rem; color: var(--muted); margin-bottom: 20px;">Mohon tunggu sebentar agar susunan
-                soal merata!</p>
-            <div style="font-size: 3.5rem; font-weight: 900; color: var(--green);" id="shuffleCountdown">5</div>
-        </div>
-    </div>
-
-    <!-- MODAL SKOR SEMPURNA 100 -->
     <div id="perfectScoreModal" class="question-modal hidden" style="z-index: 10500;">
         <div class="question-modal-box" style="max-width: 500px; text-align: center; border-color: var(--green);">
             <h2 style="color: var(--green-dark); font-size: 2.5rem; margin-bottom: 10px;">Skor Sempurna (100)</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 25px; line-height: 1.5; color: var(--muted);">Luar biasa! Kamu
-                mendapatkan skor maksimal (100) di Bagian Wajib ini. Kamu bisa langsung kumpulkan hasilnya, atau lanjut
-                mengerjakan Bagian Bonus jika ingin tantangan lebih!</p>
+            <p style="font-size: 1.1rem; margin-bottom: 25px; line-height: 1.5; color: var(--muted);">Luar biasa! Kamu mendapatkan skor maksimal (100) di Bagian Wajib ini. Kamu bisa langsung kumpulkan hasilnya, atau lanjut mengerjakan Bagian Bonus jika ingin tantangan lebih!</p>
             <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                <button class="primary" id="btnContinueMenu" style="width: auto; background: var(--blue);">Lanjut ke
-                    Daftar Bagian</button>
+                <button class="primary" id="btnContinueMenu" style="width: auto; background: var(--blue);">Lanjut ke Daftar Bagian</button>
                 <button class="primary" id="btnSubmitReport" style="width: auto;">Submit & Lihat Laporan Akhir</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL TAB TERKUNCI KARENA KELUAR HALAMAN -->
     <section class="penalty-overlay hidden" id="penaltyOverlay" aria-modal="true" role="dialog">
         <div class="penalty-box">
             <p class="eyebrow" style="color:#f5c84b">Peringatan Anti-Curang</p>
             <h2>Layar Terkunci!</h2>
-            <p>HAYOLOH! JANGAN NYONTEK. Sistem mendeteksi kamu membuka tab atau jendela lain. Permainan dijeda otomatis
-                untuk mencegah kecurangan.</p>
-            <p class="penalty-hint">Tekan <b>Ctrl + C</b> lalu tekan <b>B</b> pada keyboard untuk membuka kunci layar.
-            </p>
+            <p>HAYOLOH! JANGAN NYONTEK. Sistem mendeteksi kamu membuka tab atau aplikasi lain. Permainan dijeda otomatis untuk mencegah kecurangan.</p>
+            <p class="penalty-hint" style="font-size: 1.1rem; color: #fff;">Sistem mencatat kamu sudah berupaya mencontek/berpindah tab sebanyak <b id="cheatCountDisplay" style="color:var(--yellow); font-size: 1.3rem;">0</b> kali.</p>
+            <button class="primary" id="btnUnlockScreen" style="margin-top: 20px; font-size: 1rem;">Saya Berjanji Tidak Curang Lagi (Buka Kunci)</button>
         </div>
     </section>
 
-    <!-- MODAL PERTANYAAN -->
     <section class="question-modal hidden" id="questionModal" aria-modal="true" role="dialog">
         <div class="question-modal-box">
-            <p class="eyebrow">Kartu pertanyaan</p>
+            <p class="eyebrow">Pertanyaan Terpilih</p>
             <div class="matching-layout">
                 <div class="matching-question">
                     <h2 id="modalQuestion"></h2>
-                    <p>Pilih jawaban yang paling sesuai di samping. Kamu hanya bisa memilih 1 kali.</p>
+                    <p>Pilih jawaban yang paling sesuai di bawah. Kamu hanya bisa memilih 1 kali.</p>
                 </div>
                 <div class="modal-choices" id="modalChoices"></div>
             </div>
-            <div class="modal-feedback" id="modalFeedback">Baca dengan cermat, lalu klik jawaban yang menurutmu benar.
-            </div>
+            <div class="modal-feedback" id="modalFeedback">Baca dengan cermat, lalu klik jawaban yang menurutmu benar.</div>
         </div>
     </section>
 
-<!-- MODAL PENJELASAN SETELAH MENJAWAB -->
-<section class="explanation-modal hidden" id="explanationModal" aria-modal="true" role="dialog">
-    <div class="explanation-box">
-        <p class="eyebrow">Tahap Pembahasan</p>
-        <p id="explanationAnswer" style="margin-bottom: 10px; font-weight: bold; color:var(--ink)"></p>
-        <div class="modal-explanation" id="explanationText"></div>
-        <button class="continue-button" id="explanationContinue" type="button">Ke Soal Selanjutnya</button>
-    </div>
-</section>
+    <section class="explanation-modal hidden" id="explanationModal" aria-modal="true" role="dialog">
+        <div class="explanation-box">
+            <p class="eyebrow">Tahap Pembahasan</p>
+            <p id="explanationAnswer" style="margin-bottom: 10px; font-weight: bold; color:var(--ink)"></p>
+            <div class="modal-explanation" id="explanationText"></div>
+            <button class="continue-button" id="explanationContinue" type="button">Kembali ke Putaran</button>
+        </div>
+    </section>
 
-<script>
-    // --- KONFIGURASI PASSWORD: [WAJIB, BONUS] ---
-    const SECTION_PASSWORDS = ['WAJIB', 'BONUS'];
+    <script>
+        const SECTION_PASSWORDS = ['WAJIB', 'BONUS'];
 
-    // 80 SOAL: Indeks 0-49 (Wajib), Indeks 50-79 (Bonus)
-    const questions = [
-        // --- 50 SOAL WAJIB ---
-        { q: 'Setiap pagi Rina melakukan kegiatan secara berurutan: bangun tidur, mandi, memakai seragam, sarapan, lalu berangkat sekolah. Kegiatan tersebut merupakan contoh dari...', o: ['Algoritma', 'Internet', 'Program', 'Jaringan'], a: 0, e: 'Urutan kegiatan yang dilakukan secara terstruktur dan memiliki tujuan merupakan contoh penerapan algoritma dalam kehidupan sehari-hari.' },
-        { q: 'Saat membuat mi instan, Dika mengikuti langkah-langkah yang tertulis pada kemasan agar hasilnya sesuai. Hal tersebut menunjukkan bahwa algoritma mirip dengan...', o: ['Peta', 'Resep', 'Kalender', 'Kamus'], a: 1, e: 'Algoritma dapat dianalogikan seperti resep karena sama-sama berisi langkah-langkah yang dilakukan secara berurutan untuk mendapatkan hasil tertentu.' },
-        { q: 'Ibu ingin membuat jus mangga. Mangga, air, gula, dan es batu merupakan bagian...', o: ['Proses', 'Keluaran', 'Masukan', 'Kesimpulan'], a: 2, e: 'Bahan-bahan yang digunakan sebelum proses pembuatan jus merupakan masukan atau input.' },
-        { q: 'Setelah bahan jus disiapkan, ibu mengupas mangga, memotongnya, memasukkan bahan ke blender, lalu menghaluskannya. Kegiatan tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 1, e: 'Mengupas, memotong, memasukkan bahan, dan menghaluskan merupakan langkah-langkah pengolahan atau proses.' },
-        { q: 'Setelah jus selesai dibuat dan siap diminum, jus tersebut merupakan...', o: ['Masukan', 'Proses', 'Keluaran', 'Instruksi'], a: 2, e: 'Hasil akhir dari suatu proses disebut keluaran atau output.' },
-        { q: 'Sinta ingin membuat teh. Ia memasukkan teh dan gula ke dalam gelas, menuangkan air panas, lalu mengaduknya. Agar kegiatan tersebut disebut algoritma, langkah-langkahnya harus...', o: ['Dilakukan secara acak', 'Dilakukan secara terstruktur', 'Dilakukan sesuka hati', 'Dilakukan tanpa tujuan'], a: 1, e: 'Algoritma harus memiliki langkah yang terstruktur dan logis agar tujuan dapat dicapai dengan benar.' },
-        { q: 'Ayah mencuci mobil dengan urutan menyiram mobil, memberi sabun, menggosok, membilas, lalu mengeringkan. Jika langkah tersebut dilakukan secara teratur, ayah sedang menerapkan...', o: ['Algoritma', 'Komunikasi', 'Jaringan', 'Database'], a: 0, e: 'Kegiatan mencuci mobil yang dilakukan berdasarkan urutan langkah tertentu merupakan penerapan algoritma.' },
-        { q: 'Sebelum berangkat sekolah, Budi memeriksa jadwal pelajaran untuk menentukan buku yang harus dibawa. Jadwal pelajaran dalam kegiatan tersebut dapat dianggap sebagai...', o: ['Input', 'Output', 'Proses', 'Hasil'], a: 0, e: 'Jadwal pelajaran menjadi informasi awal yang digunakan untuk menentukan buku yang harus dibawa, sehingga dapat dianggap sebagai input.' },
-        { q: 'Jika seseorang ingin membuat telur goreng, hal pertama yang perlu dilakukan adalah...', o: ['Menyajikan telur', 'Mengangkat telur', 'Menyiapkan bahan dan alat', 'Mencuci piring'], a: 2, e: 'Sebelum memulai proses memasak, bahan dan alat yang diperlukan harus disiapkan terlebih dahulu.' },
-        { q: 'Dalam kegiatan membuat nasi goreng, nasi, telur, minyak, dan bumbu merupakan...', o: ['Output', 'Input', 'Proses', 'Algoritma'], a: 1, e: 'Nasi, telur, minyak, dan bumbu merupakan bahan yang digunakan dalam proses pembuatan nasi goreng, sehingga termasuk input.' },
-        { q: 'Lani ingin membuat sandwich. Ia menyiapkan roti, selada, telur, dan keju. Setelah itu ia menyusun semua bahan menjadi sandwich. Sandwich yang sudah jadi merupakan...', o: ['Input', 'Proses', 'Output', 'Instruksi'], a: 2, e: 'Sandwich yang sudah selesai dibuat merupakan hasil akhir atau output dari proses.' },
-        { q: 'Doni selalu lupa membawa tugas ke sekolah. Agar tidak lupa, ia membuat langkah: cek jadwal → cek tugas → masukkan tugas ke tas → periksa kembali tas. Langkah tersebut merupakan...', o: ['Algoritma', 'Permainan', 'Cerita', 'Percakapan'], a: 0, e: 'Doni menyusun langkah-langkah secara teratur untuk mencapai tujuan tertentu. Hal tersebut merupakan algoritma.' },
-        { q: 'Ketika membersihkan kamar, langkah yang paling tepat adalah...', o: ['Menyapu → membuang sampah → merapikan tempat tidur', 'Membuang sampah → menyapu → merapikan kamar', 'Merapikan kamar → membuat kamar berantakan → menyapu', 'Menyapu → mengotori lantai → membuang sampah'], a: 1, e: 'Membuang sampah, menyapu, kemudian merapikan kamar merupakan urutan kegiatan yang masuk akal untuk membersihkan kamar.' },
-        { q: 'Jika seseorang langsung menyajikan telur sebelum memasaknya, masalah yang terjadi adalah...', o: ['Algoritma menjadi lebih cepat dan benar', 'Urutan langkah tidak tepat', 'Output menjadi lebih baik', 'Input menjadi bertambah'], a: 1, e: 'Algoritma membutuhkan urutan langkah yang benar. Menyajikan telur sebelum memasaknya menunjukkan urutan yang tidak tepat.' },
-        { q: 'Siswa ingin membuat algoritma "bersiap ke sekolah". Kegiatan yang termasuk input adalah...', o: ['Siap berangkat sekolah', 'Memakai seragam dan menyiapkan buku', 'Berjalan menuju sekolah', 'Sampai di sekolah'], a: 1, e: 'Seragam dan buku merupakan hal yang disiapkan sebelum proses berangkat sekolah dilakukan.' },
-        { q: 'Dalam algoritma membuat kopi, menggiling kopi dan menyeduh air merupakan bagian...', o: ['Input', 'Proses', 'Output', 'Kesimpulan'], a: 1, e: 'Menggiling kopi dan menyeduhnya merupakan langkah pengolahan sehingga termasuk proses.' },
-        { q: 'Hasil akhir dari kegiatan "membuat sarapan" adalah...', o: ['Bahan makanan', 'Peralatan dapur', 'Sarapan siap dimakan', 'Resep makanan'], a: 2, e: 'Sarapan yang sudah selesai dibuat dan siap dimakan merupakan output dari kegiatan tersebut.' },
-        { q: 'Riko membuat algoritma untuk mencuci sepatu. Ia menulis langkah-langkah menggunakan bahasa sehari-hari. Cara penulisan tersebut disebut...', o: ['Flowchart', 'Pseudocode', 'Deskriptif', 'Grafik'], a: 2, e: 'Algoritma yang ditulis menggunakan bahasa alami atau bahasa sehari-hari disebut algoritma deskriptif.' },
-        { q: 'Algoritma deskriptif paling cocok digunakan ketika...', o: ['Langkah sederhana dan mudah dijelaskan', 'Tidak ada langkah yang harus dilakukan', 'Algoritma harus berupa gambar', 'Algoritma harus menggunakan kode komputer'], a: 0, e: 'Algoritma deskriptif menggunakan bahasa yang mudah dipahami sehingga cocok untuk kegiatan yang sederhana.' },
-        { q: 'Seseorang menjelaskan cara membuat telur goreng dengan kalimat "Panaskan minyak, pecahkan telur, masukkan telur ke wajan, lalu masak hingga matang." Bentuk algoritma tersebut adalah...', o: ['Deskriptif', 'Flowchart', 'Pseudocode', 'Diagram batang'], a: 0, e: 'Langkah tersebut ditulis menggunakan bahasa sehari-hari sehingga termasuk algoritma deskriptif.' },
-        { q: 'Ketika seseorang menggambarkan langkah mencuci tangan menggunakan simbol dan panah, bentuk algoritma tersebut disebut...', o: ['Deskriptif', 'Flowchart', 'Narasi', 'Pseudocode'], a: 1, e: 'Flowchart merupakan bentuk penyajian algoritma menggunakan simbol dan garis atau panah untuk menunjukkan alur proses.' },
-        { q: 'Flowchart dapat membantu seseorang memahami algoritma karena...', o: ['Menggunakan gambar dan simbol', 'Tidak memiliki urutan', 'Tidak membutuhkan langkah', 'Hanya berisi tulisan panjang'], a: 0, e: 'Flowchart menyajikan algoritma secara visual menggunakan simbol dan alur sehingga lebih mudah dipahami.' },
-        { q: 'Ketika membuat flowchart "berangkat sekolah", simbol dan garis digunakan untuk menunjukkan...', o: ['Warna seragam', 'Urutan proses', 'Harga makanan', 'Jumlah siswa'], a: 1, e: 'Garis atau panah dalam flowchart menunjukkan hubungan dan urutan dari satu langkah ke langkah berikutnya.' },
-        { q: 'Sari membuat flowchart untuk menentukan apakah ia membawa payung. Jika hujan, ia membawa payung. Jika tidak hujan, ia tidak membawa payung. Algoritma tersebut menggunakan...', o: ['Perulangan', 'Percabangan/kondisi', 'Masukan saja', 'Keluaran saja'], a: 1, e: 'Algoritma tersebut memiliki dua kemungkinan berdasarkan kondisi cuaca sehingga menggunakan percabangan.' },
-        { q: 'Ketika akan pergi sekolah, Andi bertanya, "Apakah hari ini hujan?" Pertanyaan tersebut dalam algoritma berfungsi sebagai...', o: ['Kondisi', 'Output', 'Bahan', 'Hasil'], a: 0, e: 'Pertanyaan yang menentukan tindakan berikutnya merupakan kondisi atau keputusan dalam algoritma.' },
-        { q: 'Jika kondisi "hujan?" menghasilkan jawaban "Ya", langkah yang tepat adalah...', o: ['Membawa payung', 'Meninggalkan tas', 'Tidak memakai sepatu', 'Kembali tidur'], a: 0, e: 'Jika kondisi menunjukkan hujan, tindakan yang sesuai adalah membawa payung.' },
-        { q: 'Jika kondisi "uang cukup?" menghasilkan jawaban "Tidak" saat membeli makanan, tindakan yang paling sesuai adalah...', o: ['Tetap membeli tanpa membayar', 'Memilih makanan yang lebih murah', 'Membeli semua makanan', 'Meninggalkan uang'], a: 1, e: 'Jika uang tidak cukup, pilihan yang logis adalah memilih makanan yang harganya sesuai dengan uang yang tersedia.' },
-        { q: 'Rudi ingin membeli minuman di kantin. Ia melihat harga minuman terlebih dahulu sebelum membayar. Melihat harga merupakan bagian dari...', o: ['Proses', 'Output', 'Hasil akhir', 'Kesimpulan'], a: 0, e: 'Mengecek harga merupakan salah satu langkah yang dilakukan sebelum mengambil keputusan membeli.' },
-        { q: 'Siswa memiliki uang Rp10.000 dan ingin membeli makanan seharga Rp8.000. Kondisi "Apakah uang cukup?" menghasilkan...', o: ['Ya', 'Tidak', 'Tidak diketahui', 'Tidak perlu diperiksa'], a: 0, e: 'Rp10.000 lebih besar daripada Rp8.000 sehingga uang siswa cukup untuk membeli makanan tersebut.' },
-        { q: 'Jika uang yang dimiliki siswa Rp5.000, sedangkan makanan berharga Rp8.000, berdasarkan algoritma yang menggunakan kondisi, siswa sebaiknya...', o: ['Membeli makanan tersebut tanpa uang cukup', 'Memilih makanan yang sesuai dengan uang', 'Membayar dengan buku', 'Membatalkan sekolah'], a: 1, e: 'Karena uang tidak mencukupi, siswa sebaiknya memilih makanan lain yang harganya sesuai dengan uang yang dimiliki.' },
-        { q: 'Dalam membuat flowchart, simbol keputusan digunakan ketika terdapat...', o: ['Pertanyaan atau kondisi', 'Bahan makanan', 'Judul cerita', 'Nama siswa'], a: 0, e: 'Simbol keputusan digunakan ketika algoritma perlu menentukan pilihan berdasarkan suatu kondisi.' },
-        { q: 'Contoh kegiatan sehari-hari yang membutuhkan keputusan adalah...', o: ['Menulis nama di buku', 'Menentukan membawa payung berdasarkan cuaca', 'Membuka buku', 'Menaruh pensil di meja'], a: 1, e: 'Menentukan apakah membawa payung membutuhkan keputusan berdasarkan kondisi cuaca.' },
-        { q: 'Jika seseorang membuat algoritma "mengerjakan PR", langkah yang paling tepat setelah mengetahui ada PR adalah...', o: ['Menyiapkan buku yang diperlukan', 'Langsung tidur', 'Menyimpan semua buku', 'Pergi bermain tanpa mengerjakan'], a: 0, e: 'Setelah mengetahui adanya tugas, langkah yang logis adalah menyiapkan buku atau alat yang diperlukan untuk mengerjakannya.' },
-        { q: 'Dita ingin memastikan tidak ada buku yang tertinggal sebelum berangkat sekolah. Langkah yang tepat adalah...', o: ['Memeriksa kembali isi tas', 'Mengeluarkan semua buku', 'Menutup mata', 'Meninggalkan tas di rumah'], a: 0, e: 'Memeriksa kembali isi tas merupakan langkah pengecekan untuk memastikan semua kebutuhan sudah dibawa.' },
-        { q: 'Algoritma yang baik harus memiliki langkah yang...', o: ['Tidak jelas', 'Terstruktur dan logis', 'Acak', 'Tidak berhubungan'], a: 1, e: 'Algoritma yang baik harus memiliki langkah-langkah yang jelas, terstruktur, dan logis.' },
-        { q: 'Ketika membuat teh, jika gula dimasukkan setelah teh diminum, maka algoritmanya...', o: ['Tepat', 'Tidak tepat', 'Lebih efektif', 'Tidak membutuhkan perubahan'], a: 1, e: 'Gula seharusnya ditambahkan sebelum teh diminum. Jika ditambahkan setelah diminum, urutan algoritmanya tidak tepat.' },
-        { q: 'Mengapa urutan langkah penting dalam algoritma?', o: ['Agar proses dapat dilakukan dengan benar', 'Agar langkah menjadi lebih banyak', 'Agar hasil selalu berbeda', 'Agar proses menjadi acak'], a: 0, e: 'Urutan yang benar membantu memastikan setiap langkah dilakukan pada waktu yang sesuai sehingga tujuan dapat tercapai.' },
-        { q: 'Beni ingin mencuci tangan. Urutan yang paling tepat adalah...', o: ['Mengeringkan tangan → membasahi → memakai sabun', 'Membasahi tangan → memakai sabun → membilas → mengeringkan', 'Memakai sabun → mengeringkan → membasahi', 'Mengeringkan → membilas → memakai sabun'], a: 1, e: 'Urutan mencuci tangan yang masuk akal adalah membasahi, menggunakan sabun, membilas, kemudian mengeringkan.' },
-        { q: 'Dalam algoritma membuat telur goreng, "telur dan minyak" termasuk...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 0, e: 'Telur dan minyak merupakan bahan yang diperlukan sebelum proses memasak dimulai sehingga termasuk input.' },
-        { q: 'Dalam kegiatan membuat telur goreng, "menggoreng telur hingga matang" merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 1, e: 'Menggoreng telur merupakan kegiatan mengolah input sehingga termasuk proses.' },
-        { q: 'Dalam kegiatan membuat telur goreng, "telur goreng siap dimakan" merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Telur goreng yang sudah siap dimakan merupakan hasil akhir dari proses memasak.' },
-        { q: 'Seorang siswa menuliskan algoritma membuat jus dengan kalimat-kalimat lengkap dan mudah dipahami. Cara tersebut termasuk...', o: ['Deskriptif', 'Flowchart', 'Pseudocode', 'Grafik'], a: 0, e: 'Algoritma yang menggunakan kalimat atau bahasa sehari-hari disebut algoritma deskriptif.' },
-        { q: 'Kelebihan algoritma deskriptif adalah...', o: ['Mudah dipahami', 'Selalu menggunakan simbol', 'Harus menggunakan komputer', 'Tidak memiliki langkah'], a: 0, e: 'Algoritma deskriptif menggunakan bahasa alami sehingga mudah dibaca dan dipahami, terutama untuk kegiatan sederhana.' },
-        { q: 'Salah satu kekurangan algoritma deskriptif adalah...', o: ['Sulit digunakan untuk algoritma yang kompleks', 'Tidak bisa digunakan untuk kegiatan sederhana', 'Tidak dapat dibaca manusia', 'Tidak memiliki bahasa'], a: 0, e: 'Algoritma deskriptif dapat menjadi kurang praktis jika digunakan untuk algoritma yang sangat kompleks dan memiliki banyak kondisi.' },
-        { q: 'Tono ingin menunjukkan proses "membeli makanan di kantin" secara visual. Bentuk algoritma yang paling sesuai adalah...', o: ['Flowchart', 'Deskriptif saja', 'Cerita pendek', 'Daftar belanja'], a: 0, e: 'Flowchart cocok digunakan untuk menunjukkan alur proses secara visual menggunakan simbol dan panah.' },
-        { q: 'Flowchart sangat membantu ketika algoritma memiliki...', o: ['Banyak langkah dan kondisi', 'Tidak ada langkah', 'Satu kata saja', 'Tidak memiliki tujuan'], a: 0, e: 'Flowchart sangat berguna untuk menggambarkan algoritma yang memiliki banyak langkah, percabangan, atau kondisi.' },
-        { q: 'Kekurangan flowchart dibandingkan algoritma deskriptif adalah...', o: ['Membutuhkan waktu dan usaha untuk membuatnya', 'Tidak dapat menunjukkan urutan', 'Tidak dapat menggunakan simbol', 'Tidak dapat dipahami manusia'], a: 0, e: 'Membuat flowchart membutuhkan waktu karena setiap proses dan hubungan antarlangkah harus digambarkan menggunakan simbol yang sesuai.' },
-        { q: 'Pseudocode dapat diibaratkan seperti...', o: ['Resep yang singkat dan terstruktur', 'Gambar pemandangan', 'Daftar nama siswa', 'Jadwal pelajaran'], a: 0, e: 'Pseudocode menggunakan kata-kata dan struktur sederhana untuk menggambarkan langkah algoritma secara ringkas.' },
-        { q: 'Seorang siswa ingin membuat algoritma yang mudah diubah jika terdapat perubahan langkah. Bentuk yang sesuai adalah...', o: ['Pseudocode', 'Foto', 'Poster gambar saja', 'Lukisan'], a: 0, e: 'Pseudocode relatif mudah ditulis dan dimodifikasi ketika terdapat perubahan dalam algoritma.' },
-        { q: 'Salah satu kelebihan pseudocode adalah...', o: ['Singkat dan mudah dimodifikasi', 'Selalu menggunakan gambar', 'Hanya dapat digunakan untuk memasak', 'Tidak membutuhkan struktur'], a: 0, e: 'Pseudocode dibuat secara singkat, terstruktur, dan mudah diubah ketika diperlukan.' },
+        const questions = [
+            // --- 50 SOAL WAJIB ---
+            { q: 'Setiap pagi Rina melakukan kegiatan secara berurutan: bangun tidur, mandi, memakai seragam, sarapan, lalu berangkat sekolah. Kegiatan tersebut merupakan contoh dari...', o: ['Algoritma', 'Internet', 'Program', 'Jaringan'], a: 0, e: 'Urutan kegiatan yang dilakukan secara terstruktur dan memiliki tujuan merupakan contoh penerapan algoritma dalam kehidupan sehari-hari.' },
+            { q: 'Saat membuat mi instan, Dika mengikuti langkah-langkah yang tertulis pada kemasan agar hasilnya sesuai. Hal tersebut menunjukkan bahwa algoritma mirip dengan...', o: ['Peta', 'Resep', 'Kalender', 'Kamus'], a: 1, e: 'Algoritma dapat dianalogikan seperti resep karena sama-sama berisi langkah-langkah yang dilakukan secara berurutan untuk mendapatkan hasil tertentu.' },
+            { q: 'Ibu ingin membuat jus mangga. Mangga, air, gula, dan es batu merupakan bagian...', o: ['Proses', 'Keluaran', 'Masukan', 'Kesimpulan'], a: 2, e: 'Bahan-bahan yang digunakan sebelum proses pembuatan jus merupakan masukan atau input.' },
+            { q: 'Setelah bahan jus disiapkan, ibu mengupas mangga, memotongnya, memasukkan bahan ke blender, lalu menghaluskannya. Kegiatan tersebut merupakan...', o: ['Input', 'Proses', 'Output', 'Hasil akhir'], a: 1, e: 'Mengupas, memotong, memasukkan bahan, dan menghaluskan merupakan langkah-langkah pengolahan atau proses.' },
+            { q: 'Setelah jus selesai dibuat dan siap diminum, jus tersebut merupakan...', o: ['Masukan', 'Proses', 'Keluaran', 'Instruksi'], a: 2, e: 'Hasil akhir dari suatu proses disebut keluaran atau output.' },
+            { q: 'Sinta ingin membuat teh. Ia memasukkan teh dan gula ke dalam gelas, menuangkan air panas, lalu mengaduknya. Agar kegiatan tersebut disebut algoritma, langkah-langkahnya harus...', o: ['Dilakukan secara acak', 'Dilakukan secara terstruktur', 'Dilakukan sesuka hati', 'Dilakukan tanpa tujuan'], a: 1, e: 'Algoritma harus memiliki langkah yang terstruktur dan logis agar tujuan dapat dicapai dengan benar.' },
+            { q: 'Ayah mencuci mobil dengan urutan menyiram mobil, memberi sabun, menggosok, membilas, lalu mengeringkan. Jika langkah tersebut dilakukan secara teratur, ayah sedang menerapkan...', o: ['Algoritma', 'Komunikasi', 'Jaringan', 'Database'], a: 0, e: 'Kegiatan mencuci mobil yang dilakukan berdasarkan urutan langkah tertentu merupakan penerapan algoritma.' },
+            { q: 'Sebelum berangkat sekolah, Budi memeriksa jadwal pelajaran untuk menentukan buku yang harus dibawa. Jadwal pelajaran dalam kegiatan tersebut dapat dianggap sebagai...', o: ['Input', 'Output', 'Proses', 'Hasil'], a: 0, e: 'Jadwal pelajaran menjadi informasi awal yang digunakan untuk menentukan buku yang harus dibawa, sehingga dapat dianggap sebagai input.' },
+            { q: 'Jika seseorang ingin membuat telur goreng, hal pertama yang perlu dilakukan adalah...', o: ['Menyajikan telur', 'Mengangkat telur', 'Menyiapkan bahan dan alat', 'Mencuci piring'], a: 2, e: 'Sebelum memulai proses memasak, bahan dan alat yang diperlukan harus disiapkan terlebih dahulu.' },
+            { q: 'Dalam kegiatan membuat nasi goreng, nasi, telur, minyak, dan bumbu merupakan...', o: ['Output', 'Input', 'Proses', 'Algoritma'], a: 1, e: 'Nasi, telur, minyak, dan bumbu merupakan bahan yang digunakan dalam proses pembuatan nasi goreng, sehingga termasuk input.' },
+            { q: 'Lani ingin membuat sandwich. Ia menyiapkan roti, selada, telur, dan keju. Setelah itu ia menyusun semua bahan menjadi sandwich. Sandwich yang sudah jadi merupakan...', o: ['Input', 'Proses', 'Output', 'Instruksi'], a: 2, e: 'Sandwich yang sudah selesai dibuat merupakan hasil akhir atau output dari proses.' },
+            { q: 'Doni selalu lupa membawa tugas ke sekolah. Agar tidak lupa, ia membuat langkah: cek jadwal → cek tugas → masukkan tugas ke tas → periksa kembali tas. Langkah tersebut merupakan...', o: ['Algoritma', 'Permainan', 'Cerita', 'Percakapan'], a: 0, e: 'Doni menyusun langkah-langkah secara teratur untuk mencapai tujuan tertentu. Hal tersebut merupakan algoritma.' },
+            { q: 'Ketika membersihkan kamar, langkah yang paling tepat adalah...', o: ['Menyapu → membuang sampah → merapikan tempat tidur', 'Membuang sampah → menyapu → merapikan kamar', 'Merapikan kamar → membuat kamar berantakan → menyapu', 'Menyapu → mengotori lantai → membuang sampah'], a: 1, e: 'Membuang sampah, menyapu, kemudian merapikan kamar merupakan urutan kegiatan yang masuk akal untuk membersihkan kamar.' },
+            { q: 'Jika seseorang langsung menyajikan telur sebelum memasaknya, masalah yang terjadi adalah...', o: ['Algoritma menjadi lebih cepat dan benar', 'Urutan langkah tidak tepat', 'Output menjadi lebih baik', 'Input menjadi bertambah'], a: 1, e: 'Algoritma membutuhkan urutan langkah yang benar. Menyajikan telur sebelum memasaknya menunjukkan urutan yang tidak tepat.' },
+            { q: 'Siswa ingin membuat algoritma "bersiap ke sekolah". Kegiatan yang termasuk input adalah...', o: ['Siap berangkat sekolah', 'Memakai seragam dan menyiapkan buku', 'Berjalan menuju sekolah', 'Sampai di sekolah'], a: 1, e: 'Seragam dan buku merupakan hal yang disiapkan sebelum proses berangkat sekolah dilakukan.' },
+            { q: 'Dalam algoritma membuat kopi, menggiling kopi dan menyeduh air merupakan bagian...', o: ['Input', 'Proses', 'Output', 'Kesimpulan'], a: 1, e: 'Menggiling kopi dan menyeduhnya merupakan langkah pengolahan sehingga termasuk proses.' },
+            { q: 'Hasil akhir dari kegiatan "membuat sarapan" adalah...', o: ['Bahan makanan', 'Peralatan dapur', 'Sarapan siap dimakan', 'Resep makanan'], a: 2, e: 'Sarapan yang sudah selesai dibuat dan siap dimakan merupakan output dari kegiatan tersebut.' },
+            { q: 'Riko membuat algoritma untuk mencuci sepatu. Ia menulis langkah-langkah menggunakan bahasa sehari-hari. Cara penulisan tersebut disebut...', o: ['Flowchart', 'Pseudocode', 'Deskriptif', 'Grafik'], a: 2, e: 'Algoritma yang ditulis menggunakan bahasa alami atau bahasa sehari-hari disebut algoritma deskriptif.' },
+            { q: 'Algoritma deskriptif paling cocok digunakan ketika...', o: ['Langkah sederhana dan mudah dijelaskan', 'Tidak ada langkah yang harus dilakukan', 'Algoritma harus berupa gambar', 'Algoritma harus menggunakan kode komputer'], a: 0, e: 'Algoritma deskriptif menggunakan bahasa yang mudah dipahami sehingga cocok untuk kegiatan yang sederhana.' },
+            { q: 'Seseorang menjelaskan cara membuat telur goreng dengan kalimat "Panaskan minyak, pecahkan telur, masukkan telur ke wajan, lalu masak hingga matang." Bentuk algoritma tersebut adalah...', o: ['Deskriptif', 'Flowchart', 'Pseudocode', 'Diagram batang'], a: 0, e: 'Langkah tersebut ditulis menggunakan bahasa sehari-hari sehingga termasuk algoritma deskriptif.' },
+            { q: 'Ketika seseorang menggambarkan langkah mencuci tangan menggunakan simbol dan panah, bentuk algoritma tersebut disebut...', o: ['Deskriptif', 'Flowchart', 'Narasi', 'Pseudocode'], a: 1, e: 'Flowchart merupakan bentuk penyajian algoritma menggunakan simbol dan garis atau panah untuk menunjukkan alur proses.' },
+            { q: 'Flowchart dapat membantu seseorang memahami algoritma karena...', o: ['Menggunakan gambar dan simbol', 'Tidak memiliki urutan', 'Tidak membutuhkan langkah', 'Hanya berisi tulisan panjang'], a: 0, e: 'Flowchart menyajikan algoritma secara visual menggunakan simbol dan alur sehingga lebih mudah dipahami.' },
+            { q: 'Ketika membuat flowchart "berangkat sekolah", simbol dan garis digunakan untuk menunjukkan...', o: ['Warna seragam', 'Urutan proses', 'Harga makanan', 'Jumlah siswa'], a: 1, e: 'Garis atau panah dalam flowchart menunjukkan hubungan dan urutan dari satu langkah ke langkah berikutnya.' },
+            { q: 'Sari membuat flowchart untuk menentukan apakah ia membawa payung. Jika hujan, ia membawa payung. Jika tidak hujan, ia tidak membawa payung. Algoritma tersebut menggunakan...', o: ['Perulangan', 'Percabangan/kondisi', 'Masukan saja', 'Keluaran saja'], a: 1, e: 'Algoritma tersebut memiliki dua kemungkinan berdasarkan kondisi cuaca sehingga menggunakan percabangan.' },
+            { q: 'Ketika akan pergi sekolah, Andi bertanya, "Apakah hari ini hujan?" Pertanyaan tersebut dalam algoritma berfungsi sebagai...', o: ['Kondisi', 'Output', 'Bahan', 'Hasil'], a: 0, e: 'Pertanyaan yang menentukan tindakan berikutnya merupakan kondisi atau keputusan dalam algoritma.' },
+            { q: 'Jika kondisi "hujan?" menghasilkan jawaban "Ya", langkah yang tepat adalah...', o: ['Membawa payung', 'Meninggalkan tas', 'Tidak memakai sepatu', 'Kembali tidur'], a: 0, e: 'Jika kondisi menunjukkan hujan, tindakan yang sesuai adalah membawa payung.' },
+            { q: 'Jika kondisi "uang cukup?" menghasilkan jawaban "Tidak" saat membeli makanan, tindakan yang paling sesuai adalah...', o: ['Tetap membeli tanpa membayar', 'Memilih makanan yang lebih murah', 'Membeli semua makanan', 'Meninggalkan uang'], a: 1, e: 'Jika uang tidak cukup, pilihan yang logis adalah memilih makanan yang harganya sesuai dengan uang yang tersedia.' },
+            { q: 'Rudi ingin membeli minuman di kantin. Ia melihat harga minuman terlebih dahulu sebelum membayar. Melihat harga merupakan bagian dari...', o: ['Proses', 'Output', 'Hasil akhir', 'Kesimpulan'], a: 0, e: 'Mengecek harga merupakan salah satu langkah yang dilakukan sebelum mengambil keputusan membeli.' },
+            { q: 'Siswa memiliki uang Rp10.000 dan ingin membeli makanan seharga Rp8.000. Kondisi "Apakah uang cukup?" menghasilkan...', o: ['Ya', 'Tidak', 'Tidak diketahui', 'Tidak perlu diperiksa'], a: 0, e: 'Rp10.000 lebih besar daripada Rp8.000 sehingga uang siswa cukup untuk membeli makanan tersebut.' },
+            { q: 'Jika uang yang dimiliki siswa Rp5.000, sedangkan makanan berharga Rp8.000, berdasarkan algoritma yang menggunakan kondisi, siswa sebaiknya...', o: ['Membeli makanan tersebut tanpa uang cukup', 'Memilih makanan yang sesuai dengan uang', 'Membayar dengan buku', 'Membatalkan sekolah'], a: 1, e: 'Karena uang tidak mencukupi, siswa sebaiknya memilih makanan lain yang harganya sesuai dengan uang yang dimiliki.' },
+            { q: 'Dalam membuat flowchart, simbol keputusan digunakan ketika terdapat...', o: ['Pertanyaan atau kondisi', 'Bahan makanan', 'Judul cerita', 'Nama siswa'], a: 0, e: 'Simbol keputusan digunakan ketika algoritma perlu menentukan pilihan berdasarkan suatu kondisi.' },
+            { q: 'Contoh kegiatan sehari-hari yang membutuhkan keputusan adalah...', o: ['Menulis nama di buku', 'Menentukan membawa payung berdasarkan cuaca', 'Membuka buku', 'Menaruh pensil di meja'], a: 1, e: 'Menentukan apakah membawa payung membutuhkan keputusan berdasarkan kondisi cuaca.' },
+            { q: 'Jika seseorang membuat algoritma "mengerjakan PR", langkah yang paling tepat setelah mengetahui ada PR adalah...', o: ['Menyiapkan buku yang diperlukan', 'Langsung tidur', 'Menyimpan semua buku', 'Pergi bermain tanpa mengerjakan'], a: 0, e: 'Setelah mengetahui adanya tugas, langkah yang logis adalah menyiapkan buku atau alat yang diperlukan untuk mengerjakannya.' },
+            { q: 'Dita ingin memastikan tidak ada buku yang tertinggal sebelum berangkat sekolah. Langkah yang tepat adalah...', o: ['Memeriksa kembali isi tas', 'Mengeluarkan semua buku', 'Menutup mata', 'Meninggalkan tas di rumah'], a: 0, e: 'Memeriksa kembali isi tas merupakan langkah pengecekan untuk memastikan semua kebutuhan sudah dibawa.' },
+            { q: 'Algoritma yang baik harus memiliki langkah yang...', o: ['Tidak jelas', 'Terstruktur dan logis', 'Acak', 'Tidak berhubungan'], a: 1, e: 'Algoritma yang baik harus memiliki langkah-langkah yang jelas, terstruktur, dan logis.' },
+            { q: 'Ketika membuat teh, jika gula dimasukkan setelah teh diminum, maka algoritmanya...', o: ['Tepat', 'Tidak tepat', 'Lebih efektif', 'Tidak membutuhkan perubahan'], a: 1, e: 'Gula seharusnya ditambahkan sebelum teh diminum. Jika ditambahkan setelah diminum, urutan algoritmanya tidak tepat.' },
+            { q: 'Mengapa urutan langkah penting dalam algoritma?', o: ['Agar proses dapat dilakukan dengan benar', 'Agar langkah menjadi lebih banyak', 'Agar hasil selalu berbeda', 'Agar proses menjadi acak'], a: 0, e: 'Urutan yang benar membantu memastikan setiap langkah dilakukan pada waktu yang sesuai sehingga tujuan dapat tercapai.' },
+            { q: 'Beni ingin mencuci tangan. Urutan yang paling tepat adalah...', o: ['Mengeringkan tangan → membasahi → memakai sabun', 'Membasahi tangan → memakai sabun → membilas → mengeringkan', 'Memakai sabun → mengeringkan → membasahi', 'Mengeringkan → membilas → memakai sabun'], a: 1, e: 'Urutan mencuci tangan yang masuk akal adalah membasahi, menggunakan sabun, membilas, kemudian mengeringkan.' },
+            { q: 'Dalam algoritma membuat telur goreng, "telur dan minyak" termasuk...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 0, e: 'Telur dan minyak merupakan bahan yang diperlukan sebelum proses memasak dimulai sehingga termasuk input.' },
+            { q: 'Dalam kegiatan membuat telur goreng, "menggoreng telur hingga matang" merupakan...', o: ['Input', 'Proses', 'Output', 'Bahan'], a: 1, e: 'Menggoreng telur merupakan kegiatan mengolah input sehingga termasuk proses.' },
+            { q: 'Dalam kegiatan membuat telur goreng, "telur goreng siap dimakan" merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Telur goreng yang sudah siap dimakan merupakan hasil akhir dari proses memasak.' },
+            { q: 'Seorang siswa menuliskan algoritma membuat jus dengan kalimat-kalimat lengkap dan mudah dipahami. Cara tersebut termasuk...', o: ['Deskriptif', 'Flowchart', 'Pseudocode', 'Grafik'], a: 0, e: 'Algoritma yang menggunakan kalimat atau bahasa sehari-hari disebut algoritma deskriptif.' },
+            { q: 'Kelebihan algoritma deskriptif adalah...', o: ['Mudah dipahami', 'Selalu menggunakan simbol', 'Harus menggunakan komputer', 'Tidak memiliki langkah'], a: 0, e: 'Algoritma deskriptif menggunakan bahasa alami sehingga mudah dibaca dan dipahami, terutama untuk kegiatan sederhana.' },
+            { q: 'Salah satu kekurangan algoritma deskriptif adalah...', o: ['Sulit digunakan untuk algoritma yang kompleks', 'Tidak bisa digunakan untuk kegiatan sederhana', 'Tidak dapat dibaca manusia', 'Tidak memiliki bahasa'], a: 0, e: 'Algoritma deskriptif dapat menjadi kurang praktis jika digunakan untuk algoritma yang sangat kompleks dan memiliki banyak kondisi.' },
+            { q: 'Tono ingin menunjukkan proses "membeli makanan di kantin" secara visual. Bentuk algoritma yang paling sesuai adalah...', o: ['Flowchart', 'Deskriptif saja', 'Cerita pendek', 'Daftar belanja'], a: 0, e: 'Flowchart cocok digunakan untuk menunjukkan alur proses secara visual menggunakan simbol dan panah.' },
+            { q: 'Flowchart sangat membantu ketika algoritma memiliki...', o: ['Banyak langkah dan kondisi', 'Tidak ada langkah', 'Satu kata saja', 'Tidak memiliki tujuan'], a: 0, e: 'Flowchart sangat berguna untuk menggambarkan algoritma yang memiliki banyak langkah, percabangan, atau kondisi.' },
+            { q: 'Kekurangan flowchart dibandingkan algoritma deskriptif adalah...', o: ['Membutuhkan waktu dan usaha untuk membuatnya', 'Tidak dapat menunjukkan urutan', 'Tidak dapat menggunakan simbol', 'Tidak dapat dipahami manusia'], a: 0, e: 'Membuat flowchart membutuhkan waktu karena setiap proses dan hubungan antarlangkah harus digambarkan menggunakan simbol yang sesuai.' },
+            { q: 'Pseudocode dapat diibaratkan seperti...', o: ['Resep yang singkat dan terstruktur', 'Gambar pemandangan', 'Daftar nama siswa', 'Jadwal pelajaran'], a: 0, e: 'Pseudocode menggunakan kata-kata dan struktur sederhana untuk menggambarkan langkah algoritma secara ringkas.' },
+            { q: 'Seorang siswa ingin membuat algoritma yang mudah diubah jika terdapat perubahan langkah. Bentuk yang sesuai adalah...', o: ['Pseudocode', 'Foto', 'Poster gambar saja', 'Lukisan'], a: 0, e: 'Pseudocode relatif mudah ditulis dan dimodifikasi ketika terdapat perubahan dalam algoritma.' },
+            { q: 'Salah satu kelebihan pseudocode adalah...', o: ['Singkat dan mudah dimodifikasi', 'Selalu menggunakan gambar', 'Hanya dapat digunakan untuk memasak', 'Tidak membutuhkan struktur'], a: 0, e: 'Pseudocode dibuat secara singkat, terstruktur, dan mudah diubah ketika diperlukan.' },
 
-        // --- 30 SOAL BONUS ---
-        { q: 'Kekurangan pseudocode adalah...', o: ['Kurang visual dibandingkan flowchart', 'Tidak bisa dibaca manusia', 'Tidak memiliki langkah', 'Hanya dapat digunakan di dapur'], a: 0, e: 'Pseudocode menggunakan teks sehingga tidak memberikan gambaran visual sejelas flowchart.' },
-        { q: 'Rara membuat algoritma untuk menyiram tanaman. Ia menulis "Periksa tanah. Jika kering, siram tanaman." Bagian "jika kering" merupakan...', o: ['Kondisi', 'Output', 'Input', 'Bahan'], a: 0, e: '"Jika kering" merupakan kondisi yang menentukan apakah tindakan menyiram tanaman dilakukan atau tidak.' },
-        { q: 'Jika tanah tanaman masih basah, berdasarkan algoritma tersebut Rara sebaiknya...', o: ['Tidak menyiram tanaman', 'Menyiram sebanyak-banyaknya', 'Mencabut tanaman', 'Membuang tanah'], a: 0, e: 'Algoritma menyatakan tanaman disiram jika tanah kering. Jika tanah masih basah, tanaman tidak perlu disiram.' },
-        { q: 'Ketika mengerjakan tugas kelompok, siswa menentukan terlebih dahulu tugas masing-masing anggota. Kegiatan tersebut dapat dibuat dalam bentuk...', o: ['Algoritma', 'Permainan', 'Gambar bebas', 'Lagu'], a: 0, e: 'Pembagian tugas dapat disusun dalam langkah-langkah terstruktur sehingga dapat digambarkan sebagai algoritma.' },
-        { q: 'Dalam algoritma "menyiapkan tas", jadwal pelajaran berfungsi untuk menentukan...', o: ['Buku yang perlu dibawa', 'Warna tas', 'Harga tas', 'Ukuran sepatu'], a: 0, e: 'Jadwal pelajaran digunakan sebagai informasi untuk menentukan buku dan perlengkapan yang perlu dibawa.' },
-        { q: 'Jika hari ini terdapat pelajaran Matematika dan Informatika, maka buku yang harus dimasukkan ke tas adalah...', o: ['Buku yang sesuai dengan jadwal', 'Semua buku di rumah', 'Tidak perlu membawa buku', 'Hanya buku cerita'], a: 0, e: 'Buku yang dibawa sebaiknya disesuaikan dengan jadwal pelajaran agar tas tidak membawa barang yang tidak diperlukan.' },
-        { q: 'Siswa membuat algoritma "membeli alat tulis". Langkah pertama yang paling tepat adalah...', o: ['Menentukan alat tulis yang dibutuhkan', 'Membayar', 'Membawa pulang barang', 'Menggunakan alat tulis'], a: 0, e: 'Sebelum membeli alat tulis, siswa perlu menentukan terlebih dahulu barang apa yang benar-benar dibutuhkan.' },
-        { q: 'Setelah menentukan alat tulis yang dibutuhkan, langkah berikutnya yang masuk akal adalah...', o: ['Mengecek harga', 'Langsung membuangnya', 'Menyimpan di rumah', 'Menggunakannya sebelum membeli'], a: 0, e: 'Setelah menentukan barang yang dibutuhkan, mengecek harga membantu menentukan apakah barang tersebut dapat dibeli.' },
-        { q: 'Jika harga alat tulis lebih mahal daripada uang yang tersedia, algoritma dapat memberikan pilihan...', o: ['Memilih barang lain yang lebih sesuai', 'Tetap mengambil barang tanpa membayar', 'Membayar dengan kartu pelajar', 'Membatalkan sekolah'], a: 0, e: 'Jika uang tidak cukup, algoritma dapat mengarahkan pengguna untuk memilih barang lain yang sesuai dengan uang yang tersedia.' },
-        { q: 'Aktivitas "memilih menu makanan berdasarkan uang yang dimiliki" merupakan contoh penerapan...', o: ['Algoritma dan kondisi', 'Algoritma tanpa tujuan', 'Flowchart tanpa proses', 'Output tanpa input'], a: 0, e: 'Pemilihan menu dilakukan berdasarkan kondisi jumlah uang yang dimiliki sehingga merupakan penerapan algoritma dan kondisi.' },
-        { q: 'Saat membuat algoritma perjalanan dari rumah ke sekolah, "rumah dan sekolah" dapat dianggap sebagai...', o: ['Awal dan tujuan', 'Proses dan output', 'Input dan bahan', 'Kondisi dan keputusan'], a: 0, e: 'Rumah merupakan titik awal perjalanan, sedangkan sekolah merupakan tujuan akhir.' },
-        { q: 'Andi ingin pergi ke sekolah. Ia melihat apakah jalan utama macet. Jika macet, ia memilih jalan lain. Situasi tersebut menunjukkan adanya...', o: ['Percabangan', 'Output', 'Input saja', 'Proses tanpa kondisi'], a: 0, e: 'Andi menentukan jalan berdasarkan kondisi macet atau tidak sehingga terdapat percabangan.' },
-        { q: 'Dalam algoritma perjalanan, "jalan utama macet?" merupakan contoh...', o: ['Pertanyaan kondisi', 'Output', 'Bahan', 'Hasil akhir'], a: 0, e: 'Pertanyaan tentang keadaan jalan digunakan untuk menentukan langkah berikutnya sehingga merupakan kondisi.' },
-        { q: 'Jika jalan utama tidak macet, Andi memilih...', o: ['Jalan utama', 'Jalan lain secara otomatis', 'Kembali tidur', 'Tidak pergi sekolah'], a: 0, e: 'Jika jalan utama tidak mengalami kemacetan, algoritma dapat mengarahkan Andi untuk menggunakan jalan utama.' },
-        { q: 'Saat membuat algoritma "membersihkan kamar", mengumpulkan pakaian kotor dapat dianggap sebagai...', o: ['Salah satu proses', 'Output akhir', 'Kondisi', 'Judul'], a: 0, e: 'Mengumpulkan pakaian merupakan salah satu langkah yang dilakukan dalam proses membersihkan dan merapikan kamar.' },
-        { q: 'Jika setelah membersihkan kamar hasil akhirnya adalah kamar rapi, "kamar rapi" merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Kamar yang sudah rapi merupakan hasil akhir atau output dari kegiatan membersihkan kamar.' },
-        { q: 'Dalam algoritma mencuci pakaian, pakaian kotor merupakan...', o: ['Input', 'Output', 'Kondisi', 'Kesimpulan'], a: 0, e: 'Pakaian kotor merupakan benda yang akan diproses dalam kegiatan mencuci sehingga termasuk input.' },
-        { q: 'Dalam kegiatan mencuci pakaian, mencuci dan membilas merupakan...', o: ['Proses', 'Input', 'Output', 'Judul'], a: 0, e: 'Mencuci dan membilas merupakan langkah pengolahan pakaian sehingga termasuk proses.' },
-        { q: 'Pakaian yang sudah bersih dan kering merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Pakaian bersih dan kering merupakan hasil akhir dari proses mencuci pakaian.' },
-        { q: 'Jika seseorang menulis "ambil sepatu → pakai sepatu → ikat tali → berangkat", hal tersebut menunjukkan bahwa algoritma memiliki...', o: ['Urutan langkah', 'Banyak bahan', 'Gambar', 'Percakapan'], a: 0, e: 'Tanda panah menunjukkan urutan langkah yang harus dilakukan dari satu kegiatan ke kegiatan berikutnya.' },
-        { q: 'Jika langkah "berangkat" dilakukan sebelum "memakai sepatu", kemungkinan yang terjadi adalah...', o: ['Urutan kegiatan menjadi tidak sesuai', 'Algoritma menjadi lebih baik', 'Output selalu sama', 'Tidak ada perubahan'], a: 0, e: 'Langkah algoritma harus dilakukan dalam urutan yang logis. Berangkat sebelum memakai sepatu membuat urutannya tidak sesuai.' },
-        { q: 'Dalam kehidupan sehari-hari, algoritma dapat digunakan untuk...', o: ['Menyelesaikan kegiatan secara terstruktur', 'Membuat kegiatan menjadi acak', 'Menghilangkan semua kegiatan', 'Menghindari semua aturan'], a: 0, e: 'Algoritma membantu seseorang menyelesaikan suatu kegiatan melalui langkah-langkah yang teratur dan logis.' },
-        { q: 'Siswa ingin menjelaskan cara membuat nasi goreng kepada temannya dengan langkah yang jelas. Bentuk yang paling sederhana adalah...', o: ['Algoritma deskriptif', 'Flowchart kompleks', 'Pseudocode program', 'Grafik'], a: 0, e: 'Untuk kegiatan sederhana seperti membuat nasi goreng, algoritma deskriptif menggunakan bahasa sehari-hari sudah cukup mudah dipahami.' },
-        { q: 'Jika siswa ingin memperlihatkan secara visual kapan harus memilih "ya" atau "tidak", bentuk yang paling tepat adalah...', o: ['Flowchart', 'Deskripsi panjang', 'Cerita', 'Daftar belanja'], a: 0, e: 'Flowchart dapat menunjukkan percabangan secara visual sehingga pilihan seperti Ya dan Tidak lebih mudah dipahami.' },
-        { q: 'Siswa membuat algoritma "apakah membawa jas hujan?" berdasarkan kondisi cuaca. Jika hujan, jas hujan dibawa. Jika tidak hujan, jas hujan tidak dibawa. Contoh tersebut menunjukkan bahwa algoritma dapat...', o: ['Menggunakan kondisi', 'Menghilangkan input', 'Menghilangkan proses', 'Menghasilkan banyak output tanpa keputusan'], a: 0, e: 'Algoritma tersebut menggunakan kondisi cuaca untuk menentukan tindakan yang harus dilakukan.' },
-        { q: 'Ketika membuat algoritma "sarapan sebelum sekolah", yang menjadi tujuan akhirnya adalah...', o: ['Sarapan siap dimakan', 'Bahan makanan masih mentah', 'Dapur belum digunakan', 'Meja masih kosong'], a: 0, e: 'Tujuan akhir dari algoritma membuat sarapan adalah menghasilkan makanan yang sudah siap dimakan.' },
-        { q: 'Seorang siswa membuat algoritma untuk mengerjakan tugas: membaca soal → memahami pertanyaan → mengerjakan → memeriksa jawaban. Langkah "memeriksa jawaban" bertujuan untuk...', o: ['Memastikan pekerjaan sudah benar', 'Menghapus semua jawaban', 'Menghentikan proses sebelum mengerjakan', 'Mengganti tugas dengan tugas lain'], a: 0, e: 'Memeriksa jawaban merupakan langkah pengecekan untuk memastikan tugas sudah dikerjakan dengan baik dan sesuai.' },
-        { q: 'Jika algoritma membuat makanan ditulis dengan langkah yang jelas dan urut, orang lain akan lebih mudah...', o: ['Mengikuti langkah tersebut', 'Mengubah bahan secara acak', 'Mengabaikan instruksi', 'Menghilangkan hasil akhir'], a: 0, e: 'Langkah yang jelas dan terurut membuat algoritma lebih mudah dipahami dan diikuti oleh orang lain.' },
-        { q: 'Perhatikan kegiatan berikut: (1) Masukkan pakaian ke mesin cuci. (2) Masukkan deterjen. (3) Pilih program pencucian. (4) Keluarkan pakaian setelah selesai. Urutan yang paling masuk akal adalah...', o: ['1 → 2 → 3 → 4', '4 → 3 → 2 → 1', '2 → 4 → 1 → 3', '3 → 1 → 4 → 2'], a: 0, e: 'Pakaian dimasukkan terlebih dahulu, kemudian deterjen ditambahkan, program pencucian dipilih, dan pakaian dikeluarkan setelah selesai.' },
-        { q: 'Kesimpulan yang paling tepat mengenai algoritma berdasarkan berbagai aktivitas sehari-hari adalah...', o: ['Algoritma hanya digunakan oleh programmer', 'Algoritma hanya digunakan untuk membuat makanan', 'Algoritma dapat membantu mengatur langkah suatu kegiatan secara terstruktur dan logis', 'Algoritma hanya dapat dibuat menggunakan komputer'], a: 2, e: 'Algoritma tidak hanya digunakan dalam pemrograman. Banyak kegiatan sehari-hari dapat dilakukan dengan mengikuti langkah yang terstruktur dan logis.' }
-    ];
-        
-        // Konfigurasi 2 Bagian
+            // --- 30 SOAL BONUS ---
+            { q: 'Kekurangan pseudocode adalah...', o: ['Kurang visual dibandingkan flowchart', 'Tidak bisa dibaca manusia', 'Tidak memiliki langkah', 'Hanya dapat digunakan di dapur'], a: 0, e: 'Pseudocode menggunakan teks sehingga tidak memberikan gambaran visual sejelas flowchart.' },
+            { q: 'Rara membuat algoritma untuk menyiram tanaman. Ia menulis "Periksa tanah. Jika kering, siram tanaman." Bagian "jika kering" merupakan...', o: ['Kondisi', 'Output', 'Input', 'Bahan'], a: 0, e: '"Jika kering" merupakan kondisi yang menentukan apakah tindakan menyiram tanaman dilakukan atau tidak.' },
+            { q: 'Jika tanah tanaman masih basah, berdasarkan algoritma tersebut Rara sebaiknya...', o: ['Tidak menyiram tanaman', 'Menyiram sebanyak-banyaknya', 'Mencabut tanaman', 'Membuang tanah'], a: 0, e: 'Algoritma menyatakan tanaman disiram jika tanah kering. Jika tanah masih basah, tanaman tidak perlu disiram.' },
+            { q: 'Ketika mengerjakan tugas kelompok, siswa menentukan terlebih dahulu tugas masing-masing anggota. Kegiatan tersebut dapat dibuat dalam bentuk...', o: ['Algoritma', 'Permainan', 'Gambar bebas', 'Lagu'], a: 0, e: 'Pembagian tugas dapat disusun dalam langkah-langkah terstruktur sehingga dapat digambarkan sebagai algoritma.' },
+            { q: 'Dalam algoritma "menyiapkan tas", jadwal pelajaran berfungsi untuk menentukan...', o: ['Buku yang perlu dibawa', 'Warna tas', 'Harga tas', 'Ukuran sepatu'], a: 0, e: 'Jadwal pelajaran digunakan sebagai informasi untuk menentukan buku dan perlengkapan yang perlu dibawa.' },
+            { q: 'Jika hari ini terdapat pelajaran Matematika dan Informatika, maka buku yang harus dimasukkan ke tas adalah...', o: ['Buku yang sesuai dengan jadwal', 'Semua buku di rumah', 'Tidak perlu membawa buku', 'Hanya buku cerita'], a: 0, e: 'Buku yang dibawa sebaiknya disesuaikan dengan jadwal pelajaran agar tas tidak membawa barang yang tidak diperlukan.' },
+            { q: 'Siswa membuat algoritma "membeli alat tulis". Langkah pertama yang paling tepat adalah...', o: ['Menentukan alat tulis yang dibutuhkan', 'Membayar', 'Membawa pulang barang', 'Menggunakan alat tulis'], a: 0, e: 'Sebelum membeli alat tulis, siswa perlu menentukan terlebih dahulu barang apa yang benar-benar dibutuhkan.' },
+            { q: 'Setelah menentukan alat tulis yang dibutuhkan, langkah berikutnya yang masuk akal adalah...', o: ['Mengecek harga', 'Langsung membuangnya', 'Menyimpan di rumah', 'Menggunakannya sebelum membeli'], a: 0, e: 'Setelah menentukan barang yang dibutuhkan, mengecek harga membantu menentukan apakah barang tersebut dapat dibeli.' },
+            { q: 'Jika harga alat tulis lebih mahal daripada uang yang tersedia, algoritma dapat memberikan pilihan...', o: ['Memilih barang lain yang lebih sesuai', 'Tetap mengambil barang tanpa membayar', 'Membayar dengan kartu pelajar', 'Membatalkan sekolah'], a: 0, e: 'Jika uang tidak cukup, algoritma dapat mengarahkan pengguna untuk memilih barang lain yang sesuai dengan uang yang tersedia.' },
+            { q: 'Aktivitas "memilih menu makanan berdasarkan uang yang dimiliki" merupakan contoh penerapan...', o: ['Algoritma dan kondisi', 'Algoritma tanpa tujuan', 'Flowchart tanpa proses', 'Output tanpa input'], a: 0, e: 'Pemilihan menu dilakukan berdasarkan kondisi jumlah uang yang dimiliki sehingga merupakan penerapan algoritma dan kondisi.' },
+            { q: 'Saat membuat algoritma perjalanan dari rumah ke sekolah, "rumah dan sekolah" dapat dianggap sebagai...', o: ['Awal dan tujuan', 'Proses dan output', 'Input dan bahan', 'Kondisi dan keputusan'], a: 0, e: 'Rumah merupakan titik awal perjalanan, sedangkan sekolah merupakan tujuan akhir.' },
+            { q: 'Andi ingin pergi ke sekolah. Ia melihat apakah jalan utama macet. Jika macet, ia memilih jalan lain. Situasi tersebut menunjukkan adanya...', o: ['Percabangan', 'Output', 'Input saja', 'Proses tanpa kondisi'], a: 0, e: 'Andi menentukan jalan berdasarkan kondisi macet atau tidak sehingga terdapat percabangan.' },
+            { q: 'Dalam algoritma perjalanan, "jalan utama macet?" merupakan contoh...', o: ['Pertanyaan kondisi', 'Output', 'Bahan', 'Hasil akhir'], a: 0, e: 'Pertanyaan tentang keadaan jalan digunakan untuk menentukan langkah berikutnya sehingga merupakan kondisi.' },
+            { q: 'Jika jalan utama tidak macet, Andi memilih...', o: ['Jalan utama', 'Jalan lain secara otomatis', 'Kembali tidur', 'Tidak pergi sekolah'], a: 0, e: 'Jika jalan utama tidak mengalami kemacetan, algoritma dapat mengarahkan Andi untuk menggunakan jalan utama.' },
+            { q: 'Saat membuat algoritma "membersihkan kamar", mengumpulkan pakaian kotor dapat dianggap sebagai...', o: ['Salah satu proses', 'Output akhir', 'Kondisi', 'Judul'], a: 0, e: 'Mengumpulkan pakaian merupakan salah satu langkah yang dilakukan dalam proses membersihkan dan merapikan kamar.' },
+            { q: 'Jika setelah membersihkan kamar hasil akhirnya adalah kamar rapi, "kamar rapi" merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Kamar yang sudah rapi merupakan hasil akhir atau output dari kegiatan membersihkan kamar.' },
+            { q: 'Dalam algoritma mencuci pakaian, pakaian kotor merupakan...', o: ['Input', 'Output', 'Kondisi', 'Kesimpulan'], a: 0, e: 'Pakaian kotor merupakan benda yang akan diproses dalam kegiatan mencuci sehingga termasuk input.' },
+            { q: 'Dalam kegiatan mencuci pakaian, mencuci dan membilas merupakan...', o: ['Proses', 'Input', 'Output', 'Judul'], a: 0, e: 'Mencuci dan membilas merupakan langkah pengolahan pakaian sehingga termasuk proses.' },
+            { q: 'Pakaian yang sudah bersih dan kering merupakan...', o: ['Input', 'Proses', 'Output', 'Kondisi'], a: 2, e: 'Pakaian bersih dan kering merupakan hasil akhir dari proses mencuci pakaian.' },
+            { q: 'Jika seseorang menulis "ambil sepatu → pakai sepatu → ikat tali → berangkat", hal tersebut menunjukkan bahwa algoritma memiliki...', o: ['Urutan langkah', 'Banyak bahan', 'Gambar', 'Percakapan'], a: 0, e: 'Tanda panah menunjukkan urutan langkah yang harus dilakukan dari satu kegiatan ke kegiatan berikutnya.' },
+            { q: 'Jika langkah "berangkat" dilakukan sebelum "memakai sepatu", kemungkinan yang terjadi adalah...', o: ['Urutan kegiatan menjadi tidak sesuai', 'Algoritma menjadi lebih baik', 'Output selalu sama', 'Tidak ada perubahan'], a: 0, e: 'Langkah algoritma harus dilakukan dalam urutan yang logis. Berangkat sebelum memakai sepatu membuat urutannya tidak sesuai.' },
+            { q: 'Dalam kehidupan sehari-hari, algoritma dapat digunakan untuk...', o: ['Menyelesaikan kegiatan secara terstruktur', 'Membuat kegiatan menjadi acak', 'Menghilangkan semua kegiatan', 'Menghindari semua aturan'], a: 0, e: 'Algoritma membantu seseorang menyelesaikan suatu kegiatan melalui langkah-langkah yang teratur dan logis.' },
+            { q: 'Siswa ingin menjelaskan cara membuat nasi goreng kepada temannya dengan langkah yang jelas. Bentuk yang paling sederhana adalah...', o: ['Algoritma deskriptif', 'Flowchart kompleks', 'Pseudocode program', 'Grafik'], a: 0, e: 'Untuk kegiatan sederhana seperti membuat nasi goreng, algoritma deskriptif menggunakan bahasa sehari-hari sudah cukup mudah dipahami.' },
+            { q: 'Jika siswa ingin memperlihatkan secara visual kapan harus memilih "ya" atau "tidak", bentuk yang paling tepat adalah...', o: ['Flowchart', 'Deskripsi panjang', 'Cerita', 'Daftar belanja'], a: 0, e: 'Flowchart dapat menunjukkan percabangan secara visual sehingga pilihan seperti Ya dan Tidak lebih mudah dipahami.' },
+            { q: 'Siswa membuat algoritma "apakah membawa jas hujan?" berdasarkan kondisi cuaca. Jika hujan, jas hujan dibawa. Jika tidak hujan, jas hujan tidak dibawa. Contoh tersebut menunjukkan bahwa algoritma dapat...', o: ['Menggunakan kondisi', 'Menghilangkan input', 'Menghilangkan proses', 'Menghasilkan banyak output tanpa keputusan'], a: 0, e: 'Algoritma tersebut menggunakan kondisi cuaca untuk menentukan tindakan yang harus dilakukan.' },
+            { q: 'Ketika membuat algoritma "sarapan sebelum sekolah", yang menjadi tujuan akhirnya adalah...', o: ['Sarapan siap dimakan', 'Bahan makanan masih mentah', 'Dapur belum digunakan', 'Meja masih kosong'], a: 0, e: 'Tujuan akhir dari algoritma membuat sarapan adalah menghasilkan makanan yang sudah siap dimakan.' },
+            { q: 'Seorang siswa membuat algoritma untuk mengerjakan tugas: membaca soal → memahami pertanyaan → mengerjakan → memeriksa jawaban. Langkah "memeriksa jawaban" bertujuan untuk...', o: ['Memastikan pekerjaan sudah benar', 'Menghapus semua jawaban', 'Menghentikan proses sebelum mengerjakan', 'Mengganti tugas dengan tugas lain'], a: 0, e: 'Memeriksa jawaban merupakan langkah pengecekan untuk memastikan tugas sudah dikerjakan dengan baik dan sesuai.' },
+            { q: 'Jika algoritma membuat makanan ditulis dengan langkah yang jelas dan urut, orang lain akan lebih mudah...', o: ['Mengikuti langkah tersebut', 'Mengubah bahan secara acak', 'Mengabaikan instruksi', 'Menghilangkan hasil akhir'], a: 0, e: 'Langkah yang jelas dan terurut membuat algoritma lebih mudah dipahami dan diikuti oleh orang lain.' },
+            { q: 'Perhatikan kegiatan berikut: (1) Masukkan pakaian ke mesin cuci. (2) Masukkan deterjen. (3) Pilih program pencucian. (4) Keluarkan pakaian setelah selesai. Urutan yang paling masuk akal adalah...', o: ['1 → 2 → 3 → 4', '4 → 3 → 2 → 1', '2 → 4 → 1 → 3', '3 → 1 → 4 → 2'], a: 0, e: 'Pakaian dimasukkan terlebih dahulu, kemudian deterjen ditambahkan, program pencucian dipilih, dan pakaian dikeluarkan setelah selesai.' },
+            { q: 'Kesimpulan yang paling tepat mengenai algoritma berdasarkan berbagai aktivitas sehari-hari adalah...', o: ['Algoritma hanya digunakan oleh programmer', 'Algoritma hanya digunakan untuk membuat makanan', 'Algoritma dapat membantu mengatur langkah suatu kegiatan secara terstruktur dan logis', 'Algoritma hanya dapat dibuat menggunakan komputer'], a: 2, e: 'Algoritma tidak hanya digunakan dalam pemrograman. Banyak kegiatan sehari-hari dapat dilakukan dengan mengikuti langkah yang terstruktur dan logis.' }
+        ];
+
         function getSectionDetails(i) {
-            if (i === 0) return { start: 0, count: 50, title: 'Wajib' };
-            else return { start: 50, count: 30, title: 'Bonus' };
+            if (i === 0) return { poolStart: 0, poolCount: 50, required: 20, title: 'Wajib' };
+            else return { poolStart: 50, poolCount: 30, required: 30, title: 'Bonus' };
         }
 
-        const storageKey = 'panjatPinangDigital80SoalProgress';
+        const storageKey = 'panjatPinangSpinWheelState';
         const colors = ['#e05a47', '#3289a8', '#7b61a8', '#e49b36', '#3b9b72', '#d14d86', '#6b7fce', '#bc6b3e', '#3d9695', '#a45a9a'];
 
-        const state = {
-            currentSection: -1, unlocked: [false, false],
-            index: 0, questionStarted: 0, totalStarted: 0, answers: [],
-            timerId: null, locked: false, phase: 'menu', completed: false, tabLocked: false,
-            questionPausedElapsedMs: 0, player: { name: '', number: '', className: '' },
-            cardOrder: [], cardColors: []
+        let state = {
+            currentSection: -1,
+            unlocked: [false, false],
+            index: 0,
+            questionStarted: 0,
+            totalStarted: 0,
+            answers: [],
+            timerId: null,
+            locked: false,
+            phase: 'menu',
+            completed: false,
+            tabLocked: false,
+            questionPausedElapsedMs: 0,
+            player: { name: '', number: '', className: '' },
+            sectionOrders: {},
+            cheatAttempts: 0,
+            wheelRotation: 0
         };
 
         const $ = id => document.getElementById(id);
@@ -1458,29 +1163,50 @@
             if (!state.player.name || state.completed) return;
             if (state.phase === 'menu' || state.phase === 'finished') return;
             if (state.tabLocked) return;
-            state.tabLocked = true; $('penaltyOverlay').classList.remove('hidden'); clearInterval(state.timerId);
-            if (state.phase === 'modal' && state.questionStarted) { state.questionPausedElapsedMs = Date.now() - state.questionStarted; state.questionStarted = 0; }
-            saveProgress()
+
+            state.tabLocked = true;
+            state.cheatAttempts = (state.cheatAttempts || 0) + 1;
+            $('cheatCountDisplay').textContent = state.cheatAttempts;
+
+            $('penaltyOverlay').classList.remove('hidden');
+            clearInterval(state.timerId);
+
+            if (state.phase === 'modal' && state.questionStarted) {
+                state.questionPausedElapsedMs = Date.now() - state.questionStarted;
+                state.questionStarted = 0;
+            }
+            saveProgress();
         }
+
         function hideTabLock() {
             if (!state.player.name || state.completed) return;
-            state.tabLocked = false; $('penaltyOverlay').classList.add('hidden');
+            state.tabLocked = false;
+            $('penaltyOverlay').classList.add('hidden');
+
             if (state.phase === 'modal' && !state.answers[state.index]?.answered) {
-                if (state.questionPausedElapsedMs > 0) { state.questionStarted = Date.now() - state.questionPausedElapsedMs; state.questionPausedElapsedMs = 0; }
+                if (state.questionPausedElapsedMs > 0) {
+                    state.questionStarted = Date.now() - state.questionPausedElapsedMs;
+                    state.questionPausedElapsedMs = 0;
+                }
             }
-            startSessionClock(); if (state.player.name) saveProgress()
+            startSessionClock();
+            if (state.player.name) saveProgress()
         }
+
+        $('btnUnlockScreen').addEventListener('click', hideTabLock);
+
         function shuffle(values) { for (let i = values.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[values[i], values[j]] = [values[j], values[i]] } return values }
+
         function resetState() {
             clearInterval(state.timerId);
             localStorage.removeItem(storageKey);
-            Object.assign(state, {
+            state = {
                 currentSection: -1, unlocked: [false, false],
                 index: 0, questionStarted: 0, totalStarted: 0, answers: [],
                 timerId: null, locked: false, phase: 'menu', completed: false, tabLocked: false,
                 questionPausedElapsedMs: 0, player: { name: '', number: '', className: '' },
-                cardOrder: [], cardColors: []
-            });
+                sectionOrders: {}, cheatAttempts: 0, wheelRotation: 0
+            };
             document.body.classList.remove('playing');
             $('registration').classList.remove('hidden');
             $('sectionMenu').classList.add('hidden');
@@ -1494,27 +1220,67 @@
             $('score').textContent = '0'; $('sessionTime').textContent = '00:00'; $('progressBar').style.width = '0%'
         }
 
+        function getCompletedCountForSection() {
+            if (state.currentSection === -1 || !state.sectionOrders[state.currentSection]) return 0;
+            let count = 0;
+            state.sectionOrders[state.currentSection].forEach(qIdx => {
+                if (state.answers[qIdx] && state.answers[qIdx].answered) count++;
+            });
+            return count;
+        }
+
+        function calculateScores() {
+            let wajibBenar = 0;
+            let wajibTotal = 20;
+            if (state.sectionOrders && state.sectionOrders[0]) {
+                state.sectionOrders[0].forEach(qIdx => {
+                    if (state.answers[qIdx]?.correct) wajibBenar++;
+                });
+            }
+            let wajibSalah = wajibTotal - wajibBenar;
+
+            let bonusBenar = 0;
+            if (state.sectionOrders && state.sectionOrders[1]) {
+                state.sectionOrders[1].forEach(qIdx => {
+                    if (state.answers[qIdx]?.correct) bonusBenar++;
+                });
+            }
+
+            let penggantiSalah = Math.floor(bonusBenar / 5);
+            let penggantiDipakai = Math.min(penggantiSalah, wajibSalah);
+
+            let finalSkor = ((wajibBenar + penggantiDipakai) / wajibTotal) * 100;
+            return { wajibBenar, wajibSalah, bonusBenar, penggantiDipakai, finalSkor, wajibTotal };
+        }
+
         function renderSectionMenu() {
             const grid = $('sectionsGrid');
             grid.innerHTML = '';
             for (let i = 0; i < 2; i++) {
                 const isUnlocked = state.unlocked[i];
                 const sec = getSectionDetails(i);
-                let completedCount = 0;
 
-                for (let j = sec.start; j < sec.start + sec.count; j++) {
-                    if (state.answers[j]?.answered) completedCount++;
+                if (!state.sectionOrders[i]) {
+                    let order = [];
+                    for (let j = sec.poolStart; j < sec.poolStart + sec.poolCount; j++) order.push(j);
+                    order = shuffle(order);
+                    state.sectionOrders[i] = order.slice(0, sec.required);
                 }
-                const isCompleted = completedCount === sec.count;
 
+                let completedCount = 0;
+                state.sectionOrders[i].forEach(qIdx => {
+                    if (state.answers[qIdx]?.answered) completedCount++;
+                });
+
+                const isCompleted = completedCount === sec.required;
                 let statusHtml = '';
                 let cardClass = 'section-card';
                 if (isCompleted) {
-                    statusHtml = `<span class="section-status status-completed">Selesai (${completedCount}/${sec.count}) - Lihat Laporan</span>`;
+                    statusHtml = `<span class="section-status status-completed">Selesai (${completedCount}/${sec.required})</span>`;
                 } else if (isUnlocked) {
-                    statusHtml = `<span class="section-status status-unlocked">Terbuka (${completedCount}/${sec.count})</span>`;
+                    statusHtml = `<span class="section-status status-unlocked">Terbuka (${completedCount}/${sec.required})</span>`;
                 } else {
-                    statusHtml = `<span class="section-status status-locked">Terkunci (Butuh Password)</span>`;
+                    statusHtml = `<span class="section-status status-locked">Terkunci</span>`;
                     cardClass += ' locked';
                 }
 
@@ -1522,7 +1288,7 @@
             <div class="${cardClass}" onclick="handleSectionClick(${i})">
                 <div>
                     <h4 style="margin:0 0 5px; font-size: 1.15rem;">Bagian ${i + 1}: Soal ${sec.title}</h4>
-                    <div style="font-size:0.85rem; color:var(--muted)">Jumlah: ${sec.count} Soal</div>
+                    <div style="font-size:0.85rem; color:var(--muted)">Jumlah: ${sec.required} Soal</div>
                 </div>
                 ${statusHtml}
             </div>
@@ -1534,11 +1300,11 @@
         function handleSectionClick(i) {
             const sec = getSectionDetails(i);
             let completedCount = 0;
-            for (let j = sec.start; j < sec.start + sec.count; j++) {
-                if (state.answers[j]?.answered) completedCount++;
-            }
-            // JIKA SUDAH SELESAI, KLIK UNTUK LIHAT LAPORAN
-            if (completedCount === sec.count) {
+            state.sectionOrders[i].forEach(qIdx => {
+                if (state.answers[qIdx]?.answered) completedCount++;
+            });
+
+            if (completedCount === sec.required) {
                 state.currentSection = i;
                 showResultArea();
                 return;
@@ -1575,82 +1341,79 @@
             state.phase = 'cards';
             const sec = getSectionDetails(i);
 
-            let currentOrder = [];
-            for (let j = sec.start; j < sec.start + sec.count; j++) {
-                currentOrder.push(j);
-            }
-            state.cardOrder = shuffle(currentOrder);
-            state.cardColors = shuffle(currentOrder.map((_, idx) => colors[idx % colors.length]));
-
             document.body.classList.add('playing');
             $('sectionMenu').classList.add('hidden');
             $('gameArea').classList.remove('hidden');
             $('panelBagianTitle').textContent = `Panjat Pinang - Bagian ${sec.title}`;
 
-            renderCards(true); // Parameter TRUE agar selalu memicu animasi 5 detik
-        }
-
-        function renderCards(withCountdown = true) {
-            $('questionCards').innerHTML = state.cardOrder.map((questionIndex, cardIndex) => {
-                const record = state.answers[questionIndex];
-                const status = record?.answered ? 'Terkunci' : 'Buka Soal';
-                return `<button class="question-card ${record?.answered ? 'done' : ''}" style="background:${state.cardColors[cardIndex]}" data-card="${questionIndex}" type="button" ${record?.answered ? 'disabled' : ''}><span class="question-card-status">${status}</span></button>`
-            }).join('');
             buildLevelMarkers();
+            renderWheel();
             updateClimber();
             saveProgress();
-
-            animateCards(withCountdown);
         }
 
-        function animateCards(withCountdown = true) {
-            const area = $('questionCards').getBoundingClientRect();
-            const points = [[0, 0], [Math.max(0, area.width - 170), 0], [0, Math.max(0, area.height - 125)], [Math.max(0, area.width - 170), Math.max(0, area.height - 125)]];
-            const cards = document.querySelectorAll('.question-card');
+        function renderWheel() {
+            if (state.currentSection === -1) return;
+            const currentOrder = state.sectionOrders[state.currentSection];
+            const unanswered = currentOrder.filter(qIdx => !state.answers[qIdx]?.answered);
 
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const startX = rect.left - area.left;
-                const startY = rect.top - area.top;
-                const targets = shuffle(points.slice());
-                [[1, 'x1', 'y1'], [2, 'x2', 'y2'], [3, 'x3', 'y3']].forEach(([point, x, y]) => {
-                    card.style.setProperty(`--${x}`, `${Math.round(targets[point][0] - startX)}px`);
-                    card.style.setProperty(`--${y}`, `${Math.round(targets[point][1] - startY)}px`)
-                });
-                card.classList.remove('card-moving');
-                void card.offsetWidth;
-                card.classList.add('card-moving');
-            });
+            const wheel = $('spinWheelElement');
+            const btn = $('btnSpin');
 
-            if (withCountdown) {
-                // Terapkan blur dan popup 5 detik
-                $('questionCards').classList.add('cards-shuffling');
-                $('shuffleModal').classList.remove('hidden');
-                let timeLeft = 5;
-                $('shuffleCountdown').textContent = timeLeft;
-
-                const timer = setInterval(() => {
-                    timeLeft--;
-                    $('shuffleCountdown').textContent = timeLeft;
-                    if (timeLeft <= 0) {
-                        clearInterval(timer);
-                        $('questionCards').classList.remove('cards-shuffling');
-                        $('shuffleModal').classList.add('hidden');
-                        cards.forEach(card => card.classList.remove('card-moving'));
-                    }
-                }, 1000);
-            } else {
-                setTimeout(() => cards.forEach(card => card.classList.remove('card-moving')), 5000);
+            if (unanswered.length === 0) {
+                wheel.style.background = '#888';
+                btn.disabled = true;
+                btn.textContent = 'Semua Selesai';
+                return;
             }
+
+            btn.disabled = false;
+            btn.textContent = 'Putar! (5s)';
+
+            const sliceAngle = 360 / unanswered.length;
+            let gradientStr = [];
+            for (let i = 0; i < unanswered.length; i++) {
+                const color = colors[i % colors.length];
+                const start = i * sliceAngle;
+                const end = (i + 1) * sliceAngle;
+                gradientStr.push(`${color} ${start}deg ${end}deg`);
+            }
+            wheel.style.background = `conic-gradient(${gradientStr.join(', ')})`;
+            wheel.dataset.unanswered = JSON.stringify(unanswered);
         }
 
-        // MUNCULKAN ANGKA 1, 2, 3 ... 50 ATAU 30 DI BAWAH ANIMASI
+        $('btnSpin').addEventListener('click', () => {
+            if ($('btnSpin').disabled) return;
+            $('btnSpin').disabled = true;
+
+            const wheel = $('spinWheelElement');
+            const unanswered = JSON.parse(wheel.dataset.unanswered);
+
+            const extraSpins = 6;
+            const targetDegree = Math.floor(Math.random() * 360);
+
+            const currentBase = state.wheelRotation + (360 - (state.wheelRotation % 360));
+            const totalRotation = currentBase + (extraSpins * 360) + targetDegree;
+
+            state.wheelRotation = totalRotation;
+            wheel.style.transform = `rotate(${totalRotation}deg)`;
+
+            setTimeout(() => {
+                const normalizedTarget = (360 - (totalRotation % 360)) % 360;
+                const sliceAngle = 360 / unanswered.length;
+                const winningIndex = Math.floor(normalizedTarget / sliceAngle);
+                const selectedQuestion = unanswered[winningIndex];
+
+                openQuestion(selectedQuestion);
+            }, 5000);
+        });
+
         function buildLevelMarkers() {
             if (state.currentSection === -1) return;
             const sec = getSectionDetails(state.currentSection);
 
             const labels = ['Mulai'];
-            for (let i = 1; i <= sec.count; i++) labels.push(String(i));
+            for (let i = 1; i <= sec.required; i++) labels.push(String(i));
             labels.push('Selesai');
 
             const box = $('levels');
@@ -1658,45 +1421,21 @@
         }
 
         function getClimbBounds() {
-            return window.innerWidth <= 760 ? { startY: 250, endY: 65 } : { startY: 345, endY: 65 };
-        }
-
-        function getCompletedCountForSection() {
-            let count = 0;
-            const sec = getSectionDetails(state.currentSection);
-            for (let i = sec.start; i < sec.start + sec.count; i++) {
-                if (state.answers[i] && state.answers[i].answered) count++;
-            }
-            return count;
-        }
-
-        function calculateScores() {
-            let wajibBenar = 0;
-            for (let i = 0; i < 50; i++) { if (state.answers[i]?.correct) wajibBenar++; }
-            let wajibSalah = 50 - wajibBenar;
-
-            let bonusBenar = 0;
-            for (let i = 50; i < 80; i++) { if (state.answers[i]?.correct) bonusBenar++; }
-
-            let penggantiSalah = Math.floor(bonusBenar / 3);
-            let penggantiDipakai = Math.min(penggantiSalah, wajibSalah);
-
-            let finalSkor = ((wajibBenar + penggantiDipakai) / 50) * 100;
-            return { wajibBenar, wajibSalah, bonusBenar, penggantiDipakai, finalSkor };
+            if (window.innerWidth <= 480) return { startY: 200, endY: 55 };
+            return window.innerWidth <= 760 ? { startY: 250, endY: 60 } : { startY: 345, endY: 65 };
         }
 
         function updateClimber() {
             const sec = getSectionDetails(state.currentSection);
-            const completed = Math.min(Math.max(0, getCompletedCountForSection()), sec.count);
+            const completed = Math.min(Math.max(0, getCompletedCountForSection()), sec.required);
 
             const { startY, endY } = getClimbBounds();
-            const stepGap = (startY - endY) / Math.max(sec.count, 1);
+            const stepGap = (startY - endY) / Math.max(sec.required, 1);
             const currentTop = startY - (completed * stepGap);
 
             $('climber').style.top = `${currentTop}px`;
 
-            // Warnai kotak angka yang sudah dilewati (Active)
-            const activeStep = completed === 0 ? 0 : (completed >= sec.count ? $('levels').children.length - 1 : completed);
+            const activeStep = completed === 0 ? 0 : (completed >= sec.required ? $('levels').children.length - 1 : completed);
             const levelSpans = $('levels').children;
             if (levelSpans.length > 0) {
                 [...levelSpans].forEach((level, index) => {
@@ -1704,12 +1443,15 @@
                 });
             }
 
-            $('climbStatus').textContent = completed === 0 ? 'Mulai perjalanan menuju puncak.' : completed === sec.count ? 'Semua soal di bagian ini selesai!' : `Kamu telah melewati ${completed} dari ${sec.count} anak tangga.`;
-            $('progressBar').style.width = `${((sec.start + completed) / 80) * 100}%`;
+            $('climbStatus').textContent = completed === 0 ? 'Mulai perjalanan.' : completed === sec.required ? 'Bagian selesai!' : `${completed} dari ${sec.required} anak tangga.`;
+
+            const totalWajibCompleted = state.sectionOrders[0] ? state.sectionOrders[0].filter(q => state.answers[q]?.answered).length : 0;
+            const totalBonusCompleted = state.sectionOrders[1] ? state.sectionOrders[1].filter(q => state.answers[q]?.answered).length : 0;
+            $('progressBar').style.width = `${((totalWajibCompleted + totalBonusCompleted) / 50) * 100}%`;
 
             const scores = calculateScores();
             $('score').textContent = scores.finalSkor.toFixed(1).replace(/\.0$/, '');
-            $('questionCount').textContent = `${completed} / ${sec.count} selesai`;
+            $('questionCount').textContent = `${completed} / ${sec.required} selesai`;
             updateSessionTime()
         }
 
@@ -1730,52 +1472,37 @@
             saveProgress(); startSessionClock()
         }
 
-        // LOGIKA MENUTUP PERTANYAAN DIPERBARUI (MENAMPILKAN HITUNG MUNDUR SETIAP SOAL)
         function closeQuestion() {
             if (state.locked) {
                 $('questionModal').classList.add('hidden');
                 state.phase = 'cards';
                 state.questionStarted = 0;
-
-                // Acak ulang susunan array posisi kartu agar benar-benar pindah posisinya setiap soal!
-                let combined = state.cardOrder.map((val, i) => ({ val, col: state.cardColors[i] }));
-                combined = shuffle(combined);
-                state.cardOrder = combined.map(c => c.val);
-                state.cardColors = combined.map(c => c.col);
-
-                // Paramater true akan memaksa layar buram & timer 5 detik berjalan
-                renderCards(true);
+                renderWheel();
                 return;
             }
         }
 
-        // FUNGSI PILIH JAWABAN (DENGAN KONFIRMASI IN-GAME)
         let pendingChoice = -1;
 
         function selectChoice(choice) {
             if (state.locked || state.phase !== 'modal') return;
             pendingChoice = choice;
 
-            // Reset warna border semua tombol
             document.querySelectorAll('#modalChoices .choice').forEach(b => b.style.borderColor = 'var(--line)');
-
-            // Beri highlight pada tombol yang baru saja diklik
             const selectedBtn = document.querySelector(`#modalChoices [data-answer="${choice}"]`);
             if (selectedBtn) selectedBtn.style.borderColor = 'var(--green)';
 
-            // Ubah area pesan bawah menjadi tombol konfirmasi
             $('modalFeedback').innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-            <strong style="color:var(--ink);">Apakah kamu yakin dengan jawaban ini?</strong>
-            <div style="display:flex; gap:10px;">
-                <button onclick="confirmAnswer(true)" style="padding:8px 16px; background:var(--green); color:#fff; border:2px solid var(--ink); border-radius:5px; font-weight:bold; cursor:pointer;">Ya, Yakin!</button>
-                <button onclick="confirmAnswer(false)" style="padding:8px 16px; background:var(--red); color:#fff; border:2px solid var(--ink); border-radius:5px; font-weight:bold; cursor:pointer;">Batal</button>
+            <strong style="color:var(--ink); width: 100%;">Yakin dengan jawaban ini?</strong>
+            <div style="display:flex; gap:10px; width: 100%;">
+                <button onclick="confirmAnswer(true)" style="flex:1; padding:10px; background:var(--green); color:#fff; border:2px solid var(--ink); border-radius:5px; font-weight:bold; cursor:pointer;">Ya!</button>
+                <button onclick="confirmAnswer(false)" style="flex:1; padding:10px; background:var(--red); color:#fff; border:2px solid var(--ink); border-radius:5px; font-weight:bold; cursor:pointer;">Batal</button>
             </div>
         </div>
     `;
         }
 
-        // EKSEKUSI JAWABAN SETELAH MENEKAN YA/BATAL
         window.confirmAnswer = function (yakin) {
             if (!yakin) {
                 pendingChoice = -1;
@@ -1798,7 +1525,7 @@
             state.questionStarted = 0;
             $('questionModal').classList.add('hidden');
             $('explanationAnswer').textContent = "Mari kita bahas:";
-            $('explanationText').innerHTML = "Informasi tambahan terkait soal tersebut:<br><br><b>Penjelasan:</b> " + item.e + "<br><br>*(Sistem telah menyimpan jawabanmu)*";
+            $('explanationText').innerHTML = "<b>Penjelasan:</b> " + item.e;
             $('explanationModal').classList.remove('hidden');
 
             state.locked = true;
@@ -1811,11 +1538,11 @@
             const climber = $('climber');
 
             const sec = getSectionDetails(state.currentSection);
-            const newlyCompleted = Math.min(Math.max(0, getCompletedCountForSection()), sec.count);
+            const newlyCompleted = Math.min(Math.max(0, getCompletedCountForSection()), sec.required);
             const oldCompleted = Math.max(0, newlyCompleted - 1);
 
             const { startY, endY } = getClimbBounds();
-            const stepGap = (startY - endY) / Math.max(sec.count, 1);
+            const stepGap = (startY - endY) / Math.max(sec.required, 1);
 
             const currentTop = startY - (oldCompleted * stepGap);
             const nextTop = startY - (newlyCompleted * stepGap);
@@ -1825,7 +1552,6 @@
                 climber.style.top = `${currentTop}px`;
                 void climber.offsetWidth;
                 climber.style.transition = 'top 3s cubic-bezier(.22,1,.36,1), transform 3s ease';
-                climber.style.transform = 'translateX(-50%) scale(1.08)';
                 requestAnimationFrame(() => { climber.style.top = `${nextTop}px`; });
             }
 
@@ -1834,7 +1560,7 @@
 
             const overlay = document.createElement('div');
             overlay.className = 'journey-overlay active';
-            overlay.innerHTML = `<div class="panel climb-panel">${panel.innerHTML}</div>`;
+            overlay.innerHTML = `<div class="panel climb-panel" style="min-height: ${panel.offsetHeight}px;">${panel.innerHTML}</div>`;
             document.body.appendChild(overlay);
 
             const overlayClimber = overlay.querySelector('#climber');
@@ -1845,7 +1571,6 @@
                 overlayClimber.style.transition = 'top 3s cubic-bezier(.22,1,.36,1), transform 3s ease';
                 requestAnimationFrame(() => {
                     overlayClimber.style.top = `${nextTop}px`;
-                    overlayClimber.style.transform = 'translateX(-50%) scale(1.08)';
                 })
             }
 
@@ -1854,7 +1579,6 @@
                 setTimeout(() => overlay.remove(), 250);
                 if (climber) {
                     climber.style.transition = 'top .7s cubic-bezier(.2,.8,.3,1), transform .35s ease';
-                    climber.style.transform = 'translateX(-50%)';
                     climber.style.top = `${nextTop}px`;
                 }
                 if (panel) { panel.style.transform = ''; }
@@ -1865,20 +1589,14 @@
 
         function nextQuestion() {
             const sec = getSectionDetails(state.currentSection);
-            let isFinalQuestion = true;
-            for (let j = sec.start; j < sec.start + sec.count; j++) {
-                if (!state.answers[j] || !state.answers[j].answered) {
-                    isFinalQuestion = false; break;
-                }
-            }
+            const answeredCount = getCompletedCountForSection();
+            const isFinalQuestion = answeredCount >= sec.required;
 
             if (isFinalQuestion) { $('explanationModal').classList.add('hidden'); finishSection(); return }
             $('explanationModal').classList.add('hidden');
-            // Efek memanjat (3 detik), setelah selesai baru jalankan closeQuestion() (yang memanggil acak 5 detik)
             triggerJourneyTransition(() => { closeQuestion(); })
         }
 
-        // FUNGSI PENYELESAIAN BAGIAN (UPDATE)
         function finishSection() {
             clearInterval(state.timerId);
             state.completed = true;
@@ -1887,23 +1605,20 @@
 
             const scores = calculateScores();
 
-            if (state.currentSection === 0) { // Jika yang diselesaikan adalah Bagian 1 (Wajib)
-                if (scores.wajibBenar === 50) {
-                    // Jika Skormu 100 Sempurna
+            if (state.currentSection === 0) {
+                if (scores.wajibBenar === scores.wajibTotal) {
                     $('perfectScoreModal').classList.remove('hidden');
                 } else {
-                    // Jika kurang dari 100, kembalikan otomatis ke daftar bagian untuk buka Bonus
-                    alert(`Bagian Wajib selesai! Skor sementaramu: ${Math.round((scores.wajibBenar / 50) * 100)}.\nSilakan lanjut ke Bagian Bonus di Daftar Bagian untuk memperbaiki skor sebelum submit.`);
+                    alert(`Bagian Wajib selesai!\nSkor sementaramu: ${Math.round(scores.finalSkor)}.\nSilakan lanjut ke Bagian Bonus di Daftar Bagian untuk menutupi jawaban salah.`);
                     returnToMenu();
                 }
             } else {
-                // Jika yang diselesaikan adalah Bagian 2 (Bonus), langsung tampilkan Hasil
                 showResultArea();
             }
         }
 
         function returnToMenu() {
-            state.completed = false; // Reset state agar tidak ngebug
+            state.completed = false;
             state.phase = 'menu';
             document.body.classList.remove('playing');
             $('gameArea').classList.add('hidden');
@@ -1930,11 +1645,12 @@
             $('resultEyebrow').textContent = `Bagian ${sec.title} Selesai`;
 
             let bagianBenar = 0;
-            for (let i = sec.start; i < sec.start + sec.count; i++) {
-                if (state.answers[i]?.correct) bagianBenar++;
-            }
+            state.sectionOrders[state.currentSection].forEach(qIdx => {
+                if (state.answers[qIdx]?.correct) bagianBenar++;
+            });
             $('resultScoreWajib').textContent = `${bagianBenar} Soal`;
             $('resultScore').textContent = `${scores.finalSkor.toFixed(1).replace(/\.0$/, '')} / 100`;
+            $('resultCheatCount').textContent = `${state.cheatAttempts} Kali`;
 
             if (state.currentSection === 1 || scores.bonusBenar > 0) {
                 $('bonusStats').innerHTML = `<b>Statistik Bantuan Bonus:</b> Kamu menjawab benar ${scores.bonusBenar} soal Bonus. Hal ini berhasil menggantikan <b>${scores.penggantiDipakai}</b> jawaban salahmu di soal Wajib!`;
@@ -1948,13 +1664,14 @@
             updateSessionTime();
 
             let htmlRows = '';
-            for (let i = sec.start; i < sec.start + sec.count; i++) {
-                const question = questions[i];
-                const item = state.answers[i] || { elapsed: 0, answered: true, correct: false, selected: -1 };
+            state.sectionOrders[state.currentSection].forEach((qIdx, orderIndex) => {
+                const question = questions[qIdx];
+                const item = state.answers[qIdx] || { elapsed: 0, answered: true, correct: false, selected: -1 };
                 const statusStr = item.correct ? '<span style="color:green;font-weight:bold;">Benar</span>' : '<span style="color:var(--red);font-weight:bold;">Salah</span>';
                 const userAns = item.selected >= 0 ? question.o[item.selected] : '-';
-                htmlRows += `<tr><td>${i + 1}</td><td>${question.q}</td><td>${userAns}</td><td>${statusStr}</td><td>${formatTime(item.elapsed)}</td></tr>`;
-            }
+                htmlRows += `<tr><td>${orderIndex + 1}</td><td>${question.q}</td><td>${userAns}</td><td>${statusStr}</td><td>${formatTime(item.elapsed)}</td></tr>`;
+            });
+
             $('resultRows').innerHTML = htmlRows;
             $('resultArea').scrollIntoView({ behavior: 'smooth' });
             state.completed = false;
@@ -1962,24 +1679,21 @@
 
         function forceFinishSection() {
             if (!state.player?.name || state.completed || state.currentSection === -1) return;
-            const sec = getSectionDetails(state.currentSection);
-
-            for (let i = sec.start; i < sec.start + sec.count; i++) {
-                const current = state.answers[i] || { elapsed: 0, answered: false, correct: false, selected: -1 };
+            state.sectionOrders[state.currentSection].forEach(qIdx => {
+                const current = state.answers[qIdx] || { elapsed: 0, answered: false, correct: false, selected: -1 };
                 if (!current.answered) {
                     current.answered = true;
                     current.correct = false;
                     current.selected = -1;
-                    state.answers[i] = current;
+                    state.answers[qIdx] = current;
                 }
-            }
+            });
 
             if (state.phase === 'modal') { $('questionModal').classList.add('hidden'); }
             $('explanationModal').classList.add('hidden');
             finishSection();
         }
 
-        // KONTROL TOMBOL
         $('startButton').addEventListener('click', () => {
             if (!$('playerName').value.trim() || !$('playerNumber').value.trim() || !$('playerClass').value.trim()) { alert('Isi nama, nomor absen, dan kelas terlebih dahulu.'); return }
             const player = { name: $('playerName').value.trim(), number: $('playerNumber').value.trim(), className: $('playerClass').value.trim() };
@@ -1998,11 +1712,6 @@
         $('btnContinueMenu').addEventListener('click', returnToMenu);
         $('btnSubmitReport').addEventListener('click', showResultArea);
 
-        $('questionCards').addEventListener('click', event => {
-            const card = event.target.closest('[data-card]');
-            if (card && !card.disabled) { card.classList.add('opened'); setTimeout(() => openQuestion(Number(card.dataset.card)), 180) }
-        });
-
         $('modalChoices').addEventListener('click', event => {
             const button = event.target.closest('[data-answer]');
             if (button) selectChoice(Number(button.dataset.answer));
@@ -2011,19 +1720,11 @@
         $('explanationContinue').addEventListener('click', nextQuestion);
         $('resetAllButton').addEventListener('click', () => { if (confirm('Reset seluruh game dan kembali ke awal?')) resetState(); });
 
-        let unlockShortcutStep = 0;
         document.addEventListener('visibilitychange', () => { if (document.hidden) showTabLock(); });
         window.addEventListener('blur', showTabLock);
 
         document.addEventListener('keydown', event => {
             const key = event.key.toLowerCase();
-
-            // UNLOCK TAB (Ctrl + C lalu B)
-            if (event.ctrlKey && key === 'c') { unlockShortcutStep = 1; return; }
-            if (unlockShortcutStep === 1 && key === 'b') { event.preventDefault(); unlockShortcutStep = 0; hideTabLock(); return; }
-            if (key !== 'control' && key !== 'c') { unlockShortcutStep = 0; }
-
-            // FORCE STOP BAGIAN (Ctrl + F)
             if (event.ctrlKey && key === 'f') {
                 event.preventDefault();
                 if (state.player?.name && !state.completed && state.currentSection !== -1 && state.phase !== 'menu') {
@@ -2031,8 +1732,6 @@
                 }
                 return;
             }
-
-            // RESET GAME PENUH (Ctrl + ` ATAU Tombol ~)
             if (event.ctrlKey && key === '`') {
                 event.preventDefault();
                 if (confirm('Reset semua progres permainan ke awal mula?')) resetState();
@@ -2044,6 +1743,8 @@
             try { Object.assign(state, JSON.parse(saved)); } catch (error) { localStorage.removeItem(storageKey); return false }
             if (!state.player?.name) return false;
 
+            if (!state.sectionOrders) { localStorage.removeItem(storageKey); return false; }
+
             $('playerName').value = state.player.name; $('playerNumber').value = state.player.number; $('playerClass').value = state.player.className;
             $('registration').classList.add('hidden'); $('heroArea').classList.add('hidden');
 
@@ -2054,10 +1755,20 @@
             } else if (state.phase === 'cards' || state.phase === 'modal') {
                 document.body.classList.add('playing');
                 $('gameArea').classList.remove('hidden');
-                renderCards(true); // Memaksa animasi 5 detik jika halaman di-refresh saat sedang menjawab
+                
+                /* ========================================================== */
+                /* FIX: Menampilkan kembali penomoran saat halaman di-refresh */
+                buildLevelMarkers();
+                updateClimber();
+                /* ========================================================== */
+                
+                renderWheel();
                 if (state.phase === 'modal' && state.index >= 0 && !state.answers[state.index]?.answered) setTimeout(() => openQuestion(state.index), 0);
             }
-            if (state.tabLocked) $('penaltyOverlay').classList.remove('hidden');
+            if (state.tabLocked) {
+                $('cheatCountDisplay').textContent = state.cheatAttempts;
+                $('penaltyOverlay').classList.remove('hidden');
+            }
             startSessionClock(); return true
         }
 
